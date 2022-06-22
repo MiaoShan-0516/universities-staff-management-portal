@@ -3,6 +3,7 @@ import VueRouter from 'vue-router'
 import App from './views/App'
 import Hello from './views/Hello'
 import Home from './views/Home'
+import Login from './views/Login'
 
 Vue.use(VueRouter)
 

@@ -1,0 +1,10 @@
+/node_modules
+/vendor
+.env
+public/js/app.js
+package-lock.json
+storage/debugbar/
+package.json
+public/css/app.css
+mix-manifest.json
+composer.lock

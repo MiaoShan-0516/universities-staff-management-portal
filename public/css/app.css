@@ -10252,3 +10252,10 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.font-weight-bold {
+  font-weight: bold;
+}

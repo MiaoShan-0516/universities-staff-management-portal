@@ -1,8 +1,9 @@
 <template>
   <div>
-    <h1>Vue Router Demo App</h1>
+    <h1>Universities Staff Management Portal</h1>
     <p>
       <router-link :to="{ name: 'home' }">Home</router-link> |
+      <router-link :to="{ name: 'login' }">Login</router-link>
       <router-link :to="{ name: 'hello' }">Hello World</router-link>
     </p>
     <button @click="logout">Logout</button>

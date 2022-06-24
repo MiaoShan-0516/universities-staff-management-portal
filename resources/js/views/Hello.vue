@@ -14,13 +14,6 @@
       });
     }
   },
-    // created() {
-    //   if (this.$session.has("user_data") == false) {
-    //       this.$alert("Please login to proceed").then(() => {
-    //       this.$router.push({ name: "login" });
-    //     });
-    //   }
-    // },
     mounted() {
       this.$session.get("user_data")[0].id
     },

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <nav-bar></nav-bar>
     <div class="container">
       <div class="row justify-content-center">
         <div class="col-12 col-lg-6">
@@ -105,11 +104,9 @@
 
 <script>
   import axios from "axios";
-  import App from "./App.vue";
 
   export default {
     components: {
-    "nav-bar": App,
   },
     data() {
       return {

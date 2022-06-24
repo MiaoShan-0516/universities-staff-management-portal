@@ -1,4 +1,3 @@
-import App from '../views/App'
 import axios from 'axios';
 import Hello from '../views/Hello'
 import Home from '../views/Home'

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Hello from '../views/Hello'
+import UniversityProfile from '../views/UniversityProfile'
 import Home from '../views/Home'
 import Login from '../views/Login'
 import Vue from 'vue'
@@ -25,9 +25,9 @@ export default {
             component: Home
         },
         {
-            path: '/hello',
-            name: 'hello',
-            component: Hello,
+            path: '/profile/:name/:id',
+            name: 'UniversityProfile',
+            component: UniversityProfile,
         },
         {
             path: '/login',

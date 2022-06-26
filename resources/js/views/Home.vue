@@ -17,27 +17,32 @@
               ></v-text-field>
             </v-card-title>
             <v-app id="inspire">
-            <v-data-table
-              :headers="headers"
-              :items="uni"
-              :search="search"
-              :items-per-page="25"
-              class="elevation-1"
-            >
-              <template v-slot:item="{ item }">
-                <tr>
-                  <td>{{item.name}}</td>
-                  <td>
-                    <a :href="'https://' + item.domains[0]" target="_blank">
-                      {{ 'https://' + item.domains[0] }}
-                    </a>
-                  </td>
-                </tr>
-              </template>
-            </v-data-table>
-  </v-app>
+              <v-data-table
+                :headers="headers"
+                :items="uni"
+                :search="search"
+                :items-per-page="25"
+                class="elevation-1"
+              >
+                <template v-slot:item="{ item }">
+                  <tr>
+                    <td>{{item.id}}</td>
+                    <td>
+                      <router-link :to="{ path: '/profile/' + item.name.replace(/\s+/g, '-') + '/' + item.id }">
+                        {{item.name}}
+                      </router-link>
+                    </td>
+                    <td>
+                      <a :href="item.url" target="_blank">
+                        {{ item.url }}
+                      </a>
+                    </td>
+                  </tr>
+                </template>
+              </v-data-table>
+            </v-app>
           </v-card>
-          <table class="table table-hover">
+          <!-- <table class="table table-hover">
             <thead>
               <tr>
                 <th></th>
@@ -50,8 +55,8 @@
                 <th scope="row">{{ index + 1 }}</th>
                 <td>{{ university.name }}</td>
                 <td>
-                  <a :href="'https://' + university.domains[0]" target="_blank">
-                    {{ 'https://' + university.domains[0] }}
+                  <a :href="university.url" target="_blank">
+                    {{ university.url }}
                   </a>
                 </td>
               </tr>
@@ -60,7 +65,7 @@
               
             </tr>
             </tbody>
-          </table>
+          </table> -->
           
         </div>
       </div>
@@ -78,14 +83,18 @@
   },
     data() {
       return {
-        universities: null,
+        universities: [],
         uni: [],
         search: '',
         headers: [
           {
-            text: '	Name of University',
+            text: 'id',
             align: 'start',
             sortable: false,
+            value: 'id',
+          },
+          {
+            text: 'Name of University',
             value: 'name',
           },
           { text: 'URL', value: 'url' },
@@ -94,15 +103,16 @@
       
     },
     mounted () {
-      axios
-        .get('http://universities.hipolabs.com/search?country=Malaysia')
-        .then(response => {
-          this.universities = response.data
-          this.uni = response.data
-        })
-        .catch((error) => {
-          alert(error);
-        });
+      // axios.defaults.baseURL = "/api";
+      // axios
+      //   .get("/getAllUniversity")
+      //   .then(response => {
+      //     this.universities = response.data;
+      //     this.uni = response.data;
+      //   })
+      //   .catch((error) => {
+      //     alert(error);
+      //   });
     },
     created() {
       if (!this.$session.exists()) {
@@ -110,40 +120,19 @@
           this.$router.push({ name: "login" });
         });
       }
+      this.getAllUniversity();
     },
     methods: {
-      emailValidation: function (email) {
-        const re =
-          /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        return re.test(email);
-      },
-      handleBlur(e) {
-        this.emailValidation(this.email);
-      },
-      displayPassword(){
-        this.showPassword = !this.showPassword;
-      },
-      logIn() {
-      axios.defaults.baseURL = "/api";
+      getAllUniversity() {
+        axios.defaults.baseURL = "/api";
       axios
-        .post("/loginValidation", {
-        email: this.email.toLowerCase(),
-        password: this.password,
-        })
-        .then((response) => {
-          this.userData = response.arr_user;
-          let self = this;
-          self.$session.start();
-          self.$session.set("userData", this.userData);
-          self.$router.push({ path: "/" });
+        .get("/getAllUniversity")
+        .then(response => {
+          this.universities = response.data;
+          this.uni = response.data;
         })
         .catch((error) => {
-          console.log(error);
-          this.$alert(
-            "Your email or password is wrong.",
-            "Error",
-            "error"
-          );
+          alert(error);
         });
       },
     }

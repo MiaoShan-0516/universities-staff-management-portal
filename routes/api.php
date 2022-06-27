@@ -24,3 +24,5 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/loginValidation', 'App\Http\Controllers\AuthController@userLogin');
 Route::get('/getAllUniversity', 'App\Http\Controllers\UniversityController@getAllUniversity');
+Route::get('/getUniversityDetails/{id}', 'App\Http\Controllers\UniversityController@getUniversityDetails');
+Route::post('/addStaffToUniversity/{id}', 'App\Http\Controllers\UniversityController@addStaffToUniversity');

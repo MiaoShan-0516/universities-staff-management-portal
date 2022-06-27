@@ -26,10 +26,10 @@
               >
                 <template v-slot:item="{ item }">
                   <tr>
-                    <td>{{item.id}}</td>
+                    <td>{{ item.id }}</td>
                     <td>
-                      <router-link :to="{ path: '/profile/' + item.name.replace(/\s+/g, '-') + '/' + item.id }">
-                        {{item.name}}
+                      <router-link :to="{ path: '/profile/' + item.name.replace(/\s+/g, '-') + '/id=' + item.id }">
+                        {{ item.name }}
                       </router-link>
                     </td>
                     <td>

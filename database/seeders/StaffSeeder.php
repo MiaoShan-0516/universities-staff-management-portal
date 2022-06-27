@@ -22,12 +22,18 @@ class StaffSeeder extends Seeder
 
         foreach ($staff as $key => $value) {
             $datetime = $value->dob->date;
-            $date_arr= explode("T", $datetime);
+            $date_arr = explode("T", $datetime);
             $date= $date_arr[0];
+            
+            // $staff_first_name = json_encode($value->name->first);
+            // $staff_last_name = json_encode($value->name->last);
+            // $fisrt_name_arr = explode('"', $staff_first_name);
+            // $last_name_arr = explode('"', $staff_last_name);
+            // $staff_full_name = $fisrt_name_arr[2] + ' ' + $last_name_arr[2];
 
             Staff::create([
                 "university_id" => rand(1,146),
-                "name" => json_encode($value->name->first),
+                "name" => json_encode($value->name),
                 "dob" => $date,
                 "email" => $value->email,
                 "location" => json_encode($value->location),

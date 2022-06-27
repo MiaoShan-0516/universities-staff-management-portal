@@ -4,7 +4,6 @@
     <p>
       <router-link :to="{ name: 'home' }">Home</router-link> |
       <router-link :to="{ name: 'login' }">Login</router-link>
-      <router-link :to="{ name: 'hello' }">Hello World</router-link>
     </p>
     <button @click="logout">Logout</button>
     <div class="container">

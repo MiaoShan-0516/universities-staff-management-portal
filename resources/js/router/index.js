@@ -25,7 +25,7 @@ export default {
             component: Home
         },
         {
-            path: '/profile/:name/:id',
+            path: '/profile/:name/id=:id',
             name: 'UniversityProfile',
             component: UniversityProfile,
         },

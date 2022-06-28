@@ -41,7 +41,11 @@
               >
                 <template v-slot:item="{ item }">
                   <tr>
-                    <td>{{ item.name.first + " " + item.name.last }}</td>
+                    <td>
+                      <router-link :to="{ path: '/staff/' + item.name.first.replace(/\s+/g, '-') + '-' + item.name.last.replace(/\s+/g, '-') + '/id=' + item.id }">
+                        {{ item.name.first + " " + item.name.last }}
+                      </router-link>
+                    </td>
                     <td>
                       <a :href="'mailto:' + item.email">{{ item.email }}</a>
                     </td>
@@ -72,22 +76,28 @@
             <form>
               <div class="form-row">
                 <div class="form-group col-md-6">
-                  <label for="first">First Name</label>
+                  <label for="first">First Name<span class="text-danger">*</span></label>
                   <input type="text" class="form-control" v-model="first" required>
+                  <small v-if="!validation && !first" class="text-danger">*first name is empty</small>
                 </div>
                 <div class="form-group col-md-6">
-                  <label for="last">Last Name</label>
+                  <label for="last">Last Name<span class="text-danger">*</span></label>
                   <input type="text" class="form-control" v-model="last" required>
+                  <small v-if="!validation && !last" class="text-danger">*last name is empty</small>
                 </div>
               </div>
               <div class="form-row">
-                <div class="form-group col-md-8">
-                  <label for="email">Email</label>
+                <div class="form-group col-md-7">
+                  <label for="email">Email<span class="text-danger">*</span></label>
                   <input type="email" class="form-control" v-model="email" placeholder="example@mail.com" required>
+                  <small v-if="!validation && !email" class="text-danger">*email is empty</small>
+                  <small v-if="email && !emailValidation(email)" class="text-danger">*Please enter a valid email address</small>
                 </div>
-                <div class="form-group col-md-4">
-                  <label for="dob">Date of Birth</label>
+                <div class="form-group col-md-5">
+                  <label for="dob">Date of Birth<span class="text-danger">*</span></label>
                   <input type="date" class="form-control" v-model="dob" required>
+                  <small v-if="!validation && !dob" class="text-danger">*date of birth is empty</small>
+                  <small v-if="dob && !ageValidation(dob)" class="text-danger">*Minimum age for a staff is 21</small>
                 </div>
               </div>
               <div class="form-group mx-2">
@@ -129,7 +139,6 @@
           {
             text: 'Name',
             align: 'start',
-            sortable: false,
             value: 'name',
           },
           {
@@ -142,6 +151,7 @@
         email: "",
         dob: "",
         is_active: true,
+        validation: true,
       };
     },
     created() {
@@ -161,47 +171,83 @@
           .then((response) => {
             this.university = response.data.university;
             this.staffs = response.data.staffs;
-            this.staff_name = response.data.staff_name;
           })
           .catch(function (error) {
             console.log(error);
           });
       },
-      addStaff(){
-      this.id = this.$route.params.id;
-
-      var full_name = {
-        first: this.first,
-        last: this.last,
-      };
-
-      axios.defaults.baseURL = "/api";
-      axios
-        .post("/addStaffToUniversity/" + this.id, {
-          university_id: this.id,
-          first: this.first,
-          last: this.last,
-          email: this.email,
-          dob: this.dob,
-          is_active: this.is_active,
-        })
-        .then((response) => {
-          alert("Staff Has Been Created");
-          $(document).ready(function () {
-            $("#createStaffModal").modal("hide");
+      addStaff() {
+        this.id = this.$route.params.id;
+        if (
+          !this.first ||
+          !this.last ||
+          !this.email ||
+          !this.dob ||
+          !this.emailValidation(this.email) ||
+          !this.ageValidation(this.dob)
+        ) {
+          this.$alert(
+            "Please fill in all details correctly",
+            "Error",
+            "error"
+          ).then(() => {
+            this.validation = false;
           });
-          this.getUniversityDetails();
-          this.full_name = {};
-          this.first = "";
-          this.last = "";
-          this.email = "";
-          this.dob = "";
-          this.is_active = true;
-        })
-        .catch((error) => {
-          alert("Error");
-        });
-    },
-      }
+        }
+        else {
+          axios.defaults.baseURL = "/api";
+          axios
+            .post("/addStaffToUniversity/" + this.id, {
+              university_id: this.id,
+              first: this.first,
+              last: this.last,
+              email: this.email,
+              dob: this.dob,
+              is_active: this.is_active,
+            })
+            .then((response) => {
+              $(document).ready(function () {
+                $("#createStaffModal").modal("hide");
+              });
+              alert("New Staff Created");
+              this.getUniversityDetails();
+              this.full_name = {};
+              this.first = "";
+              this.last = "";
+              this.email = "";
+              this.dob = "";
+              this.is_active = true;
+              this.validation = true;
+            })
+            .catch((error) => {
+              alert("Error");
+            });
+        }
+      },
+      emailValidation: function (email) {
+        const re =
+          /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(email);
+      },
+      handleBlur(e) {
+        this.emailValidation(this.email);
+        this.ageValidation(this.dob);
+      },
+      ageValidation(dob) {
+        var today = new Date();
+        var birthDate = new Date(dob);
+        var age = today.getFullYear() - birthDate.getFullYear();
+        var m = today.getMonth() - birthDate.getMonth();
+        if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
+            age--;
+        }
+        if (age >= 21) {
+          return true;
+        }
+        else {
+          return false;
+        }
+      },
+    }
   };
 </script>

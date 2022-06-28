@@ -1,7 +1,8 @@
 import axios from 'axios';
-import UniversityProfile from '../views/UniversityProfile'
 import Home from '../views/Home'
 import Login from '../views/Login'
+import StaffProfile from '../views/StaffProfile'
+import UniversityProfile from '../views/UniversityProfile'
 import Vue from 'vue'
 import VueAxios from 'vue-axios';
 import Router from 'vue-router'
@@ -25,14 +26,19 @@ export default {
             component: Home
         },
         {
+            path: '/login',
+            name: 'login',
+            component: Login,
+        },
+        {
             path: '/profile/:name/id=:id',
             name: 'UniversityProfile',
             component: UniversityProfile,
         },
         {
-            path: '/login',
-            name: 'login',
-            component: Login,
+            path: '/staff/:name/id=:id',
+            name: 'StaffProfile',
+            component: StaffProfile,
         },
     ],
 };

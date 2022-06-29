@@ -29,3 +29,5 @@ Route::post('/addStaffToUniversity/{id}', 'App\Http\Controllers\UniversityContro
 Route::get('/getStaffDetails/{id}', 'App\Http\Controllers\StaffController@getStaffDetails');
 Route::post('/updateStaffDetails', 'App\Http\Controllers\StaffController@updateStaffDetails');
 Route::post('/deleteStaff/{id}', 'App\Http\Controllers\StaffController@deleteStaff');
+
+Route::post('sociallogin/{provider}', 'App\Http\Controllers\AuthController@SocialSignup');

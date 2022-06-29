@@ -205,16 +205,18 @@
       },
       deleteStaff() {
         this.id = this.$route.params.id;
-        axios.defaults.baseURL = "/api";
-        axios
-        .post('/deleteStaff/' + this.id)
-        .then((response) => {
-          alert("Staff Deleted");
-          this.$router.back();
-        })
-        .catch((error) => {
-          alert("Error");
-        });
+        if(confirm("Do you want to delete this staff?")){
+          axios.defaults.baseURL = "/api";
+          axios
+          .post('/deleteStaff/' + this.id)
+          .then((response) => {
+            alert("Staff Deleted");
+            this.$router.back();
+          })
+          .catch((error) => {
+            alert("Error");
+          });   
+        }
       },
       emailValidation: function (update_staff_email) {
         const re =

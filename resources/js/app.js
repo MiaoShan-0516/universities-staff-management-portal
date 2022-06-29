@@ -10,7 +10,6 @@ import { VuejsDatatableFactory } from 'vuejs-datatable';
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 
-
 import store from "./store";
 import routes from './router'
 
@@ -29,3 +28,13 @@ const app = new Vue({
     router: new VueRouter(routes),
 });
 
+import VueSocialauth from 'vue-social-auth'
+Vue.use(VueSocialauth, {
+
+  providers: {
+    google: {
+      clientId: '691121027545-qv5m3omrgs27blmnoh727jkuer7meb4u.apps.googleusercontent.com',
+      redirectUri: 'http://localhost:8000/auth/google/callback'
+    }
+  }
+})

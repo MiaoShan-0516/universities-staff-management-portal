@@ -12,7 +12,7 @@
               <div class="text-center">
                 <h1 class="my-3">Login in to portal</h1>
               </div>
-                <div class="row">
+                <div class="row d-flex justify-content-center my-3">
                   <div class="col-12 col-md-6 d-flex justify-content-center">
                     <button
                       @click="AuthProvider('google')"
@@ -31,25 +31,6 @@
                         <i class="fa fa-google" aria-hidden="true"></i>
                       </span>
                       <span class="col-10">Sign in with Google</span>
-                    </button>
-                  </div>
-                  <div class="col-12 col-lg-6 d-flex justify-content-center">
-                    <button
-                      @click.prevent="AuthProvider('facebook')"
-                      class="
-                        row
-                        btn btn-primary
-                        p-3
-                        w-100
-                        d-flex
-                        align-items-center
-                        justify-content-center
-                      "
-                    >
-                      <span class="col-1 text-white">
-                        <i class="fa fa-facebook" aria-hidden="true"></i>
-                      </span>
-                      <span class="col-10">Sign in with Facebook</span>
                     </button>
                   </div>
                 </div>
@@ -120,6 +101,28 @@
       }
     },
     methods: {
+      AuthProvider(provider) {
+        this.$auth.authenticate(provider).then(response =>{
+          this.SocialLogin(provider,response)
+          }).catch(err => {
+              console.log({err:err})
+          })
+      },
+      SocialLogin(provider,response) {
+        axios.defaults.baseURL = "/api";
+          axios
+            .post("/sociallogin/" + provider, response)
+            .then((response) => {
+              console.log(response.data)
+              this.userData = response.arr_user;
+              let self = this;
+              self.$session.start();
+              self.$session.set("userData", this.userData);
+              self.$router.push({ path: "/" });
+          }).catch(err => {
+              console.log({err:err})
+          })
+      },
       emailValidation: function (email) {
         const re =
           /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

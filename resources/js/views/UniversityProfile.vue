@@ -20,7 +20,7 @@
         <div class="col-12 col-lg-8">
           <div class="row justify-content-between align-items-center my-3">
             <h2 class="col-10">List of staffs</h2>
-            <input class="col-6" type="checkbox" data-toggle="toggle" data-onstyle="info" @change="toggleInactiveStaff()">
+            <input class="col-6" type="checkbox" data-toggle="toggle" data-onstyle="info" @change="toggleInactiveStaff()" data-on="Include Inctive Staff" data-off="Show Active Staff">
             <button class="btn btn-info" @click="toggleInactiveStaff()">show</button>
           </div>
           <v-card>
@@ -52,6 +52,12 @@
                     </td>
                     <td>
                       <a :href="'mailto:' + item.email">{{ item.email }}</a>
+                    </td>
+                    <td>
+                      <i class="fa fa-pencil"></i>
+                      <button type="button" class="close">
+                        <span aria-hidden="true">&times;</span>
+                      </button>
                     </td>
                   </tr>
                   <tr v-if="!item.is_active && showInactiveStaff" class="inactive-staff-row">
@@ -158,6 +164,10 @@
           {
             text: 'Email',
             value: 'email',
+          },
+          {
+            text: 'Action',
+            value: 'action',
           },
         ],
         first: "",

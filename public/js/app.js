@@ -2188,9 +2188,9 @@ __webpack_require__.r(__webpack_exports__);
           name: "login"
         });
       });
+    } else {
+      this.getAllUniversity();
     }
-
-    this.getAllUniversity();
   },
   methods: {
     getAllUniversity: function getAllUniversity() {
@@ -2411,13 +2411,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+var date = new Date();
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       userData: {
         id: "",
         email: ""
-      }
+      },
+      dateTime: {
+        hours: date.getHours(),
+        minutes: date.getMinutes(),
+        seconds: date.getSeconds()
+      },
+      timer: undefined
     };
   },
   created: function created() {},
@@ -2430,7 +2439,21 @@ __webpack_require__.r(__webpack_exports__);
 
         location.reload();
       });
+    },
+    setDateTime: function setDateTime() {
+      var date = new Date();
+      this.dateTime = {
+        hours: date.getHours(),
+        minutes: date.getMinutes(),
+        seconds: date.getSeconds()
+      };
     }
+  },
+  beforeMount: function beforeMount() {
+    this.timer = setInterval(this.setDateTime, 1000);
+  },
+  beforeUnmount: function beforeUnmount() {
+    clearInterval(this.timer);
   }
 });
 
@@ -2450,6 +2473,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var _Navigation_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Navigation.vue */ "./resources/js/views/Navigation.vue");
+//
 //
 //
 //
@@ -2577,9 +2601,9 @@ __webpack_require__.r(__webpack_exports__);
           name: "login"
         });
       });
+    } else {
+      this.getStaffDetails();
     }
-
-    this.getStaffDetails();
   },
   methods: {
     getStaffDetails: function getStaffDetails() {
@@ -2829,6 +2853,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2854,7 +2892,8 @@ __webpack_require__.r(__webpack_exports__);
       email: "",
       dob: "",
       is_active: true,
-      validation: true
+      validation: true,
+      showInactiveStaff: false
     };
   },
   created: function created() {
@@ -2866,9 +2905,9 @@ __webpack_require__.r(__webpack_exports__);
           name: "login"
         });
       });
+    } else {
+      this.getUniversityDetails();
     }
-
-    this.getUniversityDetails();
   },
   methods: {
     getUniversityDetails: function getUniversityDetails() {
@@ -2944,6 +2983,11 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         return false;
       }
+    },
+    toggleInactiveStaff: function toggleInactiveStaff() {
+      this.showInactiveStaff = !this.showInactiveStaff;
+      this.getUniversityDetails();
+      console.log(this.showInactiveStaff);
     }
   }
 });
@@ -2960,22 +3004,22 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-axios */ "./node_modules/vue-axios/dist/vue-axios.esm.min.js");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var vue_cookie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-cookie */ "./node_modules/vue-cookie/src/vue-cookie.js");
 /* harmony import */ var vue_cookie__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_cookie__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var vue_session__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-session */ "./node_modules/vue-session/index.js");
-/* harmony import */ var vue_session__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_session__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var vue_simple_alert__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-simple-alert */ "./node_modules/vue-simple-alert/lib/index.js");
-/* harmony import */ var vuejs_datatable__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuejs-datatable */ "./node_modules/vuejs-datatable/dist/vuejs-datatable.esm.js");
-/* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vuetify */ "./node_modules/vuetify/dist/vuetify.js");
-/* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(vuetify__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var vuetify_dist_vuetify_min_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuetify/dist/vuetify.min.css */ "./node_modules/vuetify/dist/vuetify.min.css");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_store__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./router */ "./resources/js/router/index.js");
-/* harmony import */ var vue_social_auth__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vue-social-auth */ "./node_modules/vue-social-auth/dist/vue-social-auth.es2017.js");
+/* harmony import */ var vuejs_datatable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuejs-datatable */ "./node_modules/vuejs-datatable/dist/vuejs-datatable.esm.js");
+/* harmony import */ var vue_session__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-session */ "./node_modules/vue-session/index.js");
+/* harmony import */ var vue_session__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_session__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var vue_simple_alert__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-simple-alert */ "./node_modules/vue-simple-alert/lib/index.js");
+/* harmony import */ var vue_social_auth__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue-social-auth */ "./node_modules/vue-social-auth/dist/vue-social-auth.es2017.js");
+/* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vuetify */ "./node_modules/vuetify/dist/vuetify.js");
+/* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(vuetify__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var vuetify_dist_vuetify_min_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuetify/dist/vuetify.min.css */ "./node_modules/vuetify/dist/vuetify.min.css");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_store__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./router */ "./resources/js/router/index.js");
 // import App from './views/App'
 
 
@@ -2989,27 +3033,27 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_9__["default"].use((vue_cookie__WEBPACK_IMPORTED_MODULE_2___default()));
-vue__WEBPACK_IMPORTED_MODULE_9__["default"].use(vuejs_datatable__WEBPACK_IMPORTED_MODULE_5__.VuejsDatatableFactory);
-vue__WEBPACK_IMPORTED_MODULE_9__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_10__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_9__["default"].use(vue_axios__WEBPACK_IMPORTED_MODULE_1__["default"], (axios__WEBPACK_IMPORTED_MODULE_0___default()));
-vue__WEBPACK_IMPORTED_MODULE_9__["default"].use((vue_session__WEBPACK_IMPORTED_MODULE_3___default()));
-vue__WEBPACK_IMPORTED_MODULE_9__["default"].use(vue_simple_alert__WEBPACK_IMPORTED_MODULE_4__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_9__["default"].use((vuetify__WEBPACK_IMPORTED_MODULE_11___default()));
-var app = new vue__WEBPACK_IMPORTED_MODULE_9__["default"]({
-  el: '#app',
-  // store,
-  vuetify: new (vuetify__WEBPACK_IMPORTED_MODULE_11___default())(),
-  router: new vue_router__WEBPACK_IMPORTED_MODULE_10__["default"](_router__WEBPACK_IMPORTED_MODULE_8__["default"])
-});
 
-vue__WEBPACK_IMPORTED_MODULE_9__["default"].use(vue_social_auth__WEBPACK_IMPORTED_MODULE_12__["default"], {
+vue__WEBPACK_IMPORTED_MODULE_10__["default"].use((vue_cookie__WEBPACK_IMPORTED_MODULE_2___default()));
+vue__WEBPACK_IMPORTED_MODULE_10__["default"].use(vuejs_datatable__WEBPACK_IMPORTED_MODULE_3__.VuejsDatatableFactory);
+vue__WEBPACK_IMPORTED_MODULE_10__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_11__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_10__["default"].use(vue_axios__WEBPACK_IMPORTED_MODULE_1__["default"], (axios__WEBPACK_IMPORTED_MODULE_0___default()));
+vue__WEBPACK_IMPORTED_MODULE_10__["default"].use((vue_session__WEBPACK_IMPORTED_MODULE_4___default()));
+vue__WEBPACK_IMPORTED_MODULE_10__["default"].use(vue_simple_alert__WEBPACK_IMPORTED_MODULE_5__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_10__["default"].use(vue_social_auth__WEBPACK_IMPORTED_MODULE_6__["default"], {
   providers: {
     google: {
       clientId: '691121027545-qv5m3omrgs27blmnoh727jkuer7meb4u.apps.googleusercontent.com',
       redirectUri: 'http://localhost:8000/auth/google/callback'
     }
   }
+});
+vue__WEBPACK_IMPORTED_MODULE_10__["default"].use((vuetify__WEBPACK_IMPORTED_MODULE_12___default()));
+var app = new vue__WEBPACK_IMPORTED_MODULE_10__["default"]({
+  el: '#app',
+  // store,
+  vuetify: new (vuetify__WEBPACK_IMPORTED_MODULE_12___default())(),
+  router: new vue_router__WEBPACK_IMPORTED_MODULE_11__["default"](_router__WEBPACK_IMPORTED_MODULE_9__["default"])
 });
 
 /***/ }),
@@ -8313,6 +8357,16 @@ var render = function () {
       1
     ),
     _vm._v(" "),
+    _c("div", [
+      _vm._v(
+        _vm._s(_vm.dateTime.hours) +
+          ":" +
+          _vm._s(_vm.dateTime.minutes) +
+          ":" +
+          _vm._s(_vm.dateTime.seconds)
+      ),
+    ]),
+    _vm._v(" "),
     _c("button", { on: { click: _vm.logout } }, [_vm._v("Logout")]),
     _vm._v(" "),
     _c("div", { staticClass: "container" }),
@@ -8394,6 +8448,16 @@ var render = function () {
                   _c("p", [
                     _c("strong", [_vm._v("Age:")]),
                     _vm._v(" " + _vm._s(_vm.age)),
+                  ]),
+                  _vm._v(" "),
+                  _c("p", [
+                    _c("strong", [_vm._v("Status:")]),
+                    _vm._v(
+                      " " +
+                        _vm._s(
+                          user.is_active ? "Active Staff" : "Inactive Staff"
+                        )
+                    ),
                   ]),
                 ]),
               ]),
@@ -8825,7 +8889,45 @@ var render = function () {
               "div",
               { staticClass: "col-12 col-lg-8" },
               [
-                _c("h2", [_vm._v("List of staffs")]),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "row justify-content-between align-items-center my-3",
+                  },
+                  [
+                    _c("h2", { staticClass: "col-10" }, [
+                      _vm._v("List of staffs"),
+                    ]),
+                    _vm._v(" "),
+                    _c("input", {
+                      staticClass: "col-6",
+                      attrs: {
+                        type: "checkbox",
+                        "data-toggle": "toggle",
+                        "data-onstyle": "info",
+                      },
+                      on: {
+                        change: function ($event) {
+                          return _vm.toggleInactiveStaff()
+                        },
+                      },
+                    }),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-info",
+                        on: {
+                          click: function ($event) {
+                            return _vm.toggleInactiveStaff()
+                          },
+                        },
+                      },
+                      [_vm._v("show")]
+                    ),
+                  ]
+                ),
                 _vm._v(" "),
                 _c(
                   "v-card",
@@ -8927,6 +9029,66 @@ var render = function () {
                                           ),
                                         ]),
                                       ])
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  !item.is_active && _vm.showInactiveStaff
+                                    ? _c(
+                                        "tr",
+                                        { staticClass: "inactive-staff-row" },
+                                        [
+                                          _c(
+                                            "td",
+                                            [
+                                              _c(
+                                                "router-link",
+                                                {
+                                                  attrs: {
+                                                    to: {
+                                                      path:
+                                                        "/staff/" +
+                                                        item.name.first.replace(
+                                                          /\s+/g,
+                                                          "-"
+                                                        ) +
+                                                        "-" +
+                                                        item.name.last.replace(
+                                                          /\s+/g,
+                                                          "-"
+                                                        ) +
+                                                        "/id=" +
+                                                        item.id,
+                                                    },
+                                                  },
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                      " +
+                                                      _vm._s(
+                                                        item.name.first +
+                                                          " " +
+                                                          item.name.last
+                                                      ) +
+                                                      "\n                    "
+                                                  ),
+                                                ]
+                                              ),
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _c("td", [
+                                            _c(
+                                              "a",
+                                              {
+                                                attrs: {
+                                                  href: "mailto:" + item.email,
+                                                },
+                                              },
+                                              [_vm._v(_vm._s(item.email))]
+                                            ),
+                                          ]),
+                                        ]
+                                      )
                                     : _vm._e(),
                                 ]
                               },

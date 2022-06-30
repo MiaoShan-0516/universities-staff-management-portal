@@ -17,6 +17,7 @@
             </p>
             <p><strong>Date of birth:</strong> {{ user.dob }}</p>
             <p><strong>Age:</strong> {{ age }}</p>
+            <p><strong>Status:</strong> {{ user.is_active ? 'Active Staff' : 'Inactive Staff' }}</p>
           </div>
         </div> 
         <div 
@@ -120,11 +121,13 @@
     },
     created() {
       if (!this.$session.exists()) {
-      this.$alert("Please login to proceed").then(() => {
-        this.$router.push({ name: "login" });
-      });
+        this.$alert("Please login to proceed").then(() => {
+          this.$router.push({ name: "login" });
+        });
       }
-      this.getStaffDetails();
+      else {
+        this.getStaffDetails();
+      }
     },
     methods: {
       getStaffDetails() {

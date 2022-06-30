@@ -120,7 +120,9 @@
           this.$router.push({ name: "login" });
         });
       }
-      this.getAllUniversity();
+      else {
+        this.getAllUniversity();
+      }
     },
     methods: {
       getAllUniversity() {

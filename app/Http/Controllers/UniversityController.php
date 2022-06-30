@@ -19,8 +19,7 @@ class UniversityController extends Controller
     public function getUniversityDetails($id)
     {
         $university = University::where('universities.id', '=', $id)->get();
-        $staffs = Staff::where('staff.university_id', '=', $id)
-            ->where('is_active', '=', '1')->get();
+        $staffs = Staff::where('staff.university_id', '=', $id)->get();
         $arr_university = [];
         $arr_staffs = [];
         
@@ -38,6 +37,7 @@ class UniversityController extends Controller
                 "id" => $staff->id,
                 "name" => json_decode($staff->name),
                 "email" => $staff->email,
+                "is_active" => $staff->is_active,
             ]);
             
         endforeach;

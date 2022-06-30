@@ -18,7 +18,11 @@
           </div>        
         </div>
         <div class="col-12 col-lg-8">
-          <h2>List of staffs</h2>
+          <div class="row justify-content-between align-items-center my-3">
+            <h2 class="col-10">List of staffs</h2>
+            <input class="col-6" type="checkbox" data-toggle="toggle" data-onstyle="info" @change="toggleInactiveStaff()">
+            <button class="btn btn-info" @click="toggleInactiveStaff()">show</button>
+          </div>
           <v-card>
             <v-card-title>
               Home
@@ -40,7 +44,17 @@
                 class="elevation-1"
               >
                 <template v-slot:item="{ item }">
-                  <tr>
+                  <tr v-if="item.is_active">
+                    <td>
+                      <router-link :to="{ path: '/staff/' + item.name.first.replace(/\s+/g, '-') + '-' + item.name.last.replace(/\s+/g, '-') + '/id=' + item.id }">
+                        {{ item.name.first + " " + item.name.last }}
+                      </router-link>
+                    </td>
+                    <td>
+                      <a :href="'mailto:' + item.email">{{ item.email }}</a>
+                    </td>
+                  </tr>
+                  <tr v-if="!item.is_active && showInactiveStaff" class="inactive-staff-row">
                     <td>
                       <router-link :to="{ path: '/staff/' + item.name.first.replace(/\s+/g, '-') + '-' + item.name.last.replace(/\s+/g, '-') + '/id=' + item.id }">
                         {{ item.name.first + " " + item.name.last }}
@@ -152,6 +166,7 @@
         dob: "",
         is_active: true,
         validation: true,
+        showInactiveStaff: false,
       };
     },
     created() {
@@ -160,7 +175,9 @@
           this.$router.push({ name: "login" });
         });
       }
-      this.getUniversityDetails();
+      else {
+        this.getUniversityDetails();
+      }
     },
     methods: {
       getUniversityDetails() {
@@ -247,6 +264,11 @@
         else {
           return false;
         }
+      },
+      toggleInactiveStaff() {
+        this.showInactiveStaff = !this.showInactiveStaff;
+        this.getUniversityDetails();
+        console.log(this.showInactiveStaff);
       },
     }
   };

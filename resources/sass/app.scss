@@ -39,3 +39,9 @@
         transition: 0.3s;
     }
 }
+.inactive-staff-row {
+    background-color: lightgray;
+}
+.inactive-staff-row:hover {
+    background-color: gray !important;
+}

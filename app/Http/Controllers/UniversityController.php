@@ -35,9 +35,12 @@ class UniversityController extends Controller
             
             array_push($arr_staffs, [
                 "id" => $staff->id,
+                "university_id" => $staff->university_id,
                 "name" => json_decode($staff->name),
                 "email" => $staff->email,
+                "dob" => $staff->dob,
                 "is_active" => $staff->is_active,
+                "picture" => $staff->picture,
             ]);
             
         endforeach;

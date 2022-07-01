@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div id="topbar" class="d-flex align-items-center fixed-top">
+    <div id="navbar" class="d-flex align-items-center fixed-top">
       <div class="container">
         <div class="row justify-content-between justify-content-lg-center align-items-center">
           <div 
@@ -105,7 +105,6 @@
                 id="sidebarCollapseX"
                 class="btn btn-close"
               >
-                <span aria-hidden="true">&times;</span>
               </button>
             </div>
           </div>

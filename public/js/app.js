@@ -2143,6 +2143,45 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2155,7 +2194,7 @@ __webpack_require__.r(__webpack_exports__);
       uni: [],
       search: '',
       headers: [{
-        text: 'id',
+        text: 'No',
         align: 'start',
         sortable: false,
         value: 'id'
@@ -2495,7 +2534,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
 var date = new Date();
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
@@ -2692,6 +2730,88 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2702,6 +2822,9 @@ __webpack_require__.r(__webpack_exports__);
     return {
       id: "",
       staff: [],
+      university: [{
+        name: ''
+      }],
       birthday: "",
       today: "",
       age: "",
@@ -2731,10 +2854,12 @@ __webpack_require__.r(__webpack_exports__);
       var _this2 = this;
 
       this.id = this.$route.params.id;
+      this.uniId = this.$route.params.uniId;
       (axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.baseURL) = "/api";
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get("/getStaffDetails/" + this.id).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get("/getStaffDetails/" + this.id + this.uniId).then(function (response) {
         _this2.staff = response.data.staff;
-        _this2.birthday = response.data.birthday; //calculate age
+        _this2.birthday = response.data.birthday;
+        _this2.university = response.data.university; //calculate age
 
         var today = new Date();
         var dateOfBirth = new Date(_this2.birthday);
@@ -2994,6 +3119,291 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -3023,7 +3433,15 @@ __webpack_require__.r(__webpack_exports__);
       dob: "",
       is_active: true,
       validation: true,
-      showInactiveStaff: false
+      showInactiveStaff: false,
+      update_staff_id: "",
+      update_staff_first: "",
+      update_staff_last: "",
+      update_staff_email: "",
+      update_staff_dob: "",
+      update_staff_is_active: "",
+      update_staff_picture: "",
+      update_staff_university_id: ""
     };
   },
   created: function created() {
@@ -3118,6 +3536,61 @@ __webpack_require__.r(__webpack_exports__);
       this.showInactiveStaff = !this.showInactiveStaff;
       this.getUniversityDetails();
       console.log(this.showInactiveStaff);
+    },
+    getCurrentStaff: function getCurrentStaff(staffId, staffFirstName, staffLastName, staffEmail, staffDob, staffIsActive, staffPicture, staffUniversityId) {
+      this.update_staff_id = staffId;
+      this.update_staff_first = staffFirstName;
+      this.update_staff_last = staffLastName;
+      this.update_staff_email = staffEmail;
+      this.update_staff_dob = staffDob;
+      this.update_staff_is_active = staffIsActive;
+      this.update_staff_picture = staffPicture;
+      this.update_staff_university_id = staffUniversityId;
+    },
+    updateStaffDetails: function updateStaffDetails() {
+      var _this4 = this;
+
+      if (!this.update_staff_first || !this.update_staff_last || !this.update_staff_email || !this.update_staff_dob || !this.emailValidation(this.update_staff_email) || !this.ageValidation(this.update_staff_dob)) {
+        this.$alert("Please fill in all details correctly", "Error", "error").then(function () {
+          _this4.validation = false;
+        });
+      } else {
+        (axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.baseURL) = "/api";
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post("/updateStaffDetails", {
+          id: this.update_staff_id,
+          university_id: this.update_staff_university_id,
+          first: this.update_staff_first,
+          last: this.update_staff_last,
+          dob: this.update_staff_dob,
+          email: this.update_staff_email,
+          is_active: this.update_staff_is_active,
+          picture: this.update_staff_picture
+        }).then(function (response) {
+          alert("Staff Update Successful!");
+          $(document).ready(function () {
+            $("#updateStaffModal").modal("hide");
+          });
+          _this4.validation = true;
+
+          _this4.getUniversityDetails();
+        })["catch"](function (error) {
+          alert("Error");
+        });
+      }
+    },
+    deleteStaff: function deleteStaff(staffId) {
+      var _this5 = this;
+
+      if (confirm("Do you want to delete this staff?")) {
+        (axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.baseURL) = "/api";
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post('/deleteStaff/' + staffId).then(function (response) {
+          alert("Staff Deleted");
+
+          _this5.getUniversityDetails();
+        })["catch"](function (error) {
+          alert("Error");
+        });
+      }
     }
   }
 });
@@ -3245,7 +3718,7 @@ vue__WEBPACK_IMPORTED_MODULE_9__["default"].use(vue_router__WEBPACK_IMPORTED_MOD
     name: 'UniversityProfile',
     component: _views_UniversityProfile__WEBPACK_IMPORTED_MODULE_4__["default"]
   }, {
-    path: '/staff/:name/id=:id',
+    path: '/:uniId/staff/:name/id=:id',
     name: 'StaffProfile',
     component: _views_StaffProfile__WEBPACK_IMPORTED_MODULE_3__["default"]
   }]
@@ -8087,63 +8560,184 @@ var render = function () {
     [
       _c("nav-bar"),
       _vm._v(" "),
-      _c("div", { staticClass: "container" }, [
-        _c("div", { staticClass: "row justify-content-center" }, [
-          _c(
-            "div",
-            { staticClass: "col-12 col-lg-8" },
-            [
-              _c(
-                "v-card",
-                [
-                  _c(
-                    "v-card-title",
-                    [
-                      _vm._v("\n            Home\n            "),
-                      _c("v-spacer"),
-                      _vm._v(" "),
-                      _c("v-text-field", {
-                        attrs: {
-                          "append-icon": "mdi-magnify",
-                          label: "Search",
-                          "single-line": "",
-                          "hide-details": "",
-                        },
-                        model: {
-                          value: _vm.search,
-                          callback: function ($$v) {
-                            _vm.search = $$v
+      _vm._m(0),
+      _vm._v(" "),
+      _c("section", [
+        _c("div", { staticClass: "container" }, [
+          _c("div", { staticClass: "row justify-content-center" }, [
+            _c(
+              "div",
+              { staticClass: "col-12 col-lg-10" },
+              [
+                _c(
+                  "v-card",
+                  { staticClass: "d-none d-lg-block" },
+                  [
+                    _c(
+                      "v-card-title",
+                      [
+                        _vm._v(
+                          "\n              List of University\n              "
+                        ),
+                        _c("v-spacer"),
+                        _vm._v(" "),
+                        _c("v-text-field", {
+                          attrs: {
+                            "append-icon": "mdi-magnify",
+                            label: "Search",
+                            "single-line": "",
+                            "hide-details": "",
                           },
-                          expression: "search",
-                        },
-                      }),
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-app",
-                    { attrs: { id: "inspire" } },
-                    [
-                      _c("v-data-table", {
-                        staticClass: "elevation-1",
-                        attrs: {
-                          headers: _vm.headers,
-                          items: _vm.uni,
-                          search: _vm.search,
-                          "items-per-page": 25,
-                        },
-                        scopedSlots: _vm._u([
-                          {
-                            key: "item",
-                            fn: function (ref) {
-                              var item = ref.item
-                              return [
-                                _c("tr", [
-                                  _c("td", [_vm._v(_vm._s(item.id))]),
-                                  _vm._v(" "),
+                          model: {
+                            value: _vm.search,
+                            callback: function ($$v) {
+                              _vm.search = $$v
+                            },
+                            expression: "search",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-app",
+                      { attrs: { id: "inspire" } },
+                      [
+                        _c("v-data-table", {
+                          staticClass: "elevation-1",
+                          attrs: {
+                            headers: _vm.headers,
+                            items: _vm.uni,
+                            search: _vm.search,
+                            "items-per-page": 25,
+                          },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "item",
+                              fn: function (ref) {
+                                var item = ref.item
+                                return [
+                                  _c("tr", [
+                                    _c("td", [_vm._v(_vm._s(item.id))]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      [
+                                        _c(
+                                          "router-link",
+                                          {
+                                            attrs: {
+                                              to: {
+                                                path:
+                                                  "/profile/" +
+                                                  item.name.replace(
+                                                    /\s+/g,
+                                                    "-"
+                                                  ) +
+                                                  "/id=" +
+                                                  item.id,
+                                              },
+                                            },
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                        " +
+                                                _vm._s(item.name) +
+                                                "\n                      "
+                                            ),
+                                          ]
+                                        ),
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: {
+                                            href: item.url,
+                                            target: "_blank",
+                                          },
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                        " +
+                                              _vm._s(item.url) +
+                                              "\n                      "
+                                          ),
+                                        ]
+                                      ),
+                                    ]),
+                                  ]),
+                                ]
+                              },
+                            },
+                          ]),
+                        }),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-card",
+                  {
+                    staticClass: "d-block d-lg-none",
+                    attrs: { id: "university-table-mob" },
+                  },
+                  [
+                    _c(
+                      "v-card-title",
+                      [
+                        _vm._v(
+                          "\n              List of University\n              "
+                        ),
+                        _c("v-spacer"),
+                        _vm._v(" "),
+                        _c("v-text-field", {
+                          attrs: {
+                            "append-icon": "mdi-magnify",
+                            label: "Search",
+                            "single-line": "",
+                            "hide-details": "",
+                          },
+                          model: {
+                            value: _vm.search,
+                            callback: function ($$v) {
+                              _vm.search = $$v
+                            },
+                            expression: "search",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-app",
+                      { attrs: { id: "inspire" } },
+                      [
+                        _c("v-data-table", {
+                          staticClass: "elevation-1",
+                          attrs: {
+                            headers: _vm.headers,
+                            items: _vm.uni,
+                            search: _vm.search,
+                            "items-per-page": 10,
+                          },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "item",
+                              fn: function (ref) {
+                                var item = ref.item
+                                return [
                                   _c(
-                                    "td",
+                                    "tr",
+                                    { staticClass: "tr-border" },
                                     [
                                       _c(
                                         "router-link",
@@ -8159,57 +8753,137 @@ var render = function () {
                                           },
                                         },
                                         [
-                                          _vm._v(
-                                            "\n                      " +
-                                              _vm._s(item.name) +
-                                              "\n                    "
-                                          ),
+                                          _c("div", { staticClass: "d-flex" }, [
+                                            _c(
+                                              "div",
+                                              { staticClass: "col-1" },
+                                              [
+                                                _c("td", [
+                                                  _vm._v(_vm._s(item.id)),
+                                                ]),
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              { staticClass: "col-11" },
+                                              [
+                                                _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "d-flex flex-column",
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "td",
+                                                      {
+                                                        staticClass: "td-title",
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "router-link",
+                                                          {
+                                                            attrs: {
+                                                              to: {
+                                                                path:
+                                                                  "/profile/" +
+                                                                  item.name.replace(
+                                                                    /\s+/g,
+                                                                    "-"
+                                                                  ) +
+                                                                  "/id=" +
+                                                                  item.id,
+                                                              },
+                                                            },
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                " +
+                                                                _vm._s(
+                                                                  item.name
+                                                                ) +
+                                                                "\n                              "
+                                                            ),
+                                                          ]
+                                                        ),
+                                                      ],
+                                                      1
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "td",
+                                                      {
+                                                        staticClass: "td-body",
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "a",
+                                                          {
+                                                            attrs: {
+                                                              href: item.url,
+                                                              target: "_blank",
+                                                            },
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                " +
+                                                                _vm._s(
+                                                                  item.url
+                                                                ) +
+                                                                "\n                              "
+                                                            ),
+                                                          ]
+                                                        ),
+                                                      ]
+                                                    ),
+                                                  ]
+                                                ),
+                                              ]
+                                            ),
+                                          ]),
                                         ]
                                       ),
                                     ],
                                     1
                                   ),
-                                  _vm._v(" "),
-                                  _c("td", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: item.url,
-                                          target: "_blank",
-                                        },
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                      " +
-                                            _vm._s(item.url) +
-                                            "\n                    "
-                                        ),
-                                      ]
-                                    ),
-                                  ]),
-                                ]),
-                              ]
+                                ]
+                              },
                             },
-                          },
-                        ]),
-                      }),
-                    ],
-                    1
-                  ),
-                ],
-                1
-              ),
-            ],
-            1
-          ),
+                          ]),
+                        }),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+              ],
+              1
+            ),
+          ]),
         ]),
       ]),
     ],
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "container-fluid breadcrumb-header" }, [
+      _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "row justify-content-center" }, [
+          _c("div", { staticClass: "col-12 col-lg-10 py-0" }, [
+            _c("span", { staticClass: "font-weight-bold" }, [_vm._v("Home")]),
+          ]),
+        ]),
+      ]),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -8451,7 +9125,7 @@ var render = function () {
       "div",
       {
         staticClass: "d-flex align-items-center fixed-top",
-        attrs: { id: "topbar" },
+        attrs: { id: "navbar" },
       },
       [
         _c("div", { staticClass: "container" }, [
@@ -8629,19 +9303,11 @@ var render = function () {
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-4 text-right p-0" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "btn btn-close",
-                  attrs: { type: "button", id: "sidebarCollapseX" },
-                  on: { click: _vm.active },
-                },
-                [
-                  _c("span", { attrs: { "aria-hidden": "true" } }, [
-                    _vm._v("×"),
-                  ]),
-                ]
-              ),
+              _c("button", {
+                staticClass: "btn btn-close",
+                attrs: { type: "button", id: "sidebarCollapseX" },
+                on: { click: _vm.active },
+              }),
             ]),
           ]),
         ]),
@@ -8699,103 +9365,294 @@ var render = function () {
     [
       _c("nav-bar"),
       _vm._v(" "),
-      _c("div", { staticClass: "container" }, [
-        _c(
-          "div",
-          { staticClass: "row justify-content-center" },
-          _vm._l(_vm.staff, function (user, index) {
-            return _c("div", { key: index, staticClass: "col-12 col-lg-8" }, [
-              _c("h1", [
-                _vm._v(
-                  "Staff - " + _vm._s(user.name.first + " " + user.name.last)
-                ),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "border border-secondary" }, [
-                _c(
-                  "div",
-                  { staticClass: "bg-secondary border-bottom p-2 text-white" },
-                  [_vm._v("\n          Genaral Information\n        ")]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "p-2" }, [
-                  _c("img", {
-                    staticClass: "img-fluid mb-3",
-                    attrs: { src: user.picture, alt: "staff_photo" },
-                  }),
-                  _vm._v(" "),
-                  _c("p", [
-                    _c("strong", [_vm._v("Name:")]),
-                    _vm._v(
-                      " " + _vm._s(user.name.first + " " + user.name.last)
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("p", [
-                    _c("strong", [_vm._v("Email:")]),
-                    _vm._v(" "),
-                    _c("a", { attrs: { href: "mailto:" + user.email } }, [
-                      _vm._v(_vm._s(user.email)),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("p", [
-                    _c("strong", [_vm._v("Date of birth:")]),
-                    _vm._v(" " + _vm._s(user.dob)),
-                  ]),
-                  _vm._v(" "),
-                  _c("p", [
-                    _c("strong", [_vm._v("Age:")]),
-                    _vm._v(" " + _vm._s(_vm.age)),
-                  ]),
-                  _vm._v(" "),
-                  _c("p", [
-                    _c("strong", [_vm._v("Status:")]),
-                    _vm._v(
-                      " " +
-                        _vm._s(
-                          user.is_active ? "Active Staff" : "Inactive Staff"
-                        )
-                    ),
-                  ]),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "floating-add-icon",
-                  attrs: {
-                    "data-toggle": "modal",
-                    "data-target": "#updateStaffModal",
-                  },
-                  on: {
-                    click: function ($event) {
-                      return _vm.getCurrentStaff(user)
-                    },
-                  },
-                },
-                [_c("i", { staticClass: "fa fa-pencil" })]
-              ),
-            ])
-          }),
-          0
-        ),
-      ]),
-      _vm._v(" "),
       _c(
         "div",
-        {
-          staticClass: "cursor-pointer",
-          attrs: { "data-toggle": "modal", "data-target": "#deleteStaffModal" },
-          on: {
-            click: function ($event) {
-              return _vm.deleteStaff()
-            },
-          },
-        },
-        [_c("i", { staticClass: "fa fa-eraser" })]
+        { staticClass: "d-none d-lg-block container-fluid breadcrumb-header" },
+        [
+          _c("div", { staticClass: "container" }, [
+            _c("div", { staticClass: "row justify-content-center" }, [
+              _c(
+                "div",
+                { staticClass: "col-12 col-lg-10 py-0" },
+                [
+                  _c(
+                    "span",
+                    [
+                      _c("router-link", { attrs: { to: { name: "home" } } }, [
+                        _vm._v("\n            Home\n          "),
+                      ]),
+                      _vm._v("\n          >\n        "),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("span", [_vm._v(_vm._s(_vm.university[0].name) + " > ")]),
+                  _vm._v(" "),
+                  _vm._l(_vm.staff, function (user, index) {
+                    return _c(
+                      "span",
+                      { key: index, staticClass: "font-weight-bold" },
+                      [
+                        _vm._v(
+                          "\n          " +
+                            _vm._s(user.name.first + " " + user.name.last) +
+                            "\n        "
+                        ),
+                      ]
+                    )
+                  }),
+                ],
+                2
+              ),
+            ]),
+          ]),
+        ]
       ),
+      _vm._v(" "),
+      _c("section", { attrs: { id: "without-breadcrumb" } }, [
+        _c(
+          "div",
+          { staticClass: "container", attrs: { id: "staff-profile" } },
+          [
+            _c("div", { staticClass: "row justify-content-center" }, [
+              _c(
+                "div",
+                { staticClass: "col-12 col-lg-10" },
+                _vm._l(_vm.staff, function (user, index) {
+                  return _c("div", { key: index }, [
+                    _c("div", { staticClass: "name-card px-4 px-lg-5" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "row justify-content-center align-items-center",
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "col-4 col-lg-3 p-0 p-lg-3 text-right",
+                            },
+                            [
+                              _c("img", {
+                                staticClass:
+                                  "img-fluid w-100 py-3 rounded-circle",
+                                attrs: {
+                                  src: user.picture,
+                                  alt: "staff_photo",
+                                },
+                              }),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "col-8 d-none d-lg-block" },
+                            [
+                              _c(
+                                "div",
+                                { staticClass: "row justify-content-center" },
+                                [
+                                  _c("div", { staticClass: "col-8" }, [
+                                    _c("h1", [
+                                      _vm._v(
+                                        _vm._s(
+                                          user.name.first + " " + user.name.last
+                                        )
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("p", [
+                                      _vm._v(
+                                        "\n                      Status:\n                      "
+                                      ),
+                                      _c("i", {
+                                        staticClass: "fa fa-circle",
+                                        class: {
+                                          "text-success": user.is_active,
+                                          "text-danger": !user.is_active,
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass: "font-weight-bold",
+                                          class: {
+                                            "text-success": user.is_active,
+                                            "text-danger": !user.is_active,
+                                          },
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                        " +
+                                              _vm._s(
+                                                user.is_active
+                                                  ? "Active"
+                                                  : "Inactive Staff"
+                                              ) +
+                                              "\n                      "
+                                          ),
+                                        ]
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("p", [
+                                      _c("strong", [_vm._v("Email: ")]),
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: {
+                                            href: "mailto:" + user.email,
+                                          },
+                                        },
+                                        [_vm._v(_vm._s(user.email))]
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("p", [
+                                      _c("strong", [_vm._v("Date of birth: ")]),
+                                      _vm._v(
+                                        _vm._s(user.dob) +
+                                          "\n                    "
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("p", [
+                                      _c("strong", [_vm._v("Age: ")]),
+                                      _vm._v(
+                                        _vm._s(_vm.age) +
+                                          "\n                    "
+                                      ),
+                                    ]),
+                                  ]),
+                                ]
+                              ),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "col-8 d-block d-lg-none d-flex flex-column align-items-center text-center",
+                            },
+                            [
+                              _c("h5", { staticClass: "font-weight-bold" }, [
+                                _vm._v(
+                                  _vm._s(user.name.first + " " + user.name.last)
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              _c("p", { staticClass: "m-0" }, [
+                                _vm._v(
+                                  "\n                  Status:\n                  "
+                                ),
+                                _c("i", {
+                                  staticClass: "fa fa-circle",
+                                  class: {
+                                    "text-success": user.is_active,
+                                    "text-danger": !user.is_active,
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass: "font-weight-bold",
+                                    class: {
+                                      "text-success": user.is_active,
+                                      "text-danger": !user.is_active,
+                                    },
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                    " +
+                                        _vm._s(
+                                          user.is_active
+                                            ? "Active"
+                                            : "Inactive Staff"
+                                        ) +
+                                        "\n                  "
+                                    ),
+                                  ]
+                                ),
+                              ]),
+                            ]
+                          ),
+                        ]
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "d-block d-lg-none mt-3" }, [
+                      _c("div", { staticClass: "bg-white p-3 my-2" }, [
+                        _c("p", { staticClass: "m-0" }, [
+                          _c("strong", [_vm._v("Email: ")]),
+                          _c("a", { attrs: { href: "mailto:" + user.email } }, [
+                            _vm._v(_vm._s(user.email)),
+                          ]),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "bg-white p-3 my-2" }, [
+                        _c("p", { staticClass: "m-0" }, [
+                          _c("strong", [_vm._v("Date of birth: ")]),
+                          _vm._v(_vm._s(user.dob) + "\n              "),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "bg-white p-3 my-2" }, [
+                        _c("p", { staticClass: "m-0" }, [
+                          _c("strong", [_vm._v("Age: ")]),
+                          _vm._v(_vm._s(_vm.age) + "\n              "),
+                        ]),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "row justify-content-center mt-3" },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "btn-update-icon",
+                            attrs: {
+                              "data-toggle": "modal",
+                              "data-target": "#updateStaffModal",
+                            },
+                            on: {
+                              click: function ($event) {
+                                return _vm.getCurrentStaff(user)
+                              },
+                            },
+                          },
+                          [_c("i", { staticClass: "fa fa-pencil" })]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "btn-update-icon",
+                            on: {
+                              click: function ($event) {
+                                return _vm.deleteStaff()
+                              },
+                            },
+                          },
+                          [_c("i", { staticClass: "fa fa-eraser" })]
+                        ),
+                      ]
+                    ),
+                  ])
+                }),
+                0
+              ),
+            ]),
+          ]
+        ),
+      ]),
       _vm._v(" "),
       _c(
         "div",
@@ -9019,7 +9876,7 @@ var render = function () {
                             staticClass: "form-check-label",
                             attrs: { for: "is_active" },
                           },
-                          [_vm._v("\n            Active\n            ")]
+                          [_vm._v("\n              Active\n              ")]
                         ),
                       ]),
                     ]),
@@ -9148,57 +10005,125 @@ var render = function () {
     [
       _c("nav-bar"),
       _vm._v(" "),
-      _c("div", { staticClass: "container" }, [
-        _c(
-          "div",
-          { staticClass: "row justify-content-center" },
-          [
-            _vm._l(_vm.university, function (uni, index) {
-              return _c("div", { key: index, staticClass: "col-12 col-lg-8" }, [
-                _c("h1", [_vm._v("School - " + _vm._s(uni.name))]),
-                _vm._v(" "),
-                _c("div", { staticClass: "border border-secondary" }, [
+      _c(
+        "div",
+        { staticClass: "d-none d-lg-block container-fluid breadcrumb-header" },
+        [
+          _c("div", { staticClass: "container" }, [
+            _c("div", { staticClass: "row justify-content-center" }, [
+              _c(
+                "div",
+                { staticClass: "col-12 col-lg-10 py-0" },
+                [
+                  _c(
+                    "span",
+                    [
+                      _c("router-link", { attrs: { to: { name: "home" } } }, [
+                        _vm._v("\n              Home\n            "),
+                      ]),
+                      _vm._v("\n            >\n          "),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.university, function (uni, index) {
+                    return _c(
+                      "span",
+                      { key: index, staticClass: "font-weight-bold" },
+                      [
+                        _vm._v(
+                          "\n            " + _vm._s(uni.name) + "\n          "
+                        ),
+                      ]
+                    )
+                  }),
+                ],
+                2
+              ),
+            ]),
+          ]),
+        ]
+      ),
+      _vm._v(" "),
+      _c("section", { attrs: { id: "without-breadcrumb" } }, [
+        _c("div", { staticClass: "container" }, [
+          _c("div", { staticClass: "row justify-content-center" }, [
+            _c(
+              "div",
+              { staticClass: "col-12 col-lg-10" },
+              _vm._l(_vm.university, function (uni, index) {
+                return _c("div", { key: index, staticClass: "name-card" }, [
                   _c(
                     "div",
                     {
-                      staticClass: "bg-secondary border-bottom p-2 text-white",
+                      staticClass:
+                        "row justify-content-center align-items-center",
                     },
-                    [_vm._v("\n            Genaral Information\n          ")]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "p-2" }, [
-                    _c("p", [
-                      _c("strong", [_vm._v("Name of University:")]),
-                      _vm._v(" " + _vm._s(uni.name)),
-                    ]),
-                    _vm._v(" "),
-                    _c("p", [
-                      _c("strong", [_vm._v("URL:")]),
+                    [
+                      _vm._m(0, true),
                       _vm._v(" "),
-                      _c("a", { attrs: { href: uni.url, target: "_blank" } }, [
-                        _vm._v(_vm._s(uni.url)),
+                      _vm._m(1, true),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "d-none d-lg-block col-6 text-left" },
+                        [
+                          _c("p", [_vm._v(_vm._s(uni.name))]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _c("u", [
+                              _c(
+                                "a",
+                                { attrs: { href: uni.url, target: "_blank" } },
+                                [_vm._v(_vm._s(uni.url))]
+                              ),
+                            ]),
+                          ]),
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "d-block d-lg-none col-8" }, [
+                        _c("small", [
+                          _c("strong", [_vm._v("Name:")]),
+                          _vm._v(" " + _vm._s(uni.name) + "\n                "),
+                        ]),
+                        _vm._v(" "),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c("small", [
+                          _c("strong", [_vm._v("URL: ")]),
+                          _vm._v(" "),
+                          _c("u", [
+                            _c(
+                              "a",
+                              { attrs: { href: uni.url, target: "_blank" } },
+                              [_vm._v(_vm._s(uni.url))]
+                            ),
+                          ]),
+                        ]),
                       ]),
-                    ]),
-                  ]),
-                ]),
-              ])
-            }),
+                    ]
+                  ),
+                ])
+              }),
+              0
+            ),
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "col-12 col-lg-8" },
+              { staticClass: "col-12 col-lg-10" },
               [
                 _c(
                   "div",
                   {
-                    staticClass:
-                      "row justify-content-between align-items-center my-3",
+                    staticClass: "text-right my-2",
+                    on: {
+                      click: function ($event) {
+                        return _vm.toggleInactiveStaff()
+                      },
+                    },
                   },
                   [
-                    _c("h2", { staticClass: "col-10" }, [
-                      _vm._v("List of staffs"),
-                    ]),
-                    _vm._v(" "),
                     _c("input", {
                       staticClass: "col-6",
                       attrs: {
@@ -9208,35 +10133,18 @@ var render = function () {
                         "data-on": "Include Inctive Staff",
                         "data-off": "Show Active Staff",
                       },
-                      on: {
-                        change: function ($event) {
-                          return _vm.toggleInactiveStaff()
-                        },
-                      },
                     }),
-                    _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-info",
-                        on: {
-                          click: function ($event) {
-                            return _vm.toggleInactiveStaff()
-                          },
-                        },
-                      },
-                      [_vm._v("show")]
-                    ),
                   ]
                 ),
                 _vm._v(" "),
                 _c(
                   "v-card",
+                  { staticClass: "d-none d-lg-block" },
                   [
                     _c(
                       "v-card-title",
                       [
-                        _vm._v("\n            Home\n            "),
+                        _vm._v("\n              List of Staff\n              "),
                         _c("v-spacer"),
                         _vm._v(" "),
                         _c("v-text-field", {
@@ -9260,7 +10168,7 @@ var render = function () {
                     _vm._v(" "),
                     _c(
                       "v-app",
-                      { attrs: { id: "inspire" } },
+                      { attrs: { id: "staff" } },
                       [
                         _c("v-data-table", {
                           staticClass: "elevation-1",
@@ -9268,7 +10176,6 @@ var render = function () {
                             headers: _vm.headers,
                             items: _vm.staffs,
                             search: _vm.search,
-                            "items-per-page": 10,
                           },
                           scopedSlots: _vm._u([
                             {
@@ -9287,6 +10194,8 @@ var render = function () {
                                                 attrs: {
                                                   to: {
                                                     path:
+                                                      "/" +
+                                                      item.university_id +
                                                       "/staff/" +
                                                       item.name.first.replace(
                                                         /\s+/g,
@@ -9304,13 +10213,13 @@ var render = function () {
                                               },
                                               [
                                                 _vm._v(
-                                                  "\n                      " +
+                                                  "\n                        " +
                                                     _vm._s(
                                                       item.name.first +
                                                         " " +
                                                         item.name.last
                                                     ) +
-                                                    "\n                    "
+                                                    "\n                      "
                                                 ),
                                               ]
                                             ),
@@ -9330,30 +10239,61 @@ var render = function () {
                                           ),
                                         ]),
                                         _vm._v(" "),
-                                        _c("td", [
-                                          _c("i", {
-                                            staticClass: "fa fa-pencil",
-                                          }),
-                                          _vm._v(" "),
-                                          _c(
-                                            "button",
-                                            {
-                                              staticClass: "close",
-                                              attrs: { type: "button" },
-                                            },
-                                            [
-                                              _c(
-                                                "span",
-                                                {
-                                                  attrs: {
-                                                    "aria-hidden": "true",
+                                        _c(
+                                          "td",
+                                          { staticClass: "text-right" },
+                                          [
+                                            _c("i", {
+                                              staticClass:
+                                                "fa fa-pencil cursor-pointer",
+                                              attrs: {
+                                                "data-toggle": "modal",
+                                                "data-target":
+                                                  "#updateStaffModal",
+                                              },
+                                              on: {
+                                                click: function ($event) {
+                                                  return _vm.getCurrentStaff(
+                                                    item.id,
+                                                    item.name.first,
+                                                    item.name.last,
+                                                    item.email,
+                                                    item.dob,
+                                                    item.is_active,
+                                                    item.picture,
+                                                    item.university_id
+                                                  )
+                                                },
+                                              },
+                                            }),
+                                            _vm._v(" "),
+                                            _c(
+                                              "button",
+                                              {
+                                                staticClass: "close mx-4",
+                                                attrs: { type: "button" },
+                                                on: {
+                                                  click: function ($event) {
+                                                    return _vm.deleteStaff(
+                                                      item.id
+                                                    )
                                                   },
                                                 },
-                                                [_vm._v("×")]
-                                              ),
-                                            ]
-                                          ),
-                                        ]),
+                                              },
+                                              [
+                                                _c(
+                                                  "span",
+                                                  {
+                                                    attrs: {
+                                                      "aria-hidden": "true",
+                                                    },
+                                                  },
+                                                  [_vm._v("×")]
+                                                ),
+                                              ]
+                                            ),
+                                          ]
+                                        ),
                                       ])
                                     : _vm._e(),
                                   _vm._v(" "),
@@ -9371,6 +10311,8 @@ var render = function () {
                                                   attrs: {
                                                     to: {
                                                       path:
+                                                        "/" +
+                                                        item.university_id +
                                                         "/staff/" +
                                                         item.name.first.replace(
                                                           /\s+/g,
@@ -9388,13 +10330,13 @@ var render = function () {
                                                 },
                                                 [
                                                   _vm._v(
-                                                    "\n                      " +
+                                                    "\n                        " +
                                                       _vm._s(
                                                         item.name.first +
                                                           " " +
                                                           item.name.last
                                                       ) +
-                                                      "\n                    "
+                                                      "\n                      "
                                                   ),
                                                 ]
                                               ),
@@ -9411,6 +10353,510 @@ var render = function () {
                                                 },
                                               },
                                               [_vm._v(_vm._s(item.email))]
+                                            ),
+                                          ]),
+                                          _vm._v(" "),
+                                          _c(
+                                            "td",
+                                            { staticClass: "text-right" },
+                                            [
+                                              _c("i", {
+                                                staticClass:
+                                                  "fa fa-pencil cursor-pointer",
+                                                attrs: {
+                                                  "data-toggle": "modal",
+                                                  "data-target":
+                                                    "#updateStaffModal",
+                                                },
+                                                on: {
+                                                  click: function ($event) {
+                                                    return _vm.getCurrentStaff(
+                                                      item.id,
+                                                      item.name.first,
+                                                      item.name.last,
+                                                      item.email,
+                                                      item.dob,
+                                                      item.is_active,
+                                                      item.picture,
+                                                      item.university_id
+                                                    )
+                                                  },
+                                                },
+                                              }),
+                                              _vm._v(" "),
+                                              _c(
+                                                "button",
+                                                {
+                                                  staticClass: "close mx-4",
+                                                  attrs: { type: "button" },
+                                                  on: {
+                                                    click: function ($event) {
+                                                      return _vm.deleteStaff(
+                                                        item.id
+                                                      )
+                                                    },
+                                                  },
+                                                },
+                                                [
+                                                  _c(
+                                                    "span",
+                                                    {
+                                                      attrs: {
+                                                        "aria-hidden": "true",
+                                                      },
+                                                    },
+                                                    [_vm._v("×")]
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          ),
+                                        ]
+                                      )
+                                    : _vm._e(),
+                                ]
+                              },
+                            },
+                          ]),
+                        }),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-card",
+                  { staticClass: "d-block d-lg-none" },
+                  [
+                    _c(
+                      "v-card-title",
+                      [
+                        _vm._v("\n              List of Staff\n              "),
+                        _c("v-spacer"),
+                        _vm._v(" "),
+                        _c("v-text-field", {
+                          attrs: {
+                            "append-icon": "mdi-magnify",
+                            label: "Search",
+                            "single-line": "",
+                            "hide-details": "",
+                          },
+                          model: {
+                            value: _vm.search,
+                            callback: function ($$v) {
+                              _vm.search = $$v
+                            },
+                            expression: "search",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-app",
+                      { attrs: { id: "staff" } },
+                      [
+                        _c("v-data-table", {
+                          staticClass: "elevation-1",
+                          attrs: {
+                            headers: _vm.headers,
+                            items: _vm.staffs,
+                            search: _vm.search,
+                          },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "item",
+                              fn: function (ref) {
+                                var item = ref.item
+                                return [
+                                  item.is_active
+                                    ? _c("tr", { staticClass: "tr-border" }, [
+                                        _c("div", { staticClass: "d-flex" }, [
+                                          _c(
+                                            "div",
+                                            { staticClass: "col-8" },
+                                            [
+                                              _c(
+                                                "router-link",
+                                                {
+                                                  attrs: {
+                                                    to: {
+                                                      path:
+                                                        "/" +
+                                                        item.university_id +
+                                                        "/staff/" +
+                                                        item.name.first.replace(
+                                                          /\s+/g,
+                                                          "-"
+                                                        ) +
+                                                        "-" +
+                                                        item.name.last.replace(
+                                                          /\s+/g,
+                                                          "-"
+                                                        ) +
+                                                        "/id=" +
+                                                        item.id,
+                                                    },
+                                                  },
+                                                },
+                                                [
+                                                  _c(
+                                                    "div",
+                                                    {
+                                                      staticClass:
+                                                        "d-flex flex-column",
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "td",
+                                                        {
+                                                          staticClass:
+                                                            "td-title",
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "\n                              " +
+                                                              _vm._s(
+                                                                item.name
+                                                                  .first +
+                                                                  " " +
+                                                                  item.name.last
+                                                              ) +
+                                                              "\n                            "
+                                                          ),
+                                                        ]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "td",
+                                                        {
+                                                          staticClass:
+                                                            "td-body",
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "a",
+                                                            {
+                                                              attrs: {
+                                                                href:
+                                                                  "mailto:" +
+                                                                  item.email,
+                                                              },
+                                                            },
+                                                            [
+                                                              _vm._v(
+                                                                _vm._s(
+                                                                  item.email
+                                                                )
+                                                              ),
+                                                            ]
+                                                          ),
+                                                        ]
+                                                      ),
+                                                    ]
+                                                  ),
+                                                ]
+                                              ),
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "col-4 d-flex align-items-center justify-content-end",
+                                            },
+                                            [
+                                              _c(
+                                                "td",
+                                                { staticClass: "d-flex" },
+                                                [
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      staticClass:
+                                                        "mx-2 h4 collapse",
+                                                      class:
+                                                        "editStaff" + item.id,
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "fa fa-pencil cursor-pointer",
+                                                        attrs: {
+                                                          "data-toggle":
+                                                            "modal",
+                                                          "data-target":
+                                                            "#updateStaffModal",
+                                                        },
+                                                        on: {
+                                                          click: function (
+                                                            $event
+                                                          ) {
+                                                            return _vm.getCurrentStaff(
+                                                              item.id,
+                                                              item.name.first,
+                                                              item.name.last,
+                                                              item.email,
+                                                              item.dob,
+                                                              item.is_active,
+                                                              item.picture,
+                                                              item.university_id
+                                                            )
+                                                          },
+                                                        },
+                                                      }),
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      staticClass:
+                                                        "mx-2 h4 collapse",
+                                                      class:
+                                                        "editStaff" + item.id,
+                                                      on: {
+                                                        click: function (
+                                                          $event
+                                                        ) {
+                                                          return _vm.deleteStaff(
+                                                            item.id
+                                                          )
+                                                        },
+                                                      },
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "fa fa-close",
+                                                      }),
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      staticClass: "mx-2 h5",
+                                                      attrs: {
+                                                        "data-toggle":
+                                                          "collapse",
+                                                        href:
+                                                          ".editStaff" +
+                                                          item.id,
+                                                      },
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "fa fa-bars",
+                                                      }),
+                                                    ]
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          ),
+                                        ]),
+                                      ])
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  !item.is_active && _vm.showInactiveStaff
+                                    ? _c(
+                                        "tr",
+                                        { staticClass: "inactive-staff-row" },
+                                        [
+                                          _c("div", { staticClass: "d-flex" }, [
+                                            _c(
+                                              "div",
+                                              { staticClass: "col-8" },
+                                              [
+                                                _c(
+                                                  "router-link",
+                                                  {
+                                                    attrs: {
+                                                      to: {
+                                                        path:
+                                                          "/" +
+                                                          item.university_id +
+                                                          "/staff/" +
+                                                          item.name.first.replace(
+                                                            /\s+/g,
+                                                            "-"
+                                                          ) +
+                                                          "-" +
+                                                          item.name.last.replace(
+                                                            /\s+/g,
+                                                            "-"
+                                                          ) +
+                                                          "/id=" +
+                                                          item.id,
+                                                      },
+                                                    },
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "div",
+                                                      {
+                                                        staticClass:
+                                                          "d-flex flex-column",
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "td",
+                                                          {
+                                                            staticClass:
+                                                              "td-title",
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                              " +
+                                                                _vm._s(
+                                                                  item.name
+                                                                    .first +
+                                                                    " " +
+                                                                    item.name
+                                                                      .last
+                                                                ) +
+                                                                "\n                            "
+                                                            ),
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "td",
+                                                          {
+                                                            staticClass:
+                                                              "td-body",
+                                                          },
+                                                          [
+                                                            _c(
+                                                              "a",
+                                                              {
+                                                                attrs: {
+                                                                  href:
+                                                                    "mailto:" +
+                                                                    item.email,
+                                                                },
+                                                              },
+                                                              [
+                                                                _vm._v(
+                                                                  _vm._s(
+                                                                    item.email
+                                                                  )
+                                                                ),
+                                                              ]
+                                                            ),
+                                                          ]
+                                                        ),
+                                                      ]
+                                                    ),
+                                                  ]
+                                                ),
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "col-4 d-flex align-items-center justify-content-end",
+                                              },
+                                              [
+                                                _c(
+                                                  "td",
+                                                  { staticClass: "d-flex" },
+                                                  [
+                                                    _c(
+                                                      "button",
+                                                      {
+                                                        staticClass:
+                                                          "mx-2 h4 collapse",
+                                                        class:
+                                                          "editStaff" + item.id,
+                                                      },
+                                                      [
+                                                        _c("i", {
+                                                          staticClass:
+                                                            "fa fa-pencil cursor-pointer",
+                                                          attrs: {
+                                                            "data-toggle":
+                                                              "modal",
+                                                            "data-target":
+                                                              "#updateStaffModal",
+                                                          },
+                                                          on: {
+                                                            click: function (
+                                                              $event
+                                                            ) {
+                                                              return _vm.getCurrentStaff(
+                                                                item.id,
+                                                                item.name.first,
+                                                                item.name.last,
+                                                                item.email,
+                                                                item.dob,
+                                                                item.is_active,
+                                                                item.picture,
+                                                                item.university_id
+                                                              )
+                                                            },
+                                                          },
+                                                        }),
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "button",
+                                                      {
+                                                        staticClass:
+                                                          "mx-2 h4 collapse",
+                                                        class:
+                                                          "editStaff" + item.id,
+                                                        on: {
+                                                          click: function (
+                                                            $event
+                                                          ) {
+                                                            return _vm.deleteStaff(
+                                                              item.id
+                                                            )
+                                                          },
+                                                        },
+                                                      },
+                                                      [
+                                                        _c("i", {
+                                                          staticClass:
+                                                            "fa fa-close",
+                                                        }),
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "button",
+                                                      {
+                                                        staticClass: "mx-2 h5",
+                                                        attrs: {
+                                                          "data-toggle":
+                                                            "collapse",
+                                                          href:
+                                                            ".editStaff" +
+                                                            item.id,
+                                                        },
+                                                      },
+                                                      [
+                                                        _c("i", {
+                                                          staticClass:
+                                                            "fa fa-bars",
+                                                        }),
+                                                      ]
+                                                    ),
+                                                  ]
+                                                ),
+                                              ]
                                             ),
                                           ]),
                                         ]
@@ -9430,12 +10876,11 @@ var render = function () {
               ],
               1
             ),
-          ],
-          2
-        ),
+          ]),
+        ]),
       ]),
       _vm._v(" "),
-      _vm._m(0),
+      _vm._m(2),
       _vm._v(" "),
       _c(
         "div",
@@ -9455,13 +10900,13 @@ var render = function () {
             { staticClass: "modal-dialog", attrs: { role: "document" } },
             [
               _c("div", { staticClass: "modal-content" }, [
-                _vm._m(1),
+                _vm._m(3),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
                   _c("form", [
                     _c("div", { staticClass: "form-row" }, [
                       _c("div", { staticClass: "form-group col-md-6" }, [
-                        _vm._m(2),
+                        _vm._m(4),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -9493,7 +10938,7 @@ var render = function () {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "form-group col-md-6" }, [
-                        _vm._m(3),
+                        _vm._m(5),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -9527,7 +10972,7 @@ var render = function () {
                     _vm._v(" "),
                     _c("div", { staticClass: "form-row" }, [
                       _c("div", { staticClass: "form-group col-md-7" }, [
-                        _vm._m(4),
+                        _vm._m(6),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -9569,7 +11014,7 @@ var render = function () {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "form-group col-md-5" }, [
-                        _vm._m(5),
+                        _vm._m(7),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -9693,11 +11138,289 @@ var render = function () {
           ),
         ]
       ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          attrs: {
+            id: "updateStaffModal",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-hidden": "true",
+          },
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _vm._m(8),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _c("form", [
+                    _c("div", { staticClass: "form-row" }, [
+                      _c("div", { staticClass: "form-group col-md-6" }, [
+                        _vm._m(9),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.update_staff_first,
+                              expression: "update_staff_first",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", required: "" },
+                          domProps: { value: _vm.update_staff_first },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.update_staff_first = $event.target.value
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        !_vm.validation && !_vm.update_staff_first
+                          ? _c("small", { staticClass: "text-danger" }, [
+                              _vm._v("*first name is empty"),
+                            ])
+                          : _vm._e(),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group col-md-6" }, [
+                        _vm._m(10),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.update_staff_last,
+                              expression: "update_staff_last",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", required: "" },
+                          domProps: { value: _vm.update_staff_last },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.update_staff_last = $event.target.value
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        !_vm.validation && !_vm.update_staff_last
+                          ? _c("small", { staticClass: "text-danger" }, [
+                              _vm._v("*last name is empty"),
+                            ])
+                          : _vm._e(),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-row" }, [
+                      _c("div", { staticClass: "form-group col-md-7" }, [
+                        _vm._m(11),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.update_staff_email,
+                              expression: "update_staff_email",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "email",
+                            placeholder: "example@mail.com",
+                            required: "",
+                          },
+                          domProps: { value: _vm.update_staff_email },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.update_staff_email = $event.target.value
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        !_vm.validation && !_vm.update_staff_email
+                          ? _c("small", { staticClass: "text-danger" }, [
+                              _vm._v("*email is empty"),
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.update_staff_email &&
+                        !_vm.emailValidation(_vm.update_staff_email)
+                          ? _c("small", { staticClass: "text-danger" }, [
+                              _vm._v("*Please enter a valid email address"),
+                            ])
+                          : _vm._e(),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group col-md-5" }, [
+                        _vm._m(12),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.update_staff_dob,
+                              expression: "update_staff_dob",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "date", required: "" },
+                          domProps: { value: _vm.update_staff_dob },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.update_staff_dob = $event.target.value
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        !_vm.validation && !_vm.update_staff_dob
+                          ? _c("small", { staticClass: "text-danger" }, [
+                              _vm._v("*date of birth is empty"),
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.update_staff_dob &&
+                        !_vm.ageValidation(_vm.update_staff_dob)
+                          ? _c("small", { staticClass: "text-danger" }, [
+                              _vm._v("*Minimum age for a staff is 21"),
+                            ])
+                          : _vm._e(),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group mx-2" }, [
+                      _c("div", { staticClass: "form-check" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.update_staff_is_active,
+                              expression: "update_staff_is_active",
+                            },
+                          ],
+                          staticClass: "form-check-input",
+                          attrs: { type: "checkbox" },
+                          domProps: {
+                            checked: Array.isArray(_vm.update_staff_is_active)
+                              ? _vm._i(_vm.update_staff_is_active, null) > -1
+                              : _vm.update_staff_is_active,
+                          },
+                          on: {
+                            change: function ($event) {
+                              var $$a = _vm.update_staff_is_active,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = null,
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    (_vm.update_staff_is_active = $$a.concat([
+                                      $$v,
+                                    ]))
+                                } else {
+                                  $$i > -1 &&
+                                    (_vm.update_staff_is_active = $$a
+                                      .slice(0, $$i)
+                                      .concat($$a.slice($$i + 1)))
+                                }
+                              } else {
+                                _vm.update_staff_is_active = $$c
+                              }
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "label",
+                          {
+                            staticClass: "form-check-label",
+                            attrs: { for: "is_active" },
+                          },
+                          [_vm._v("\n                Active\n                ")]
+                        ),
+                      ]),
+                    ]),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-info text-white",
+                      on: {
+                        click: function ($event) {
+                          return _vm.updateStaffDetails()
+                        },
+                      },
+                    },
+                    [_vm._v("Update")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary text-white",
+                      attrs: { type: "button", "data-dismiss": "modal" },
+                    },
+                    [_vm._v("Close")]
+                  ),
+                ]),
+              ]),
+            ]
+          ),
+        ]
+      ),
     ],
     1
   )
 }
 var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-3 col-lg-2 p-0 p-lg-2" }, [
+      _c("img", {
+        staticClass: "img-fluid",
+        attrs: { src: "/img/u_icon.png", alt: "u_icon" },
+      }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "d-none d-lg-block col-3 text-right" }, [
+      _c("p", [_c("strong", [_vm._v("Name of University :")])]),
+      _vm._v(" "),
+      _c("p", [_c("strong", [_vm._v("URL :")])]),
+    ])
+  },
   function () {
     var _vm = this
     var _h = _vm.$createElement
@@ -9720,6 +11443,67 @@ var staticRenderFns = [
         "h5",
         { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
         [_vm._v("Create new staff")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close",
+          },
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      ),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "first" } }, [
+      _vm._v("First Name"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "last" } }, [
+      _vm._v("Last Name"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "email" } }, [
+      _vm._v("Email"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "dob" } }, [
+      _vm._v("Date of Birth"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Update staff")]
       ),
       _vm._v(" "),
       _c(

@@ -1,98 +1,180 @@
 <template>
   <div>
   <nav-bar></nav-bar>
-  <div class="container">
-    <div class="row justify-content-center">
-      <div class="col-12 col-lg-8" v-for="(user, index) in staff" :key="index">
-        <h1>Staff - {{ user.name.first + ' ' + user.name.last }}</h1>
-        <div class="border border-secondary">
-          <div class="bg-secondary border-bottom p-2 text-white">
-            Genaral Information
-          </div>
-          <div class="p-2">
-            <img :src="user.picture" alt="staff_photo" class="img-fluid mb-3">
-            <p><strong>Name:</strong> {{ user.name.first + ' ' + user.name.last }}</p>
-            <p><strong>Email:</strong> 
-            <a :href="'mailto:' + user.email">{{ user.email }}</a>
-            </p>
-            <p><strong>Date of birth:</strong> {{ user.dob }}</p>
-            <p><strong>Age:</strong> {{ age }}</p>
-            <p><strong>Status:</strong> {{ user.is_active ? 'Active Staff' : 'Inactive Staff' }}</p>
-          </div>
-        </div> 
-        <div 
-          class="floating-add-icon" 
-          data-toggle="modal" 
-          data-target="#updateStaffModal"
-          @click="getCurrentStaff(user)"
-        >
-          <i class="fa fa-pencil"></i>
-        </div>       
+  <div class="d-none d-lg-block container-fluid breadcrumb-header"> 
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-10 py-0">
+          <span>
+            <router-link :to="{ name: 'home'}">
+              Home
+            </router-link>
+            >
+          </span>
+          <span>{{ university[0].name }} > </span>
+          <span 
+            v-for="(user, index) in staff" 
+            :key="index" 
+            class="font-weight-bold"
+          >
+            {{ user.name.first + ' ' + user.name.last }}
+          </span>
+        </div>
       </div>
     </div>
   </div>
-  
-  
-  <div class="cursor-pointer" data-toggle="modal" data-target="#deleteStaffModal" @click="deleteStaff()">
-    <i class="fa fa-eraser"></i>
-  </div>
+  <section id="without-breadcrumb">
+    <div id="staff-profile" class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 col-lg-10">
+          <div v-for="(user, index) in staff" :key="index">
+            <div class="name-card px-4 px-lg-5">
+              <div class="row justify-content-center align-items-center">
+                <div class="col-4 col-lg-3 p-0 p-lg-3 text-right">
+                  <img :src="user.picture" alt="staff_photo" class="img-fluid w-100 py-3 rounded-circle">
+                </div>
+                <div class="col-8 d-none d-lg-block">
+                  <div class="row justify-content-center">
+                    <div class="col-8">
+                      <h1>{{ user.name.first + ' ' + user.name.last }}</h1>
+                      <p>
+                        Status:
+                        <i 
+                          class="fa fa-circle"
+                          :class="{ 'text-success': user.is_active, 'text-danger': !user.is_active }"
+                        ></i>
+                        <span 
+                          class="font-weight-bold"
+                          :class="{ 'text-success': user.is_active, 'text-danger': !user.is_active }"
+                        >
+                          {{ user.is_active ? 'Active' : 'Inactive Staff' }}
+                        </span>
+                      </p>
+                      <p>
+                        <strong>Email: </strong><a :href="'mailto:' + user.email">{{ user.email }}</a>
+                      </p>
+                      <p>
+                        <strong>Date of birth: </strong>{{ user.dob }}
+                      </p>
+                      <p>
+                        <strong>Age: </strong>{{ age }}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-8 d-block d-lg-none d-flex flex-column align-items-center text-center">
+                  <h5 class="font-weight-bold">{{ user.name.first + ' ' + user.name.last }}</h5>
+                  <p class="m-0">
+                    Status:
+                    <i 
+                      class="fa fa-circle"
+                      :class="{ 'text-success': user.is_active, 'text-danger': !user.is_active }"
+                    ></i>
+                    <span 
+                      class="font-weight-bold"
+                      :class="{ 'text-success': user.is_active, 'text-danger': !user.is_active }"
+                    >
+                      {{ user.is_active ? 'Active' : 'Inactive Staff' }}
+                    </span>
+                  </p>
+                </div>
+              </div>     
+            </div>
+            <div class="d-block d-lg-none mt-3">
+              <div class="bg-white p-3 my-2">
+                <p class="m-0">
+                  <strong>Email: </strong><a :href="'mailto:' + user.email">{{ user.email }}</a>
+                </p>
+              </div>
+              <div class="bg-white p-3 my-2">
+                <p class="m-0">
+                  <strong>Date of birth: </strong>{{ user.dob }}
+                </p>
+              </div>
+              <div class="bg-white p-3 my-2">
+                <p class="m-0">
+                  <strong>Age: </strong>{{ age }}
+                </p>
+              </div>
+            </div>
+            <div class="row justify-content-center mt-3">
+              <div 
+                class="btn-update-icon" 
+                data-toggle="modal" 
+                data-target="#updateStaffModal"
+                @click="getCurrentStaff(user)"
+              >
+                <i class="fa fa-pencil"></i>
+              </div>   
+              <div 
+                class="btn-update-icon" 
+                @click="deleteStaff()"
+              >
+                <i class="fa fa-eraser"></i>
+              </div>   
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-  <!-- Modal Create Staff -->
+  <!-- Modal Update Staff -->
   <div class="modal fade" id="updateStaffModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-      <h5 class="modal-title" id="exampleModalLabel">Update staff</h5>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
+      <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Update staff</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+          <form>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="first">First Name<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" v-model="update_staff_first" required>
+                <small v-if="!validation && !update_staff_first" class="text-danger">*first name is empty</small>
+              </div>
+              <div class="form-group col-md-6">
+                <label for="last">Last Name<span class="text-danger">*</span></label>
+                <input type="text" class="form-control" v-model="update_staff_last" required>
+                <small v-if="!validation && !update_staff_last" class="text-danger">*last name is empty</small>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-7">
+                <label for="email">Email<span class="text-danger">*</span></label>
+                <input type="email" class="form-control" v-model="update_staff_email" placeholder="example@mail.com" required>
+                <small v-if="!validation && !update_staff_email" class="text-danger">*email is empty</small>
+                <small v-if="update_staff_email && !emailValidation(update_staff_email)" class="text-danger">*Please enter a valid email address</small>
+              </div>
+              <div class="form-group col-md-5">
+                <label for="dob">Date of Birth<span class="text-danger">*</span></label>
+                <input type="date" class="form-control" v-model="update_staff_dob" required>
+                <small v-if="!validation && !update_staff_dob" class="text-danger">*date of birth is empty</small>
+                <small v-if="update_staff_dob && !ageValidation(update_staff_dob)" class="text-danger">*Minimum age for a staff is 21</small>
+              </div>
+            </div>
+            <div class="form-group mx-2">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" v-model="update_staff_is_active">
+                <label class="form-check-label" for="is_active">
+                Active
+                </label>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button @click="updateStaffDetails()" class="btn btn-info text-white">Update</button>
+          <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">Close</button>
+        </div>
       </div>
-      <div class="modal-body">
-        <form>
-          <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="first">First Name<span class="text-danger">*</span></label>
-              <input type="text" class="form-control" v-model="update_staff_first" required>
-              <small v-if="!validation && !update_staff_first" class="text-danger">*first name is empty</small>
-            </div>
-            <div class="form-group col-md-6">
-              <label for="last">Last Name<span class="text-danger">*</span></label>
-              <input type="text" class="form-control" v-model="update_staff_last" required>
-              <small v-if="!validation && !update_staff_last" class="text-danger">*last name is empty</small>
-            </div>
-          </div>
-          <div class="form-row">
-            <div class="form-group col-md-7">
-              <label for="email">Email<span class="text-danger">*</span></label>
-              <input type="email" class="form-control" v-model="update_staff_email" placeholder="example@mail.com" required>
-              <small v-if="!validation && !update_staff_email" class="text-danger">*email is empty</small>
-              <small v-if="update_staff_email && !emailValidation(update_staff_email)" class="text-danger">*Please enter a valid email address</small>
-            </div>
-            <div class="form-group col-md-5">
-              <label for="dob">Date of Birth<span class="text-danger">*</span></label>
-              <input type="date" class="form-control" v-model="update_staff_dob" required>
-              <small v-if="!validation && !update_staff_dob" class="text-danger">*date of birth is empty</small>
-              <small v-if="update_staff_dob && !ageValidation(update_staff_dob)" class="text-danger">*Minimum age for a staff is 21</small>
-            </div>
-          </div>
-          <div class="form-group mx-2">
-            <div class="form-check">
-              <input class="form-check-input" type="checkbox" v-model="update_staff_is_active">
-              <label class="form-check-label" for="is_active">
-              Active
-              </label>
-            </div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-      <button @click="updateStaffDetails()" class="btn btn-info text-white">Update</button>
-      <button type="button" class="btn btn-secondary text-white" data-dismiss="modal">Close</button>
-      </div>
-    </div>
     </div>
   </div>
-  <!-- end Modal Create Staff -->
+  <!-- end Modal Update Staff -->
   </div>
 </template>
 
@@ -106,17 +188,22 @@
     },
     data() {
       return {
-      id: "",
-      staff: [],
-      birthday: "",
-      today: "",
-      age: "",
-      validation: true,
-      update_staff_first: "",
-      update_staff_last: "",
-      update_staff_email: "",
-      update_staff_dob: "",
-      update_staff_is_active: "",
+        id: "",
+        staff: [],
+        university: [
+          {
+            name: '',
+          }
+        ],
+        birthday: "",
+        today: "",
+        age: "",
+        validation: true,
+        update_staff_first: "",
+        update_staff_last: "",
+        update_staff_email: "",
+        update_staff_dob: "",
+        update_staff_is_active: "",
       };
     },
     created() {
@@ -132,12 +219,14 @@
     methods: {
       getStaffDetails() {
       this.id = this.$route.params.id;
+      this.uniId = this.$route.params.uniId;
       axios.defaults.baseURL = "/api";
       axios
-        .get("/getStaffDetails/" + this.id)
+        .get("/getStaffDetails/" + this.id + this.uniId)
         .then((response) => {
           this.staff = response.data.staff;
           this.birthday = response.data.birthday;
+          this.university = response.data.university;
           //calculate age
           var today = new Date();
           var dateOfBirth = new Date(this.birthday);

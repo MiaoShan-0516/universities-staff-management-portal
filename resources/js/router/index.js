@@ -36,7 +36,7 @@ export default {
             component: UniversityProfile,
         },
         {
-            path: '/staff/:name/id=:id',
+            path: '/:uniId/staff/:name/id=:id',
             name: 'StaffProfile',
             component: StaffProfile,
         },

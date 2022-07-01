@@ -36,3 +36,4 @@ const app = new Vue({
     vuetify: new Vuetify(),
     router: new VueRouter(routes),
 });
+

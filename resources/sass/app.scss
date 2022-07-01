@@ -10,7 +10,57 @@
 /*--------------------------------------------------------------
 # General
 --------------------------------------------------------------*/
+body {
+    background-color: #E2DEDB !important;
+    color: #4B3D30;
+}
+section {
+    margin-top: 8rem;
+}
+.v-application a {
+    color: #6c3400 !important
+}
+.v-application a:hover {
+    font-weight: bold;
+}
+.tr-border {
+    border-bottom: 1px solid #e5e5e5;
+}
+.td-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+.td-body {
+    font-size: 0.8rem;
+}
+.breadcrumb-header {
+    position: fixed;
+    top: 80px;
+    padding: 10px;
+    background-color: #AC9D94;
+    color: #FFFFFF;
+    z-index: 9;
 
+    a, a:hover {
+        color: #ffffff;
+    }
+}
+.name-card {
+    background-color: #ffffff;
+    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
+    border-radius: 10px;
+    padding: 1rem;
+
+    a, a:hover {
+        color: #6c3400;
+    }
+}
+.text-center {
+    text-align: center !important;
+}
+.text-right {
+    text-align: right !important;
+}
 .cursor-pointer {
     cursor: pointer;
 }
@@ -23,9 +73,8 @@
     bottom: 40px;
     right: 111px;
     padding: 11px 15px;
-    background-color: darkgray;
+    background-color: #4b3d30;
     border-radius: 30px;
-    border: solid 1px grey;
     cursor: pointer;
 
     i {
@@ -37,23 +86,29 @@
     }
 }
 .floating-add-icon:hover {
-    background-color: gray;
+    
+    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
     i {
         font-size: 35px;
         transition: 0.3s;
     }
 }
-.inactive-staff-row {
-    background-color: lightgray;
+
+@media screen and (max-width: 768px) {
+    .v-application a {
+        color: #4B3D30 !important;
+    }
 }
-.inactive-staff-row:hover {
-    background-color: gray !important;
+@media screen and (max-width: 992px) {
+    section#without-breadcrumb {
+        margin-top: 5rem;
+    }
 }
 
 /*--------------------------------------------------------------
 # Navgation Bar
 --------------------------------------------------------------*/
-#topbar {
+#navbar {
     height: 80px;
     font-size: 0.8em;
     background: #D2C5BD;
@@ -135,7 +190,7 @@
     left: 0;
 }
 
-@media screen and (max-width: 480px) {
+@media screen and (max-width: 768px) {
     .dropdown-menu {
         transform: translate3d(55vw, 50%, 0px) !important;
     }
@@ -171,4 +226,44 @@
 .btn-login:hover {
     background-color: #71614a;
     color: #ffffff;
+}
+
+/*--------------------------------------------------------------
+# University Profile Page
+--------------------------------------------------------------*/
+
+#staff > div > div > div.v-data-table__wrapper > table > thead > tr > th:nth-child(3) {
+    text-align: right !important;
+}
+.inactive-staff-row {
+    background-color: lightgray;
+}
+.inactive-staff-row:hover {
+    background-color: gray !important;
+}
+
+/*--------------------------------------------------------------
+# Staff Profile Page
+--------------------------------------------------------------*/
+
+#staff-profile {
+    a, a:hover {
+        color: #6c3400;
+        text-decoration: underline;
+    }
+}
+.btn-update-icon {
+    width: 75px;
+    padding: 11px 15px;
+    background-color: #4b3d30;
+    border-radius: 8px;
+    margin: 0 1rem;
+    cursor: pointer;
+    i {
+        font-size: 30px;
+        color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
 }

@@ -10323,31 +10323,6 @@ section {
   font-weight: bold;
 }
 
-.floating-add-icon {
-  position: fixed;
-  bottom: 40px;
-  right: 111px;
-  padding: 11px 15px;
-  background-color: #4b3d30;
-  border-radius: 30px;
-  cursor: pointer;
-}
-.floating-add-icon i {
-  font-size: 30px;
-  color: #ffffff;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.floating-add-icon:hover {
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-}
-.floating-add-icon:hover i {
-  font-size: 35px;
-  transition: 0.3s;
-}
-
 @media screen and (max-width: 768px) {
   .v-application a {
     color: #4B3D30 !important;
@@ -10466,6 +10441,10 @@ section {
 /*--------------------------------------------------------------
 # Login Page
 --------------------------------------------------------------*/
+section#login {
+  margin: 0;
+}
+
 #login span {
   font-size: 1.2rem;
 }
@@ -10505,6 +10484,36 @@ section {
   background-color: gray !important;
 }
 
+.floating-add-icon {
+  position: fixed;
+  bottom: 40px;
+  right: 111px;
+  padding: 11px 15px;
+  background-color: #4b3d30;
+  border-radius: 30px;
+  cursor: pointer;
+}
+.floating-add-icon i {
+  font-size: 30px;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.floating-add-icon:hover {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+.floating-add-icon:hover i {
+  font-size: 35px;
+  transition: 0.3s;
+}
+
+@media screen and (max-width: 425px) {
+  .floating-add-icon {
+    right: 41px;
+  }
+}
 /*--------------------------------------------------------------
 # Staff Profile Page
 --------------------------------------------------------------*/

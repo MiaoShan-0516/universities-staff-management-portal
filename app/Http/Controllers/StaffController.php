@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Staff;
+use App\Models\University;
 
 class StaffController extends Controller
 {
-    public function getStaffDetails($id)
+    public function getStaffDetails($id, $uniId)
     {
         $staff = Staff::where('staff.id', '=', $id)->get();
+        $university = University::where('universities.id', '=', $uniId)->get();
         $arr_staff = [];
         
         foreach ($staff as $user) :
@@ -26,7 +28,7 @@ class StaffController extends Controller
         endforeach;
         
 
-        return response()->json(["staff" => $arr_staff, "birthday" => $user->dob]);
+        return response()->json(["staff" => $arr_staff, "birthday" => $user->dob, "university" => $university]);
     }
 
     public function updateStaffDetails(Request $request)

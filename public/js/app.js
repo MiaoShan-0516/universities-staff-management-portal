@@ -2143,6 +2143,45 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2155,7 +2194,7 @@ __webpack_require__.r(__webpack_exports__);
       uni: [],
       search: '',
       headers: [{
-        text: 'id',
+        text: 'No',
         align: 'start',
         sortable: false,
         value: 'id'
@@ -2188,9 +2227,9 @@ __webpack_require__.r(__webpack_exports__);
           name: "login"
         });
       });
+    } else {
+      this.getAllUniversity();
     }
-
-    this.getAllUniversity();
   },
   methods: {
     getAllUniversity: function getAllUniversity() {
@@ -2288,44 +2327,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {},
@@ -2341,6 +2342,36 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    AuthProvider: function AuthProvider(provider) {
+      var _this = this;
+
+      this.$auth.authenticate(provider).then(function (response) {
+        _this.SocialLogin(provider, response);
+      })["catch"](function (err) {
+        console.log({
+          err: err
+        });
+      });
+    },
+    SocialLogin: function SocialLogin(provider, response) {
+      var _this2 = this;
+
+      (axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.baseURL) = "/api";
+      axios__WEBPACK_IMPORTED_MODULE_0___default().post("/sociallogin/" + provider, response).then(function (response) {
+        console.log(response.data);
+        _this2.userData = response.arr_user;
+        var self = _this2;
+        self.$session.start();
+        self.$session.set("userData", _this2.userData);
+        self.$router.push({
+          path: "/"
+        });
+      })["catch"](function (err) {
+        console.log({
+          err: err
+        });
+      });
+    },
     emailValidation: function emailValidation(email) {
       var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
@@ -2352,24 +2383,24 @@ __webpack_require__.r(__webpack_exports__);
       this.showPassword = !this.showPassword;
     },
     logIn: function logIn() {
-      var _this = this;
+      var _this3 = this;
 
       (axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.baseURL) = "/api";
       axios__WEBPACK_IMPORTED_MODULE_0___default().post("/loginValidation", {
         email: this.email.toLowerCase(),
         password: this.password
       }).then(function (response) {
-        _this.userData = response.arr_user;
-        var self = _this;
+        _this3.userData = response.arr_user;
+        var self = _this3;
         self.$session.start();
-        self.$session.set("userData", _this.userData);
+        self.$session.set("userData", _this3.userData);
         self.$router.push({
           path: "/"
         });
       })["catch"](function (error) {
         console.log(error);
 
-        _this.$alert("Your email or password is wrong.", "Error", "error");
+        _this3.$alert("Your email or password is wrong.", "Error", "error");
       });
     }
   }
@@ -2400,13 +2431,126 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+var date = new Date();
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
       userData: {
         id: "",
         email: ""
-      }
+      },
+      dateTime: {
+        hours: date.getHours(),
+        minutes: date.getMinutes(),
+        seconds: date.getSeconds()
+      },
+      timer: undefined,
+      isActive: false,
+      isVisible: false,
+      isDrop: false
     };
   },
   created: function created() {},
@@ -2414,12 +2558,61 @@ __webpack_require__.r(__webpack_exports__);
     logout: function logout() {
       var _this = this;
 
+      this.isActive = false;
       this.$confirm("Are you confirm to logout?").then(function () {
         _this.$session.destroy();
 
         location.reload();
       });
+    },
+    setDateTime: function setDateTime() {
+      var date = new Date();
+      this.dateTime = {
+        hours: date.getHours(),
+        minutes: date.getMinutes(),
+        seconds: date.getSeconds()
+      };
+    },
+    active: function active(e) {
+      this.isActive = !this.isActive;
+      this.isVisible = !this.isVisible;
+    },
+    hide: function hide(e) {
+      if (!this.$el.contains(e.target)) {
+        this.isActive = false;
+        this.isVisible = false;
+      }
+    },
+    dropTrigger: function dropTrigger(e) {
+      this.isDrop = !this.isDrop;
+    },
+    close: function close(e) {
+      if (!this.$el.contains(e.target)) {
+        this.isDrop = false;
+      }
+    },
+    subIsActive: function subIsActive(input) {
+      var _this2 = this;
+
+      var paths = Array.isArray(input) ? input : [input];
+      return paths.some(function (path) {
+        return _this2.$route.path.indexOf(path) === 0; // current path starts with this path string
+      });
     }
+  },
+  beforeMount: function beforeMount() {
+    this.timer = setInterval(this.setDateTime, 1000);
+  },
+  mounted: function mounted() {
+    document.addEventListener("click", this.close);
+    document.addEventListener("click", this.hide);
+  },
+  beforeUnmount: function beforeUnmount() {
+    clearInterval(this.timer);
+  },
+  beforeDestroy: function beforeDestroy() {
+    document.removeEventListener("click", this.close);
+    document.removeEventListener("click", this.hide);
   }
 });
 
@@ -2536,6 +2729,89 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2546,6 +2822,9 @@ __webpack_require__.r(__webpack_exports__);
     return {
       id: "",
       staff: [],
+      university: [{
+        name: ''
+      }],
       birthday: "",
       today: "",
       age: "",
@@ -2566,19 +2845,21 @@ __webpack_require__.r(__webpack_exports__);
           name: "login"
         });
       });
+    } else {
+      this.getStaffDetails();
     }
-
-    this.getStaffDetails();
   },
   methods: {
     getStaffDetails: function getStaffDetails() {
       var _this2 = this;
 
       this.id = this.$route.params.id;
+      this.uniId = this.$route.params.uniId;
       (axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.baseURL) = "/api";
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get("/getStaffDetails/" + this.id).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get("/getStaffDetails/" + this.id + this.uniId).then(function (response) {
         _this2.staff = response.data.staff;
-        _this2.birthday = response.data.birthday; //calculate age
+        _this2.birthday = response.data.birthday;
+        _this2.university = response.data.university; //calculate age
 
         var today = new Date();
         var dateOfBirth = new Date(_this2.birthday);
@@ -2640,14 +2921,17 @@ __webpack_require__.r(__webpack_exports__);
       var _this4 = this;
 
       this.id = this.$route.params.id;
-      (axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.baseURL) = "/api";
-      axios__WEBPACK_IMPORTED_MODULE_0___default().post('/deleteStaff/' + this.id).then(function (response) {
-        alert("Staff Deleted");
 
-        _this4.$router.back();
-      })["catch"](function (error) {
-        alert("Error");
-      });
+      if (confirm("Do you want to delete this staff?")) {
+        (axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.baseURL) = "/api";
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post('/deleteStaff/' + this.id).then(function (response) {
+          alert("Staff Deleted");
+
+          _this4.$router.back();
+        })["catch"](function (error) {
+          alert("Error");
+        });
+      }
     },
     emailValidation: function emailValidation(update_staff_email) {
       var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -2815,6 +3099,311 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -2834,13 +3423,25 @@ __webpack_require__.r(__webpack_exports__);
       }, {
         text: 'Email',
         value: 'email'
+      }, {
+        text: 'Action',
+        value: 'action'
       }],
       first: "",
       last: "",
       email: "",
       dob: "",
       is_active: true,
-      validation: true
+      validation: true,
+      showInactiveStaff: false,
+      update_staff_id: "",
+      update_staff_first: "",
+      update_staff_last: "",
+      update_staff_email: "",
+      update_staff_dob: "",
+      update_staff_is_active: "",
+      update_staff_picture: "",
+      update_staff_university_id: ""
     };
   },
   created: function created() {
@@ -2852,9 +3453,9 @@ __webpack_require__.r(__webpack_exports__);
           name: "login"
         });
       });
+    } else {
+      this.getUniversityDetails();
     }
-
-    this.getUniversityDetails();
   },
   methods: {
     getUniversityDetails: function getUniversityDetails() {
@@ -2930,6 +3531,66 @@ __webpack_require__.r(__webpack_exports__);
       } else {
         return false;
       }
+    },
+    toggleInactiveStaff: function toggleInactiveStaff() {
+      this.showInactiveStaff = !this.showInactiveStaff;
+      this.getUniversityDetails();
+      console.log(this.showInactiveStaff);
+    },
+    getCurrentStaff: function getCurrentStaff(staffId, staffFirstName, staffLastName, staffEmail, staffDob, staffIsActive, staffPicture, staffUniversityId) {
+      this.update_staff_id = staffId;
+      this.update_staff_first = staffFirstName;
+      this.update_staff_last = staffLastName;
+      this.update_staff_email = staffEmail;
+      this.update_staff_dob = staffDob;
+      this.update_staff_is_active = staffIsActive;
+      this.update_staff_picture = staffPicture;
+      this.update_staff_university_id = staffUniversityId;
+    },
+    updateStaffDetails: function updateStaffDetails() {
+      var _this4 = this;
+
+      if (!this.update_staff_first || !this.update_staff_last || !this.update_staff_email || !this.update_staff_dob || !this.emailValidation(this.update_staff_email) || !this.ageValidation(this.update_staff_dob)) {
+        this.$alert("Please fill in all details correctly", "Error", "error").then(function () {
+          _this4.validation = false;
+        });
+      } else {
+        (axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.baseURL) = "/api";
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post("/updateStaffDetails", {
+          id: this.update_staff_id,
+          university_id: this.update_staff_university_id,
+          first: this.update_staff_first,
+          last: this.update_staff_last,
+          dob: this.update_staff_dob,
+          email: this.update_staff_email,
+          is_active: this.update_staff_is_active,
+          picture: this.update_staff_picture
+        }).then(function (response) {
+          alert("Staff Update Successful!");
+          $(document).ready(function () {
+            $("#updateStaffModal").modal("hide");
+          });
+          _this4.validation = true;
+
+          _this4.getUniversityDetails();
+        })["catch"](function (error) {
+          alert("Error");
+        });
+      }
+    },
+    deleteStaff: function deleteStaff(staffId) {
+      var _this5 = this;
+
+      if (confirm("Do you want to delete this staff?")) {
+        (axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.baseURL) = "/api";
+        axios__WEBPACK_IMPORTED_MODULE_0___default().post('/deleteStaff/' + staffId).then(function (response) {
+          alert("Staff Deleted");
+
+          _this5.getUniversityDetails();
+        })["catch"](function (error) {
+          alert("Error");
+        });
+      }
     }
   }
 });
@@ -2946,21 +3607,22 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
+/* harmony import */ var vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm.js");
 /* harmony import */ var vue_axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-axios */ "./node_modules/vue-axios/dist/vue-axios.esm.min.js");
-/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
+/* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
 /* harmony import */ var vue_cookie__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-cookie */ "./node_modules/vue-cookie/src/vue-cookie.js");
 /* harmony import */ var vue_cookie__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_cookie__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var vue_session__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vue-session */ "./node_modules/vue-session/index.js");
-/* harmony import */ var vue_session__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(vue_session__WEBPACK_IMPORTED_MODULE_3__);
-/* harmony import */ var vue_simple_alert__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-simple-alert */ "./node_modules/vue-simple-alert/lib/index.js");
-/* harmony import */ var vuejs_datatable__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuejs-datatable */ "./node_modules/vuejs-datatable/dist/vuejs-datatable.esm.js");
-/* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! vuetify */ "./node_modules/vuetify/dist/vuetify.js");
-/* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_11___default = /*#__PURE__*/__webpack_require__.n(vuetify__WEBPACK_IMPORTED_MODULE_11__);
-/* harmony import */ var vuetify_dist_vuetify_min_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vuetify/dist/vuetify.min.css */ "./node_modules/vuetify/dist/vuetify.min.css");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
-/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(_store__WEBPACK_IMPORTED_MODULE_7__);
-/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./router */ "./resources/js/router/index.js");
+/* harmony import */ var vuejs_datatable__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuejs-datatable */ "./node_modules/vuejs-datatable/dist/vuejs-datatable.esm.js");
+/* harmony import */ var vue_session__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vue-session */ "./node_modules/vue-session/index.js");
+/* harmony import */ var vue_session__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(vue_session__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var vue_simple_alert__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-simple-alert */ "./node_modules/vue-simple-alert/lib/index.js");
+/* harmony import */ var vue_social_auth__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue-social-auth */ "./node_modules/vue-social-auth/dist/vue-social-auth.es2017.js");
+/* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! vuetify */ "./node_modules/vuetify/dist/vuetify.js");
+/* harmony import */ var vuetify__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(vuetify__WEBPACK_IMPORTED_MODULE_12__);
+/* harmony import */ var vuetify_dist_vuetify_min_css__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! vuetify/dist/vuetify.min.css */ "./node_modules/vuetify/dist/vuetify.min.css");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./store */ "./resources/js/store/index.js");
+/* harmony import */ var _store__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(_store__WEBPACK_IMPORTED_MODULE_8__);
+/* harmony import */ var _router__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./router */ "./resources/js/router/index.js");
 // import App from './views/App'
 
 
@@ -2974,18 +3636,27 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-vue__WEBPACK_IMPORTED_MODULE_9__["default"].use((vue_cookie__WEBPACK_IMPORTED_MODULE_2___default()));
-vue__WEBPACK_IMPORTED_MODULE_9__["default"].use(vuejs_datatable__WEBPACK_IMPORTED_MODULE_5__.VuejsDatatableFactory);
-vue__WEBPACK_IMPORTED_MODULE_9__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_10__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_9__["default"].use(vue_axios__WEBPACK_IMPORTED_MODULE_1__["default"], (axios__WEBPACK_IMPORTED_MODULE_0___default()));
-vue__WEBPACK_IMPORTED_MODULE_9__["default"].use((vue_session__WEBPACK_IMPORTED_MODULE_3___default()));
-vue__WEBPACK_IMPORTED_MODULE_9__["default"].use(vue_simple_alert__WEBPACK_IMPORTED_MODULE_4__["default"]);
-vue__WEBPACK_IMPORTED_MODULE_9__["default"].use((vuetify__WEBPACK_IMPORTED_MODULE_11___default()));
-var app = new vue__WEBPACK_IMPORTED_MODULE_9__["default"]({
+
+vue__WEBPACK_IMPORTED_MODULE_10__["default"].use((vue_cookie__WEBPACK_IMPORTED_MODULE_2___default()));
+vue__WEBPACK_IMPORTED_MODULE_10__["default"].use(vuejs_datatable__WEBPACK_IMPORTED_MODULE_3__.VuejsDatatableFactory);
+vue__WEBPACK_IMPORTED_MODULE_10__["default"].use(vue_router__WEBPACK_IMPORTED_MODULE_11__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_10__["default"].use(vue_axios__WEBPACK_IMPORTED_MODULE_1__["default"], (axios__WEBPACK_IMPORTED_MODULE_0___default()));
+vue__WEBPACK_IMPORTED_MODULE_10__["default"].use((vue_session__WEBPACK_IMPORTED_MODULE_4___default()));
+vue__WEBPACK_IMPORTED_MODULE_10__["default"].use(vue_simple_alert__WEBPACK_IMPORTED_MODULE_5__["default"]);
+vue__WEBPACK_IMPORTED_MODULE_10__["default"].use(vue_social_auth__WEBPACK_IMPORTED_MODULE_6__["default"], {
+  providers: {
+    google: {
+      clientId: '691121027545-qv5m3omrgs27blmnoh727jkuer7meb4u.apps.googleusercontent.com',
+      redirectUri: 'http://localhost:8000/auth/google/callback'
+    }
+  }
+});
+vue__WEBPACK_IMPORTED_MODULE_10__["default"].use((vuetify__WEBPACK_IMPORTED_MODULE_12___default()));
+var app = new vue__WEBPACK_IMPORTED_MODULE_10__["default"]({
   el: '#app',
   // store,
-  vuetify: new (vuetify__WEBPACK_IMPORTED_MODULE_11___default())(),
-  router: new vue_router__WEBPACK_IMPORTED_MODULE_10__["default"](_router__WEBPACK_IMPORTED_MODULE_8__["default"])
+  vuetify: new (vuetify__WEBPACK_IMPORTED_MODULE_12___default())(),
+  router: new vue_router__WEBPACK_IMPORTED_MODULE_11__["default"](_router__WEBPACK_IMPORTED_MODULE_9__["default"])
 });
 
 /***/ }),
@@ -3047,7 +3718,7 @@ vue__WEBPACK_IMPORTED_MODULE_9__["default"].use(vue_router__WEBPACK_IMPORTED_MOD
     name: 'UniversityProfile',
     component: _views_UniversityProfile__WEBPACK_IMPORTED_MODULE_4__["default"]
   }, {
-    path: '/staff/:name/id=:id',
+    path: '/:uniId/staff/:name/id=:id',
     name: 'StaffProfile',
     component: _views_StaffProfile__WEBPACK_IMPORTED_MODULE_3__["default"]
   }]
@@ -7889,63 +8560,184 @@ var render = function () {
     [
       _c("nav-bar"),
       _vm._v(" "),
-      _c("div", { staticClass: "container" }, [
-        _c("div", { staticClass: "row justify-content-center" }, [
-          _c(
-            "div",
-            { staticClass: "col-12 col-lg-8" },
-            [
-              _c(
-                "v-card",
-                [
-                  _c(
-                    "v-card-title",
-                    [
-                      _vm._v("\n            Home\n            "),
-                      _c("v-spacer"),
-                      _vm._v(" "),
-                      _c("v-text-field", {
-                        attrs: {
-                          "append-icon": "mdi-magnify",
-                          label: "Search",
-                          "single-line": "",
-                          "hide-details": "",
-                        },
-                        model: {
-                          value: _vm.search,
-                          callback: function ($$v) {
-                            _vm.search = $$v
+      _vm._m(0),
+      _vm._v(" "),
+      _c("section", [
+        _c("div", { staticClass: "container" }, [
+          _c("div", { staticClass: "row justify-content-center" }, [
+            _c(
+              "div",
+              { staticClass: "col-12 col-lg-10" },
+              [
+                _c(
+                  "v-card",
+                  { staticClass: "d-none d-lg-block" },
+                  [
+                    _c(
+                      "v-card-title",
+                      [
+                        _vm._v(
+                          "\n              List of University\n              "
+                        ),
+                        _c("v-spacer"),
+                        _vm._v(" "),
+                        _c("v-text-field", {
+                          attrs: {
+                            "append-icon": "mdi-magnify",
+                            label: "Search",
+                            "single-line": "",
+                            "hide-details": "",
                           },
-                          expression: "search",
-                        },
-                      }),
-                    ],
-                    1
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "v-app",
-                    { attrs: { id: "inspire" } },
-                    [
-                      _c("v-data-table", {
-                        staticClass: "elevation-1",
-                        attrs: {
-                          headers: _vm.headers,
-                          items: _vm.uni,
-                          search: _vm.search,
-                          "items-per-page": 25,
-                        },
-                        scopedSlots: _vm._u([
-                          {
-                            key: "item",
-                            fn: function (ref) {
-                              var item = ref.item
-                              return [
-                                _c("tr", [
-                                  _c("td", [_vm._v(_vm._s(item.id))]),
-                                  _vm._v(" "),
+                          model: {
+                            value: _vm.search,
+                            callback: function ($$v) {
+                              _vm.search = $$v
+                            },
+                            expression: "search",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-app",
+                      { attrs: { id: "inspire" } },
+                      [
+                        _c("v-data-table", {
+                          staticClass: "elevation-1",
+                          attrs: {
+                            headers: _vm.headers,
+                            items: _vm.uni,
+                            search: _vm.search,
+                            "items-per-page": 25,
+                          },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "item",
+                              fn: function (ref) {
+                                var item = ref.item
+                                return [
+                                  _c("tr", [
+                                    _c("td", [_vm._v(_vm._s(item.id))]),
+                                    _vm._v(" "),
+                                    _c(
+                                      "td",
+                                      [
+                                        _c(
+                                          "router-link",
+                                          {
+                                            attrs: {
+                                              to: {
+                                                path:
+                                                  "/profile/" +
+                                                  item.name.replace(
+                                                    /\s+/g,
+                                                    "-"
+                                                  ) +
+                                                  "/id=" +
+                                                  item.id,
+                                              },
+                                            },
+                                          },
+                                          [
+                                            _vm._v(
+                                              "\n                        " +
+                                                _vm._s(item.name) +
+                                                "\n                      "
+                                            ),
+                                          ]
+                                        ),
+                                      ],
+                                      1
+                                    ),
+                                    _vm._v(" "),
+                                    _c("td", [
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: {
+                                            href: item.url,
+                                            target: "_blank",
+                                          },
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                        " +
+                                              _vm._s(item.url) +
+                                              "\n                      "
+                                          ),
+                                        ]
+                                      ),
+                                    ]),
+                                  ]),
+                                ]
+                              },
+                            },
+                          ]),
+                        }),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-card",
+                  {
+                    staticClass: "d-block d-lg-none",
+                    attrs: { id: "university-table-mob" },
+                  },
+                  [
+                    _c(
+                      "v-card-title",
+                      [
+                        _vm._v(
+                          "\n              List of University\n              "
+                        ),
+                        _c("v-spacer"),
+                        _vm._v(" "),
+                        _c("v-text-field", {
+                          attrs: {
+                            "append-icon": "mdi-magnify",
+                            label: "Search",
+                            "single-line": "",
+                            "hide-details": "",
+                          },
+                          model: {
+                            value: _vm.search,
+                            callback: function ($$v) {
+                              _vm.search = $$v
+                            },
+                            expression: "search",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-app",
+                      { attrs: { id: "inspire" } },
+                      [
+                        _c("v-data-table", {
+                          staticClass: "elevation-1",
+                          attrs: {
+                            headers: _vm.headers,
+                            items: _vm.uni,
+                            search: _vm.search,
+                            "items-per-page": 10,
+                          },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "item",
+                              fn: function (ref) {
+                                var item = ref.item
+                                return [
                                   _c(
-                                    "td",
+                                    "tr",
+                                    { staticClass: "tr-border" },
                                     [
                                       _c(
                                         "router-link",
@@ -7961,57 +8753,137 @@ var render = function () {
                                           },
                                         },
                                         [
-                                          _vm._v(
-                                            "\n                      " +
-                                              _vm._s(item.name) +
-                                              "\n                    "
-                                          ),
+                                          _c("div", { staticClass: "d-flex" }, [
+                                            _c(
+                                              "div",
+                                              { staticClass: "col-1" },
+                                              [
+                                                _c("td", [
+                                                  _vm._v(_vm._s(item.id)),
+                                                ]),
+                                              ]
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              { staticClass: "col-11" },
+                                              [
+                                                _c(
+                                                  "div",
+                                                  {
+                                                    staticClass:
+                                                      "d-flex flex-column",
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "td",
+                                                      {
+                                                        staticClass: "td-title",
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "router-link",
+                                                          {
+                                                            attrs: {
+                                                              to: {
+                                                                path:
+                                                                  "/profile/" +
+                                                                  item.name.replace(
+                                                                    /\s+/g,
+                                                                    "-"
+                                                                  ) +
+                                                                  "/id=" +
+                                                                  item.id,
+                                                              },
+                                                            },
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                " +
+                                                                _vm._s(
+                                                                  item.name
+                                                                ) +
+                                                                "\n                              "
+                                                            ),
+                                                          ]
+                                                        ),
+                                                      ],
+                                                      1
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "td",
+                                                      {
+                                                        staticClass: "td-body",
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "a",
+                                                          {
+                                                            attrs: {
+                                                              href: item.url,
+                                                              target: "_blank",
+                                                            },
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                                " +
+                                                                _vm._s(
+                                                                  item.url
+                                                                ) +
+                                                                "\n                              "
+                                                            ),
+                                                          ]
+                                                        ),
+                                                      ]
+                                                    ),
+                                                  ]
+                                                ),
+                                              ]
+                                            ),
+                                          ]),
                                         ]
                                       ),
                                     ],
                                     1
                                   ),
-                                  _vm._v(" "),
-                                  _c("td", [
-                                    _c(
-                                      "a",
-                                      {
-                                        attrs: {
-                                          href: item.url,
-                                          target: "_blank",
-                                        },
-                                      },
-                                      [
-                                        _vm._v(
-                                          "\n                      " +
-                                            _vm._s(item.url) +
-                                            "\n                    "
-                                        ),
-                                      ]
-                                    ),
-                                  ]),
-                                ]),
-                              ]
+                                ]
+                              },
                             },
-                          },
-                        ]),
-                      }),
-                    ],
-                    1
-                  ),
-                ],
-                1
-              ),
-            ],
-            1
-          ),
+                          ]),
+                        }),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+              ],
+              1
+            ),
+          ]),
         ]),
       ]),
     ],
     1
   )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "container-fluid breadcrumb-header" }, [
+      _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "row justify-content-center" }, [
+          _c("div", { staticClass: "col-12 col-lg-10 py-0" }, [
+            _c("span", { staticClass: "font-weight-bold" }, [_vm._v("Home")]),
+          ]),
+        ]),
+      ]),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -8035,91 +8907,48 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-12 col-lg-6" }, [
-          _c("div", { staticClass: "card shadow" }, [
-            _c("div", { staticClass: "p-5" }, [
-              _vm._m(0),
+    _c("section", { attrs: { id: "login" } }, [
+      _c("div", { staticClass: "container-fluid p-0" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("img", {
+            staticClass: "img-fluid d-none d-lg-block col-md-6 p-0",
+            attrs: { src: "/img/login_bg.jfif", alt: "login_bg" },
+          }),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "col-12 col-md-6 m-auto text-center px-0" },
+            [
+              _c("img", {
+                staticClass: "img-fluid",
+                attrs: { src: "/img/logo.png", alt: "logo" },
+              }),
               _vm._v(" "),
-              _c("div", { staticClass: "my-3" }, [
-                _vm._m(1),
-                _vm._v(" "),
-                _c("div", { staticClass: "row" }, [
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "col-12 col-md-6 d-flex justify-content-center",
+              _c("h1", { staticClass: "my-4" }, [_vm._v("Welcome")]),
+              _vm._v(" "),
+              _c(
+                "button",
+                {
+                  staticClass: "btn-google",
+                  on: {
+                    click: function ($event) {
+                      return _vm.AuthProvider("google")
                     },
-                    [
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "\n                      row\n                      btn btn-danger\n                      text-white\n                      p-3\n                      w-100\n                      d-flex\n                      align-items-center\n                      justify-content-center\n                    ",
-                          on: {
-                            click: function ($event) {
-                              return _vm.AuthProvider("google")
-                            },
-                          },
-                        },
-                        [
-                          _vm._m(2),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "col-10" }, [
-                            _vm._v("Sign in with Google"),
-                          ]),
-                        ]
-                      ),
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "div",
-                    {
-                      staticClass:
-                        "col-12 col-lg-6 d-flex justify-content-center",
-                    },
-                    [
-                      _c(
-                        "button",
-                        {
-                          staticClass:
-                            "\n                      row\n                      btn btn-primary\n                      p-3\n                      w-100\n                      d-flex\n                      align-items-center\n                      justify-content-center\n                    ",
-                          on: {
-                            click: function ($event) {
-                              $event.preventDefault()
-                              return _vm.AuthProvider("facebook")
-                            },
-                          },
-                        },
-                        [
-                          _vm._m(3),
-                          _vm._v(" "),
-                          _c("span", { staticClass: "col-10" }, [
-                            _vm._v("Sign in with Facebook"),
-                          ]),
-                        ]
-                      ),
-                    ]
-                  ),
-                ]),
-                _vm._v(" "),
-                _c(
-                  "span",
-                  {
-                    staticClass:
-                      "row my-3 text-center justify-content-center font-weight-bold",
                   },
-                  [_vm._v("\n                OR\n                ")]
-                ),
-                _vm._v(" "),
-                _c("div", [
-                  _c("div", { staticClass: "my-3" }, [
-                    _c("label", { attrs: { for: "email" } }, [
-                      _vm._v("Email Address"),
-                    ]),
+                },
+                [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Sign in with Google")]),
+                ]
+              ),
+              _vm._v(" "),
+              _c("h2", { staticClass: "mt-4" }, [_vm._v("OR")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-10 col-md-6 m-auto" }, [
+                _c("div", { staticClass: "my-3" }, [
+                  _c("div", { staticClass: "d-flex align-items-center" }, [
+                    _vm._m(1),
                     _vm._v(" "),
                     _c("input", {
                       directives: [
@@ -8135,7 +8964,7 @@ var render = function () {
                       attrs: {
                         type: "email",
                         name: "email",
-                        placeholder: "example@email.com",
+                        placeholder: "Email Address",
                       },
                       domProps: { value: _vm.email },
                       on: {
@@ -8148,97 +8977,93 @@ var render = function () {
                         },
                       },
                     }),
-                    _vm._v(" "),
-                    _vm.email != "" && !_vm.emailValidation(_vm.email)
-                      ? _c("small", [
-                          _vm._v("Please enter valid email address"),
-                        ])
-                      : _vm._e(),
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "my-3" }, [
-                    _c("label", { attrs: { for: "password" } }, [
-                      _vm._v("Password"),
-                    ]),
+                  _vm.email != "" && !_vm.emailValidation(_vm.email)
+                    ? _c("small", { staticClass: "text-danger" }, [
+                        _vm._v(
+                          "\n                Please enter valid email address (format: example@email.com)\n              "
+                        ),
+                      ])
+                    : _vm._e(),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "my-3" }, [
+                  _c("div", { staticClass: "d-flex align-items-center" }, [
+                    _vm._m(2),
                     _vm._v(" "),
-                    _c("div", { staticClass: "d-flex align-items-center" }, [
-                      [_vm.showPassword ? "text" : "password"] === "checkbox"
-                        ? 0
-                        : [_vm.showPassword ? "text" : "password"] === "radio"
-                        ? 0
-                        : _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.password,
-                                expression: "password",
-                              },
-                            ],
-                            staticClass: "form-control form-control-lg",
-                            attrs: {
-                              name: "password",
-                              autocomplete: "off",
-                              placeholder: "",
-                              type: [_vm.showPassword ? "text" : "password"],
+                    [_vm.showPassword ? "text" : "password"] === "checkbox"
+                      ? 0
+                      : [_vm.showPassword ? "text" : "password"] === "radio"
+                      ? 0
+                      : _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.password,
+                              expression: "password",
                             },
-                            domProps: { value: _vm.password },
-                            on: {
-                              input: function ($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.password = $event.target.value
-                              },
-                            },
-                          }),
-                      _vm._v(" "),
-                      _c(
-                        "div",
-                        {
-                          staticClass:
-                            "form-control form-control-lg col cursor-pointer",
+                          ],
+                          staticClass: "form-control form-control-lg",
+                          attrs: {
+                            name: "password",
+                            autocomplete: "off",
+                            placeholder: "Password",
+                            type: [_vm.showPassword ? "text" : "password"],
+                          },
+                          domProps: { value: _vm.password },
                           on: {
-                            click: function ($event) {
-                              return _vm.displayPassword()
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.password = $event.target.value
                             },
                           },
-                        },
-                        [
-                          _c("i", {
-                            staticClass: "fa",
-                            class: {
-                              "fa-eye-slash": _vm.showPassword,
-                              "fa-eye": !_vm.showPassword,
-                            },
-                          }),
-                        ]
-                      ),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-12 col-lg-3 m-auto" }, [
+                        }),
+                    _vm._v(" "),
                     _c(
-                      "button",
+                      "div",
                       {
-                        staticClass: "btn btn-primary w-100",
+                        staticClass:
+                          "form-control form-control-md col cursor-pointer",
                         on: {
                           click: function ($event) {
-                            return _vm.logIn()
+                            return _vm.displayPassword()
                           },
                         },
                       },
                       [
-                        _vm._v(
-                          "\n                    Login\n                  "
-                        ),
+                        _c("i", {
+                          staticClass: "fa",
+                          class: {
+                            "fa-eye-slash": _vm.showPassword,
+                            "fa-eye": !_vm.showPassword,
+                          },
+                        }),
                       ]
                     ),
                   ]),
                 ]),
+                _vm._v(" "),
+                _c("div", [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-login",
+                      on: {
+                        click: function ($event) {
+                          return _vm.logIn()
+                        },
+                      },
+                    },
+                    [_vm._v("\n                Login\n              ")]
+                  ),
+                ]),
               ]),
-            ]),
-          ]),
+            ]
+          ),
         ]),
       ]),
     ]),
@@ -8249,26 +9074,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-2 mx-auto mb-3" }, [
-      _c("img", {
-        staticClass: "img-fluid",
-        attrs: { src: "https://www.arealme.com/logo.png", alt: "Logo" },
-      }),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "text-center" }, [
-      _c("h1", { staticClass: "my-3" }, [_vm._v("Login in to portal")]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "text-white col-1 " }, [
+    return _c("span", { staticClass: "mr-2" }, [
       _c("i", {
         staticClass: "fa fa-google",
         attrs: { "aria-hidden": "true" },
@@ -8279,11 +9085,16 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "col-1 text-white" }, [
-      _c("i", {
-        staticClass: "fa fa-facebook",
-        attrs: { "aria-hidden": "true" },
-      }),
+    return _c("div", { staticClass: "form-control form-control-md col" }, [
+      _c("i", { staticClass: "fa fa-envelope" }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-control form-control-md col" }, [
+      _c("i", { staticClass: "fa fa-lock mr-1" }),
     ])
   },
 ]
@@ -8310,28 +9121,223 @@ var render = function () {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c("h1", [_vm._v("Universities Staff Management Portal")]),
-    _vm._v(" "),
     _c(
-      "p",
+      "div",
+      {
+        staticClass: "d-flex align-items-center fixed-top",
+        attrs: { id: "navbar" },
+      },
       [
-        _c("router-link", { attrs: { to: { name: "home" } } }, [
-          _vm._v("Home"),
+        _c("div", { staticClass: "container" }, [
+          _c(
+            "div",
+            {
+              staticClass:
+                "row justify-content-between justify-content-lg-center align-items-center",
+            },
+            [
+              _c(
+                "div",
+                {
+                  staticClass: "col-2 d-block d-lg-none",
+                  on: { click: _vm.active },
+                },
+                [_vm._m(0)]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-5 col-lg-4 d-flex align-items-center" },
+                [
+                  _c(
+                    "div",
+                    { staticClass: "logo" },
+                    [
+                      _c("router-link", { attrs: { to: { name: "home" } } }, [
+                        _c("img", {
+                          staticClass: "img-fluid",
+                          attrs: { src: "/img/logo.png", alt: "logo" },
+                        }),
+                      ]),
+                    ],
+                    1
+                  ),
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "col-5 col-lg-4 d-flex align-items-center justify-content-center",
+                },
+                [
+                  _c("div", { staticClass: "time" }, [
+                    _vm._v(
+                      "\n            " +
+                        _vm._s(
+                          _vm.dateTime.hours > 12
+                            ? _vm.dateTime.hours - 12
+                            : _vm.dateTime.hours
+                        ) +
+                        ":" +
+                        _vm._s(_vm.dateTime.minutes) +
+                        ":" +
+                        _vm._s(_vm.dateTime.seconds) +
+                        "\n            "
+                    ),
+                    _c("span", [
+                      _vm._v(_vm._s(_vm.dateTime.hours > 12 ? "PM" : "AM")),
+                    ]),
+                  ]),
+                ]
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass:
+                    "\n            d-none d-lg-flex\n            col-4 col-sm-2\n            dropdown\n            justify-content-end\n            text-center\n            shadow-none\n            user-dropdown\n          ",
+                  class: { touch: _vm.isDrop },
+                },
+                [
+                  _c("div", { staticClass: "col-12 col-sm-12 pr-0" }, [
+                    _c(
+                      "div",
+                      {
+                        staticClass: "user-dropdown",
+                        attrs: { type: "", id: "droptrigger" },
+                        on: { click: _vm.dropTrigger },
+                      },
+                      [_vm._m(1)]
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "dropcontent", class: { open: _vm.isDrop } },
+                    [
+                      _c("div", [
+                        _c("div", { staticClass: "row px-3 py-2" }, [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "col-12 px-0 pb-0 d-flex align-items-center",
+                            },
+                            [
+                              _c(
+                                "router-link",
+                                {
+                                  staticClass:
+                                    "dropdown-item border-bottom py-2",
+                                  attrs: { to: { name: "home" } },
+                                },
+                                [
+                                  _vm._v(
+                                    "\n                    Home\n                  "
+                                  ),
+                                ]
+                              ),
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-12" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass: "btn btn-dark btn-block m-0",
+                                on: { click: _vm.logout },
+                              },
+                              [
+                                _vm._v(
+                                  "\n                    Logout\n                  "
+                                ),
+                              ]
+                            ),
+                          ]),
+                        ]),
+                      ]),
+                    ]
+                  ),
+                ]
+              ),
+            ]
+          ),
         ]),
-        _vm._v(" |\n    "),
-        _c("router-link", { attrs: { to: { name: "login" } } }, [
-          _vm._v("Login"),
-        ]),
-      ],
-      1
+      ]
     ),
     _vm._v(" "),
-    _c("button", { on: { click: _vm.logout } }, [_vm._v("Logout")]),
-    _vm._v(" "),
-    _c("div", { staticClass: "container" }),
+    _c("nav", { class: { active: _vm.isActive }, attrs: { id: "sidebar" } }, [
+      _c("div", { staticClass: "sidebar-header" }, [
+        _c("div", { staticClass: "container" }, [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-8 px-0 font-weight-less-bold" }, [
+              _c(
+                "div",
+                { staticClass: "col-12 p-0" },
+                [
+                  _c("router-link", { attrs: { to: { name: "home" } } }, [
+                    _c(
+                      "dd",
+                      {
+                        staticClass: "m-0 p-3",
+                        class: { "menu-item-active": _vm.subIsActive("/home") },
+                      },
+                      [_vm._v("\n                  Home\n                ")]
+                    ),
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-dark btn-block m-0",
+                      on: { click: _vm.logout },
+                    },
+                    [_vm._v("\n                Logout\n              ")]
+                  ),
+                ],
+                1
+              ),
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-4 text-right p-0" }, [
+              _c("button", {
+                staticClass: "btn btn-close",
+                attrs: { type: "button", id: "sidebarCollapseX" },
+                on: { click: _vm.active },
+              }),
+            ]),
+          ]),
+        ]),
+      ]),
+    ]),
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "row align-items-center" }, [
+      _c("div", { staticClass: "col-12 h4" }, [
+        _c("i", { staticClass: "fa fa-bars" }),
+      ]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _vm._v("\n                Dashboard\n                "),
+      _c("i", { staticClass: "fa fa-user mx-1" }),
+      _vm._v(" "),
+      _c("i", { staticClass: "fa fa-caret-down" }),
+    ])
+  },
+]
 render._withStripped = true
 
 
@@ -8359,93 +9365,294 @@ var render = function () {
     [
       _c("nav-bar"),
       _vm._v(" "),
-      _c("div", { staticClass: "container" }, [
-        _c(
-          "div",
-          { staticClass: "row justify-content-center" },
-          _vm._l(_vm.staff, function (user, index) {
-            return _c("div", { key: index, staticClass: "col-12 col-lg-8" }, [
-              _c("h1", [
-                _vm._v(
-                  "Staff - " + _vm._s(user.name.first + " " + user.name.last)
-                ),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "border border-secondary" }, [
-                _c(
-                  "div",
-                  { staticClass: "bg-secondary border-bottom p-2 text-white" },
-                  [_vm._v("\n          Genaral Information\n        ")]
-                ),
-                _vm._v(" "),
-                _c("div", { staticClass: "p-2" }, [
-                  _c("img", {
-                    staticClass: "img-fluid mb-3",
-                    attrs: { src: user.picture, alt: "staff_photo" },
-                  }),
-                  _vm._v(" "),
-                  _c("p", [
-                    _c("strong", [_vm._v("Name:")]),
-                    _vm._v(
-                      " " + _vm._s(user.name.first + " " + user.name.last)
-                    ),
-                  ]),
-                  _vm._v(" "),
-                  _c("p", [
-                    _c("strong", [_vm._v("Email:")]),
-                    _vm._v(" "),
-                    _c("a", { attrs: { href: "mailto:" + user.email } }, [
-                      _vm._v(_vm._s(user.email)),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("p", [
-                    _c("strong", [_vm._v("Date of birth:")]),
-                    _vm._v(" " + _vm._s(user.dob)),
-                  ]),
-                  _vm._v(" "),
-                  _c("p", [
-                    _c("strong", [_vm._v("Age:")]),
-                    _vm._v(" " + _vm._s(_vm.age)),
-                  ]),
-                ]),
-              ]),
-              _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "floating-add-icon",
-                  attrs: {
-                    "data-toggle": "modal",
-                    "data-target": "#updateStaffModal",
-                  },
-                  on: {
-                    click: function ($event) {
-                      return _vm.getCurrentStaff(user)
-                    },
-                  },
-                },
-                [_c("i", { staticClass: "fa fa-pencil" })]
-              ),
-            ])
-          }),
-          0
-        ),
-      ]),
-      _vm._v(" "),
       _c(
         "div",
-        {
-          staticClass: "cursor-pointer",
-          attrs: { "data-toggle": "modal", "data-target": "#deleteStaffModal" },
-          on: {
-            click: function ($event) {
-              return _vm.deleteStaff()
-            },
-          },
-        },
-        [_c("i", { staticClass: "fa fa-eraser" })]
+        { staticClass: "d-none d-lg-block container-fluid breadcrumb-header" },
+        [
+          _c("div", { staticClass: "container" }, [
+            _c("div", { staticClass: "row justify-content-center" }, [
+              _c(
+                "div",
+                { staticClass: "col-12 col-lg-10 py-0" },
+                [
+                  _c(
+                    "span",
+                    [
+                      _c("router-link", { attrs: { to: { name: "home" } } }, [
+                        _vm._v("\n            Home\n          "),
+                      ]),
+                      _vm._v("\n          >\n        "),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _c("span", [_vm._v(_vm._s(_vm.university[0].name) + " > ")]),
+                  _vm._v(" "),
+                  _vm._l(_vm.staff, function (user, index) {
+                    return _c(
+                      "span",
+                      { key: index, staticClass: "font-weight-bold" },
+                      [
+                        _vm._v(
+                          "\n          " +
+                            _vm._s(user.name.first + " " + user.name.last) +
+                            "\n        "
+                        ),
+                      ]
+                    )
+                  }),
+                ],
+                2
+              ),
+            ]),
+          ]),
+        ]
       ),
+      _vm._v(" "),
+      _c("section", { attrs: { id: "without-breadcrumb" } }, [
+        _c(
+          "div",
+          { staticClass: "container", attrs: { id: "staff-profile" } },
+          [
+            _c("div", { staticClass: "row justify-content-center" }, [
+              _c(
+                "div",
+                { staticClass: "col-12 col-lg-10" },
+                _vm._l(_vm.staff, function (user, index) {
+                  return _c("div", { key: index }, [
+                    _c("div", { staticClass: "name-card px-4 px-lg-5" }, [
+                      _c(
+                        "div",
+                        {
+                          staticClass:
+                            "row justify-content-center align-items-center",
+                        },
+                        [
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "col-4 col-lg-3 p-0 p-lg-3 text-right",
+                            },
+                            [
+                              _c("img", {
+                                staticClass:
+                                  "img-fluid w-100 py-3 rounded-circle",
+                                attrs: {
+                                  src: user.picture,
+                                  alt: "staff_photo",
+                                },
+                              }),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            { staticClass: "col-8 d-none d-lg-block" },
+                            [
+                              _c(
+                                "div",
+                                { staticClass: "row justify-content-center" },
+                                [
+                                  _c("div", { staticClass: "col-8" }, [
+                                    _c("h1", [
+                                      _vm._v(
+                                        _vm._s(
+                                          user.name.first + " " + user.name.last
+                                        )
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("p", [
+                                      _vm._v(
+                                        "\n                      Status:\n                      "
+                                      ),
+                                      _c("i", {
+                                        staticClass: "fa fa-circle",
+                                        class: {
+                                          "text-success": user.is_active,
+                                          "text-danger": !user.is_active,
+                                        },
+                                      }),
+                                      _vm._v(" "),
+                                      _c(
+                                        "span",
+                                        {
+                                          staticClass: "font-weight-bold",
+                                          class: {
+                                            "text-success": user.is_active,
+                                            "text-danger": !user.is_active,
+                                          },
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                        " +
+                                              _vm._s(
+                                                user.is_active
+                                                  ? "Active"
+                                                  : "Inactive Staff"
+                                              ) +
+                                              "\n                      "
+                                          ),
+                                        ]
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("p", [
+                                      _c("strong", [_vm._v("Email: ")]),
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: {
+                                            href: "mailto:" + user.email,
+                                          },
+                                        },
+                                        [_vm._v(_vm._s(user.email))]
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("p", [
+                                      _c("strong", [_vm._v("Date of birth: ")]),
+                                      _vm._v(
+                                        _vm._s(user.dob) +
+                                          "\n                    "
+                                      ),
+                                    ]),
+                                    _vm._v(" "),
+                                    _c("p", [
+                                      _c("strong", [_vm._v("Age: ")]),
+                                      _vm._v(
+                                        _vm._s(_vm.age) +
+                                          "\n                    "
+                                      ),
+                                    ]),
+                                  ]),
+                                ]
+                              ),
+                            ]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "div",
+                            {
+                              staticClass:
+                                "col-8 d-block d-lg-none d-flex flex-column align-items-center text-center",
+                            },
+                            [
+                              _c("h5", { staticClass: "font-weight-bold" }, [
+                                _vm._v(
+                                  _vm._s(user.name.first + " " + user.name.last)
+                                ),
+                              ]),
+                              _vm._v(" "),
+                              _c("p", { staticClass: "m-0" }, [
+                                _vm._v(
+                                  "\n                  Status:\n                  "
+                                ),
+                                _c("i", {
+                                  staticClass: "fa fa-circle",
+                                  class: {
+                                    "text-success": user.is_active,
+                                    "text-danger": !user.is_active,
+                                  },
+                                }),
+                                _vm._v(" "),
+                                _c(
+                                  "span",
+                                  {
+                                    staticClass: "font-weight-bold",
+                                    class: {
+                                      "text-success": user.is_active,
+                                      "text-danger": !user.is_active,
+                                    },
+                                  },
+                                  [
+                                    _vm._v(
+                                      "\n                    " +
+                                        _vm._s(
+                                          user.is_active
+                                            ? "Active"
+                                            : "Inactive Staff"
+                                        ) +
+                                        "\n                  "
+                                    ),
+                                  ]
+                                ),
+                              ]),
+                            ]
+                          ),
+                        ]
+                      ),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "d-block d-lg-none mt-3" }, [
+                      _c("div", { staticClass: "bg-white p-3 my-2" }, [
+                        _c("p", { staticClass: "m-0" }, [
+                          _c("strong", [_vm._v("Email: ")]),
+                          _c("a", { attrs: { href: "mailto:" + user.email } }, [
+                            _vm._v(_vm._s(user.email)),
+                          ]),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "bg-white p-3 my-2" }, [
+                        _c("p", { staticClass: "m-0" }, [
+                          _c("strong", [_vm._v("Date of birth: ")]),
+                          _vm._v(_vm._s(user.dob) + "\n              "),
+                        ]),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "bg-white p-3 my-2" }, [
+                        _c("p", { staticClass: "m-0" }, [
+                          _c("strong", [_vm._v("Age: ")]),
+                          _vm._v(_vm._s(_vm.age) + "\n              "),
+                        ]),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "row justify-content-center mt-3" },
+                      [
+                        _c(
+                          "div",
+                          {
+                            staticClass: "btn-update-icon",
+                            attrs: {
+                              "data-toggle": "modal",
+                              "data-target": "#updateStaffModal",
+                            },
+                            on: {
+                              click: function ($event) {
+                                return _vm.getCurrentStaff(user)
+                              },
+                            },
+                          },
+                          [_c("i", { staticClass: "fa fa-pencil" })]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "div",
+                          {
+                            staticClass: "btn-update-icon",
+                            on: {
+                              click: function ($event) {
+                                return _vm.deleteStaff()
+                              },
+                            },
+                          },
+                          [_c("i", { staticClass: "fa fa-eraser" })]
+                        ),
+                      ]
+                    ),
+                  ])
+                }),
+                0
+              ),
+            ]),
+          ]
+        ),
+      ]),
       _vm._v(" "),
       _c(
         "div",
@@ -8669,7 +9876,7 @@ var render = function () {
                             staticClass: "form-check-label",
                             attrs: { for: "is_active" },
                           },
-                          [_vm._v("\n            Active\n            ")]
+                          [_vm._v("\n              Active\n              ")]
                         ),
                       ]),
                     ]),
@@ -8798,55 +10005,146 @@ var render = function () {
     [
       _c("nav-bar"),
       _vm._v(" "),
-      _c("div", { staticClass: "container" }, [
-        _c(
-          "div",
-          { staticClass: "row justify-content-center" },
-          [
-            _vm._l(_vm.university, function (uni, index) {
-              return _c("div", { key: index, staticClass: "col-12 col-lg-8" }, [
-                _c("h1", [_vm._v("School - " + _vm._s(uni.name))]),
-                _vm._v(" "),
-                _c("div", { staticClass: "border border-secondary" }, [
+      _c(
+        "div",
+        { staticClass: "d-none d-lg-block container-fluid breadcrumb-header" },
+        [
+          _c("div", { staticClass: "container" }, [
+            _c("div", { staticClass: "row justify-content-center" }, [
+              _c(
+                "div",
+                { staticClass: "col-12 col-lg-10 py-0" },
+                [
+                  _c(
+                    "span",
+                    [
+                      _c("router-link", { attrs: { to: { name: "home" } } }, [
+                        _vm._v("\n              Home\n            "),
+                      ]),
+                      _vm._v("\n            >\n          "),
+                    ],
+                    1
+                  ),
+                  _vm._v(" "),
+                  _vm._l(_vm.university, function (uni, index) {
+                    return _c(
+                      "span",
+                      { key: index, staticClass: "font-weight-bold" },
+                      [
+                        _vm._v(
+                          "\n            " + _vm._s(uni.name) + "\n          "
+                        ),
+                      ]
+                    )
+                  }),
+                ],
+                2
+              ),
+            ]),
+          ]),
+        ]
+      ),
+      _vm._v(" "),
+      _c("section", { attrs: { id: "without-breadcrumb" } }, [
+        _c("div", { staticClass: "container" }, [
+          _c("div", { staticClass: "row justify-content-center" }, [
+            _c(
+              "div",
+              { staticClass: "col-12 col-lg-10" },
+              _vm._l(_vm.university, function (uni, index) {
+                return _c("div", { key: index, staticClass: "name-card" }, [
                   _c(
                     "div",
                     {
-                      staticClass: "bg-secondary border-bottom p-2 text-white",
+                      staticClass:
+                        "row justify-content-center align-items-center",
                     },
-                    [_vm._v("\n            Genaral Information\n          ")]
-                  ),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "p-2" }, [
-                    _c("p", [
-                      _c("strong", [_vm._v("Name of University:")]),
-                      _vm._v(" " + _vm._s(uni.name)),
-                    ]),
-                    _vm._v(" "),
-                    _c("p", [
-                      _c("strong", [_vm._v("URL:")]),
+                    [
+                      _vm._m(0, true),
                       _vm._v(" "),
-                      _c("a", { attrs: { href: uni.url, target: "_blank" } }, [
-                        _vm._v(_vm._s(uni.url)),
+                      _vm._m(1, true),
+                      _vm._v(" "),
+                      _c(
+                        "div",
+                        { staticClass: "d-none d-lg-block col-6 text-left" },
+                        [
+                          _c("p", [_vm._v(_vm._s(uni.name))]),
+                          _vm._v(" "),
+                          _c("p", [
+                            _c("u", [
+                              _c(
+                                "a",
+                                { attrs: { href: uni.url, target: "_blank" } },
+                                [_vm._v(_vm._s(uni.url))]
+                              ),
+                            ]),
+                          ]),
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "d-block d-lg-none col-8" }, [
+                        _c("small", [
+                          _c("strong", [_vm._v("Name:")]),
+                          _vm._v(" " + _vm._s(uni.name) + "\n                "),
+                        ]),
+                        _vm._v(" "),
+                        _c("br"),
+                        _vm._v(" "),
+                        _c("small", [
+                          _c("strong", [_vm._v("URL: ")]),
+                          _vm._v(" "),
+                          _c("u", [
+                            _c(
+                              "a",
+                              { attrs: { href: uni.url, target: "_blank" } },
+                              [_vm._v(_vm._s(uni.url))]
+                            ),
+                          ]),
+                        ]),
                       ]),
-                    ]),
-                  ]),
-                ]),
-              ])
-            }),
+                    ]
+                  ),
+                ])
+              }),
+              0
+            ),
             _vm._v(" "),
             _c(
               "div",
-              { staticClass: "col-12 col-lg-8" },
+              { staticClass: "col-12 col-lg-10" },
               [
-                _c("h2", [_vm._v("List of staffs")]),
+                _c(
+                  "div",
+                  {
+                    staticClass: "text-right my-2",
+                    on: {
+                      click: function ($event) {
+                        return _vm.toggleInactiveStaff()
+                      },
+                    },
+                  },
+                  [
+                    _c("input", {
+                      staticClass: "col-6",
+                      attrs: {
+                        type: "checkbox",
+                        "data-toggle": "toggle",
+                        "data-onstyle": "info",
+                        "data-on": "Include Inctive Staff",
+                        "data-off": "Show Active Staff",
+                      },
+                    }),
+                  ]
+                ),
                 _vm._v(" "),
                 _c(
                   "v-card",
+                  { staticClass: "d-none d-lg-block" },
                   [
                     _c(
                       "v-card-title",
                       [
-                        _vm._v("\n            Home\n            "),
+                        _vm._v("\n              List of Staff\n              "),
                         _c("v-spacer"),
                         _vm._v(" "),
                         _c("v-text-field", {
@@ -8870,7 +10168,7 @@ var render = function () {
                     _vm._v(" "),
                     _c(
                       "v-app",
-                      { attrs: { id: "inspire" } },
+                      { attrs: { id: "staff" } },
                       [
                         _c("v-data-table", {
                           staticClass: "elevation-1",
@@ -8878,7 +10176,6 @@ var render = function () {
                             headers: _vm.headers,
                             items: _vm.staffs,
                             search: _vm.search,
-                            "items-per-page": 10,
                           },
                           scopedSlots: _vm._u([
                             {
@@ -8886,59 +10183,685 @@ var render = function () {
                               fn: function (ref) {
                                 var item = ref.item
                                 return [
-                                  _c("tr", [
-                                    _c(
-                                      "td",
-                                      [
+                                  item.is_active
+                                    ? _c("tr", [
                                         _c(
-                                          "router-link",
-                                          {
-                                            attrs: {
-                                              to: {
-                                                path:
-                                                  "/staff/" +
-                                                  item.name.first.replace(
-                                                    /\s+/g,
-                                                    "-"
-                                                  ) +
-                                                  "-" +
-                                                  item.name.last.replace(
-                                                    /\s+/g,
-                                                    "-"
-                                                  ) +
-                                                  "/id=" +
-                                                  item.id,
+                                          "td",
+                                          [
+                                            _c(
+                                              "router-link",
+                                              {
+                                                attrs: {
+                                                  to: {
+                                                    path:
+                                                      "/" +
+                                                      item.university_id +
+                                                      "/staff/" +
+                                                      item.name.first.replace(
+                                                        /\s+/g,
+                                                        "-"
+                                                      ) +
+                                                      "-" +
+                                                      item.name.last.replace(
+                                                        /\s+/g,
+                                                        "-"
+                                                      ) +
+                                                      "/id=" +
+                                                      item.id,
+                                                  },
+                                                },
+                                              },
+                                              [
+                                                _vm._v(
+                                                  "\n                        " +
+                                                    _vm._s(
+                                                      item.name.first +
+                                                        " " +
+                                                        item.name.last
+                                                    ) +
+                                                    "\n                      "
+                                                ),
+                                              ]
+                                            ),
+                                          ],
+                                          1
+                                        ),
+                                        _vm._v(" "),
+                                        _c("td", [
+                                          _c(
+                                            "a",
+                                            {
+                                              attrs: {
+                                                href: "mailto:" + item.email,
                                               },
                                             },
-                                          },
+                                            [_vm._v(_vm._s(item.email))]
+                                          ),
+                                        ]),
+                                        _vm._v(" "),
+                                        _c(
+                                          "td",
+                                          { staticClass: "text-right" },
                                           [
-                                            _vm._v(
-                                              "\n                      " +
-                                                _vm._s(
-                                                  item.name.first +
-                                                    " " +
-                                                    item.name.last
-                                                ) +
-                                                "\n                    "
+                                            _c("i", {
+                                              staticClass:
+                                                "fa fa-pencil cursor-pointer",
+                                              attrs: {
+                                                "data-toggle": "modal",
+                                                "data-target":
+                                                  "#updateStaffModal",
+                                              },
+                                              on: {
+                                                click: function ($event) {
+                                                  return _vm.getCurrentStaff(
+                                                    item.id,
+                                                    item.name.first,
+                                                    item.name.last,
+                                                    item.email,
+                                                    item.dob,
+                                                    item.is_active,
+                                                    item.picture,
+                                                    item.university_id
+                                                  )
+                                                },
+                                              },
+                                            }),
+                                            _vm._v(" "),
+                                            _c(
+                                              "button",
+                                              {
+                                                staticClass: "close mx-4",
+                                                attrs: { type: "button" },
+                                                on: {
+                                                  click: function ($event) {
+                                                    return _vm.deleteStaff(
+                                                      item.id
+                                                    )
+                                                  },
+                                                },
+                                              },
+                                              [
+                                                _c(
+                                                  "span",
+                                                  {
+                                                    attrs: {
+                                                      "aria-hidden": "true",
+                                                    },
+                                                  },
+                                                  [_vm._v("×")]
+                                                ),
+                                              ]
                                             ),
                                           ]
                                         ),
-                                      ],
-                                      1
-                                    ),
-                                    _vm._v(" "),
-                                    _c("td", [
-                                      _c(
-                                        "a",
-                                        {
-                                          attrs: {
-                                            href: "mailto:" + item.email,
-                                          },
-                                        },
-                                        [_vm._v(_vm._s(item.email))]
-                                      ),
-                                    ]),
-                                  ]),
+                                      ])
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  !item.is_active && _vm.showInactiveStaff
+                                    ? _c(
+                                        "tr",
+                                        { staticClass: "inactive-staff-row" },
+                                        [
+                                          _c(
+                                            "td",
+                                            [
+                                              _c(
+                                                "router-link",
+                                                {
+                                                  attrs: {
+                                                    to: {
+                                                      path:
+                                                        "/" +
+                                                        item.university_id +
+                                                        "/staff/" +
+                                                        item.name.first.replace(
+                                                          /\s+/g,
+                                                          "-"
+                                                        ) +
+                                                        "-" +
+                                                        item.name.last.replace(
+                                                          /\s+/g,
+                                                          "-"
+                                                        ) +
+                                                        "/id=" +
+                                                        item.id,
+                                                    },
+                                                  },
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    "\n                        " +
+                                                      _vm._s(
+                                                        item.name.first +
+                                                          " " +
+                                                          item.name.last
+                                                      ) +
+                                                      "\n                      "
+                                                  ),
+                                                ]
+                                              ),
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _c("td", [
+                                            _c(
+                                              "a",
+                                              {
+                                                attrs: {
+                                                  href: "mailto:" + item.email,
+                                                },
+                                              },
+                                              [_vm._v(_vm._s(item.email))]
+                                            ),
+                                          ]),
+                                          _vm._v(" "),
+                                          _c(
+                                            "td",
+                                            { staticClass: "text-right" },
+                                            [
+                                              _c("i", {
+                                                staticClass:
+                                                  "fa fa-pencil cursor-pointer",
+                                                attrs: {
+                                                  "data-toggle": "modal",
+                                                  "data-target":
+                                                    "#updateStaffModal",
+                                                },
+                                                on: {
+                                                  click: function ($event) {
+                                                    return _vm.getCurrentStaff(
+                                                      item.id,
+                                                      item.name.first,
+                                                      item.name.last,
+                                                      item.email,
+                                                      item.dob,
+                                                      item.is_active,
+                                                      item.picture,
+                                                      item.university_id
+                                                    )
+                                                  },
+                                                },
+                                              }),
+                                              _vm._v(" "),
+                                              _c(
+                                                "button",
+                                                {
+                                                  staticClass: "close mx-4",
+                                                  attrs: { type: "button" },
+                                                  on: {
+                                                    click: function ($event) {
+                                                      return _vm.deleteStaff(
+                                                        item.id
+                                                      )
+                                                    },
+                                                  },
+                                                },
+                                                [
+                                                  _c(
+                                                    "span",
+                                                    {
+                                                      attrs: {
+                                                        "aria-hidden": "true",
+                                                      },
+                                                    },
+                                                    [_vm._v("×")]
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          ),
+                                        ]
+                                      )
+                                    : _vm._e(),
+                                ]
+                              },
+                            },
+                          ]),
+                        }),
+                      ],
+                      1
+                    ),
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "v-card",
+                  { staticClass: "d-block d-lg-none" },
+                  [
+                    _c(
+                      "v-card-title",
+                      [
+                        _vm._v("\n              List of Staff\n              "),
+                        _c("v-spacer"),
+                        _vm._v(" "),
+                        _c("v-text-field", {
+                          attrs: {
+                            "append-icon": "mdi-magnify",
+                            label: "Search",
+                            "single-line": "",
+                            "hide-details": "",
+                          },
+                          model: {
+                            value: _vm.search,
+                            callback: function ($$v) {
+                              _vm.search = $$v
+                            },
+                            expression: "search",
+                          },
+                        }),
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "v-app",
+                      { attrs: { id: "staff" } },
+                      [
+                        _c("v-data-table", {
+                          staticClass: "elevation-1",
+                          attrs: {
+                            headers: _vm.headers,
+                            items: _vm.staffs,
+                            search: _vm.search,
+                          },
+                          scopedSlots: _vm._u([
+                            {
+                              key: "item",
+                              fn: function (ref) {
+                                var item = ref.item
+                                return [
+                                  item.is_active
+                                    ? _c("tr", { staticClass: "tr-border" }, [
+                                        _c("div", { staticClass: "d-flex" }, [
+                                          _c(
+                                            "div",
+                                            { staticClass: "col-8" },
+                                            [
+                                              _c(
+                                                "router-link",
+                                                {
+                                                  attrs: {
+                                                    to: {
+                                                      path:
+                                                        "/" +
+                                                        item.university_id +
+                                                        "/staff/" +
+                                                        item.name.first.replace(
+                                                          /\s+/g,
+                                                          "-"
+                                                        ) +
+                                                        "-" +
+                                                        item.name.last.replace(
+                                                          /\s+/g,
+                                                          "-"
+                                                        ) +
+                                                        "/id=" +
+                                                        item.id,
+                                                    },
+                                                  },
+                                                },
+                                                [
+                                                  _c(
+                                                    "div",
+                                                    {
+                                                      staticClass:
+                                                        "d-flex flex-column",
+                                                    },
+                                                    [
+                                                      _c(
+                                                        "td",
+                                                        {
+                                                          staticClass:
+                                                            "td-title",
+                                                        },
+                                                        [
+                                                          _vm._v(
+                                                            "\n                              " +
+                                                              _vm._s(
+                                                                item.name
+                                                                  .first +
+                                                                  " " +
+                                                                  item.name.last
+                                                              ) +
+                                                              "\n                            "
+                                                          ),
+                                                        ]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "td",
+                                                        {
+                                                          staticClass:
+                                                            "td-body",
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "a",
+                                                            {
+                                                              attrs: {
+                                                                href:
+                                                                  "mailto:" +
+                                                                  item.email,
+                                                              },
+                                                            },
+                                                            [
+                                                              _vm._v(
+                                                                _vm._s(
+                                                                  item.email
+                                                                )
+                                                              ),
+                                                            ]
+                                                          ),
+                                                        ]
+                                                      ),
+                                                    ]
+                                                  ),
+                                                ]
+                                              ),
+                                            ],
+                                            1
+                                          ),
+                                          _vm._v(" "),
+                                          _c(
+                                            "div",
+                                            {
+                                              staticClass:
+                                                "col-4 d-flex align-items-center justify-content-end",
+                                            },
+                                            [
+                                              _c(
+                                                "td",
+                                                { staticClass: "d-flex" },
+                                                [
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      staticClass:
+                                                        "mx-2 h4 collapse",
+                                                      class:
+                                                        "editStaff" + item.id,
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "fa fa-pencil cursor-pointer",
+                                                        attrs: {
+                                                          "data-toggle":
+                                                            "modal",
+                                                          "data-target":
+                                                            "#updateStaffModal",
+                                                        },
+                                                        on: {
+                                                          click: function (
+                                                            $event
+                                                          ) {
+                                                            return _vm.getCurrentStaff(
+                                                              item.id,
+                                                              item.name.first,
+                                                              item.name.last,
+                                                              item.email,
+                                                              item.dob,
+                                                              item.is_active,
+                                                              item.picture,
+                                                              item.university_id
+                                                            )
+                                                          },
+                                                        },
+                                                      }),
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      staticClass:
+                                                        "mx-2 h4 collapse",
+                                                      class:
+                                                        "editStaff" + item.id,
+                                                      on: {
+                                                        click: function (
+                                                          $event
+                                                        ) {
+                                                          return _vm.deleteStaff(
+                                                            item.id
+                                                          )
+                                                        },
+                                                      },
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "fa fa-close",
+                                                      }),
+                                                    ]
+                                                  ),
+                                                  _vm._v(" "),
+                                                  _c(
+                                                    "button",
+                                                    {
+                                                      staticClass: "mx-2 h5",
+                                                      attrs: {
+                                                        "data-toggle":
+                                                          "collapse",
+                                                        href:
+                                                          ".editStaff" +
+                                                          item.id,
+                                                      },
+                                                    },
+                                                    [
+                                                      _c("i", {
+                                                        staticClass:
+                                                          "fa fa-bars",
+                                                      }),
+                                                    ]
+                                                  ),
+                                                ]
+                                              ),
+                                            ]
+                                          ),
+                                        ]),
+                                      ])
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  !item.is_active && _vm.showInactiveStaff
+                                    ? _c(
+                                        "tr",
+                                        { staticClass: "inactive-staff-row" },
+                                        [
+                                          _c("div", { staticClass: "d-flex" }, [
+                                            _c(
+                                              "div",
+                                              { staticClass: "col-8" },
+                                              [
+                                                _c(
+                                                  "router-link",
+                                                  {
+                                                    attrs: {
+                                                      to: {
+                                                        path:
+                                                          "/" +
+                                                          item.university_id +
+                                                          "/staff/" +
+                                                          item.name.first.replace(
+                                                            /\s+/g,
+                                                            "-"
+                                                          ) +
+                                                          "-" +
+                                                          item.name.last.replace(
+                                                            /\s+/g,
+                                                            "-"
+                                                          ) +
+                                                          "/id=" +
+                                                          item.id,
+                                                      },
+                                                    },
+                                                  },
+                                                  [
+                                                    _c(
+                                                      "div",
+                                                      {
+                                                        staticClass:
+                                                          "d-flex flex-column",
+                                                      },
+                                                      [
+                                                        _c(
+                                                          "td",
+                                                          {
+                                                            staticClass:
+                                                              "td-title",
+                                                          },
+                                                          [
+                                                            _vm._v(
+                                                              "\n                              " +
+                                                                _vm._s(
+                                                                  item.name
+                                                                    .first +
+                                                                    " " +
+                                                                    item.name
+                                                                      .last
+                                                                ) +
+                                                                "\n                            "
+                                                            ),
+                                                          ]
+                                                        ),
+                                                        _vm._v(" "),
+                                                        _c(
+                                                          "td",
+                                                          {
+                                                            staticClass:
+                                                              "td-body",
+                                                          },
+                                                          [
+                                                            _c(
+                                                              "a",
+                                                              {
+                                                                attrs: {
+                                                                  href:
+                                                                    "mailto:" +
+                                                                    item.email,
+                                                                },
+                                                              },
+                                                              [
+                                                                _vm._v(
+                                                                  _vm._s(
+                                                                    item.email
+                                                                  )
+                                                                ),
+                                                              ]
+                                                            ),
+                                                          ]
+                                                        ),
+                                                      ]
+                                                    ),
+                                                  ]
+                                                ),
+                                              ],
+                                              1
+                                            ),
+                                            _vm._v(" "),
+                                            _c(
+                                              "div",
+                                              {
+                                                staticClass:
+                                                  "col-4 d-flex align-items-center justify-content-end",
+                                              },
+                                              [
+                                                _c(
+                                                  "td",
+                                                  { staticClass: "d-flex" },
+                                                  [
+                                                    _c(
+                                                      "button",
+                                                      {
+                                                        staticClass:
+                                                          "mx-2 h4 collapse",
+                                                        class:
+                                                          "editStaff" + item.id,
+                                                      },
+                                                      [
+                                                        _c("i", {
+                                                          staticClass:
+                                                            "fa fa-pencil cursor-pointer",
+                                                          attrs: {
+                                                            "data-toggle":
+                                                              "modal",
+                                                            "data-target":
+                                                              "#updateStaffModal",
+                                                          },
+                                                          on: {
+                                                            click: function (
+                                                              $event
+                                                            ) {
+                                                              return _vm.getCurrentStaff(
+                                                                item.id,
+                                                                item.name.first,
+                                                                item.name.last,
+                                                                item.email,
+                                                                item.dob,
+                                                                item.is_active,
+                                                                item.picture,
+                                                                item.university_id
+                                                              )
+                                                            },
+                                                          },
+                                                        }),
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "button",
+                                                      {
+                                                        staticClass:
+                                                          "mx-2 h4 collapse",
+                                                        class:
+                                                          "editStaff" + item.id,
+                                                        on: {
+                                                          click: function (
+                                                            $event
+                                                          ) {
+                                                            return _vm.deleteStaff(
+                                                              item.id
+                                                            )
+                                                          },
+                                                        },
+                                                      },
+                                                      [
+                                                        _c("i", {
+                                                          staticClass:
+                                                            "fa fa-close",
+                                                        }),
+                                                      ]
+                                                    ),
+                                                    _vm._v(" "),
+                                                    _c(
+                                                      "button",
+                                                      {
+                                                        staticClass: "mx-2 h5",
+                                                        attrs: {
+                                                          "data-toggle":
+                                                            "collapse",
+                                                          href:
+                                                            ".editStaff" +
+                                                            item.id,
+                                                        },
+                                                      },
+                                                      [
+                                                        _c("i", {
+                                                          staticClass:
+                                                            "fa fa-bars",
+                                                        }),
+                                                      ]
+                                                    ),
+                                                  ]
+                                                ),
+                                              ]
+                                            ),
+                                          ]),
+                                        ]
+                                      )
+                                    : _vm._e(),
                                 ]
                               },
                             },
@@ -8953,12 +10876,11 @@ var render = function () {
               ],
               1
             ),
-          ],
-          2
-        ),
+          ]),
+        ]),
       ]),
       _vm._v(" "),
-      _vm._m(0),
+      _vm._m(2),
       _vm._v(" "),
       _c(
         "div",
@@ -8978,13 +10900,13 @@ var render = function () {
             { staticClass: "modal-dialog", attrs: { role: "document" } },
             [
               _c("div", { staticClass: "modal-content" }, [
-                _vm._m(1),
+                _vm._m(3),
                 _vm._v(" "),
                 _c("div", { staticClass: "modal-body" }, [
                   _c("form", [
                     _c("div", { staticClass: "form-row" }, [
                       _c("div", { staticClass: "form-group col-md-6" }, [
-                        _vm._m(2),
+                        _vm._m(4),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -9016,7 +10938,7 @@ var render = function () {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "form-group col-md-6" }, [
-                        _vm._m(3),
+                        _vm._m(5),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -9050,7 +10972,7 @@ var render = function () {
                     _vm._v(" "),
                     _c("div", { staticClass: "form-row" }, [
                       _c("div", { staticClass: "form-group col-md-7" }, [
-                        _vm._m(4),
+                        _vm._m(6),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -9092,7 +11014,7 @@ var render = function () {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "form-group col-md-5" }, [
-                        _vm._m(5),
+                        _vm._m(7),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
@@ -9216,11 +11138,289 @@ var render = function () {
           ),
         ]
       ),
+      _vm._v(" "),
+      _c(
+        "div",
+        {
+          staticClass: "modal fade",
+          attrs: {
+            id: "updateStaffModal",
+            tabindex: "-1",
+            role: "dialog",
+            "aria-hidden": "true",
+          },
+        },
+        [
+          _c(
+            "div",
+            { staticClass: "modal-dialog", attrs: { role: "document" } },
+            [
+              _c("div", { staticClass: "modal-content" }, [
+                _vm._m(8),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-body" }, [
+                  _c("form", [
+                    _c("div", { staticClass: "form-row" }, [
+                      _c("div", { staticClass: "form-group col-md-6" }, [
+                        _vm._m(9),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.update_staff_first,
+                              expression: "update_staff_first",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", required: "" },
+                          domProps: { value: _vm.update_staff_first },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.update_staff_first = $event.target.value
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        !_vm.validation && !_vm.update_staff_first
+                          ? _c("small", { staticClass: "text-danger" }, [
+                              _vm._v("*first name is empty"),
+                            ])
+                          : _vm._e(),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group col-md-6" }, [
+                        _vm._m(10),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.update_staff_last,
+                              expression: "update_staff_last",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text", required: "" },
+                          domProps: { value: _vm.update_staff_last },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.update_staff_last = $event.target.value
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        !_vm.validation && !_vm.update_staff_last
+                          ? _c("small", { staticClass: "text-danger" }, [
+                              _vm._v("*last name is empty"),
+                            ])
+                          : _vm._e(),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-row" }, [
+                      _c("div", { staticClass: "form-group col-md-7" }, [
+                        _vm._m(11),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.update_staff_email,
+                              expression: "update_staff_email",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: {
+                            type: "email",
+                            placeholder: "example@mail.com",
+                            required: "",
+                          },
+                          domProps: { value: _vm.update_staff_email },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.update_staff_email = $event.target.value
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        !_vm.validation && !_vm.update_staff_email
+                          ? _c("small", { staticClass: "text-danger" }, [
+                              _vm._v("*email is empty"),
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.update_staff_email &&
+                        !_vm.emailValidation(_vm.update_staff_email)
+                          ? _c("small", { staticClass: "text-danger" }, [
+                              _vm._v("*Please enter a valid email address"),
+                            ])
+                          : _vm._e(),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "form-group col-md-5" }, [
+                        _vm._m(12),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.update_staff_dob,
+                              expression: "update_staff_dob",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "date", required: "" },
+                          domProps: { value: _vm.update_staff_dob },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.update_staff_dob = $event.target.value
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        !_vm.validation && !_vm.update_staff_dob
+                          ? _c("small", { staticClass: "text-danger" }, [
+                              _vm._v("*date of birth is empty"),
+                            ])
+                          : _vm._e(),
+                        _vm._v(" "),
+                        _vm.update_staff_dob &&
+                        !_vm.ageValidation(_vm.update_staff_dob)
+                          ? _c("small", { staticClass: "text-danger" }, [
+                              _vm._v("*Minimum age for a staff is 21"),
+                            ])
+                          : _vm._e(),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group mx-2" }, [
+                      _c("div", { staticClass: "form-check" }, [
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.update_staff_is_active,
+                              expression: "update_staff_is_active",
+                            },
+                          ],
+                          staticClass: "form-check-input",
+                          attrs: { type: "checkbox" },
+                          domProps: {
+                            checked: Array.isArray(_vm.update_staff_is_active)
+                              ? _vm._i(_vm.update_staff_is_active, null) > -1
+                              : _vm.update_staff_is_active,
+                          },
+                          on: {
+                            change: function ($event) {
+                              var $$a = _vm.update_staff_is_active,
+                                $$el = $event.target,
+                                $$c = $$el.checked ? true : false
+                              if (Array.isArray($$a)) {
+                                var $$v = null,
+                                  $$i = _vm._i($$a, $$v)
+                                if ($$el.checked) {
+                                  $$i < 0 &&
+                                    (_vm.update_staff_is_active = $$a.concat([
+                                      $$v,
+                                    ]))
+                                } else {
+                                  $$i > -1 &&
+                                    (_vm.update_staff_is_active = $$a
+                                      .slice(0, $$i)
+                                      .concat($$a.slice($$i + 1)))
+                                }
+                              } else {
+                                _vm.update_staff_is_active = $$c
+                              }
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _c(
+                          "label",
+                          {
+                            staticClass: "form-check-label",
+                            attrs: { for: "is_active" },
+                          },
+                          [_vm._v("\n                Active\n                ")]
+                        ),
+                      ]),
+                    ]),
+                  ]),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "modal-footer" }, [
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-info text-white",
+                      on: {
+                        click: function ($event) {
+                          return _vm.updateStaffDetails()
+                        },
+                      },
+                    },
+                    [_vm._v("Update")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "button",
+                    {
+                      staticClass: "btn btn-secondary text-white",
+                      attrs: { type: "button", "data-dismiss": "modal" },
+                    },
+                    [_vm._v("Close")]
+                  ),
+                ]),
+              ]),
+            ]
+          ),
+        ]
+      ),
     ],
     1
   )
 }
 var staticRenderFns = [
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-3 col-lg-2 p-0 p-lg-2" }, [
+      _c("img", {
+        staticClass: "img-fluid",
+        attrs: { src: "/img/u_icon.png", alt: "u_icon" },
+      }),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "d-none d-lg-block col-3 text-right" }, [
+      _c("p", [_c("strong", [_vm._v("Name of University :")])]),
+      _vm._v(" "),
+      _c("p", [_c("strong", [_vm._v("URL :")])]),
+    ])
+  },
   function () {
     var _vm = this
     var _h = _vm.$createElement
@@ -9243,6 +11443,67 @@ var staticRenderFns = [
         "h5",
         { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
         [_vm._v("Create new staff")]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close",
+          },
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      ),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "first" } }, [
+      _vm._v("First Name"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "last" } }, [
+      _vm._v("Last Name"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "email" } }, [
+      _vm._v("Email"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("label", { attrs: { for: "dob" } }, [
+      _vm._v("Date of Birth"),
+      _c("span", { staticClass: "text-danger" }, [_vm._v("*")]),
+    ])
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [_vm._v("Update staff")]
       ),
       _vm._v(" "),
       _c(
@@ -13119,6 +15380,1388 @@ var VueSimpleAlert = (function () {
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (VueSimpleAlert);
 //# sourceMappingURL=index.js.map
+
+/***/ }),
+
+/***/ "./node_modules/vue-social-auth/dist/vue-social-auth.es2017.js":
+/*!*********************************************************************!*\
+  !*** ./node_modules/vue-social-auth/dist/vue-social-auth.es2017.js ***!
+  \*********************************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "VueSocialauth": () => (/* binding */ VueSocialauth),
+/* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
+/* harmony export */ });
+/*!
+ * vue-social-auth v1.4.3
+ * https://github.com/diadal/vue-social-auth
+ * Released under the MIT License.
+ */
+
+if (typeof Object.assign != 'function') {
+  Object.assign = function(target, varArgs) {
+    'use strict';
+    var arguments$1 = arguments;
+
+    if (target == null) {
+      throw new TypeError('Cannot convert undefined or null to object');
+    }
+
+    var to = Object(target);
+
+    for (var index = 1; index < arguments.length; index++) {
+      var nextSource = arguments$1[index];
+
+      if (nextSource != null) { // Skip over if undefined or null
+        for (var nextKey in nextSource) {
+          // Avoid bugs when hasOwnProperty is shadowed
+          if (Object.prototype.hasOwnProperty.call(nextSource, nextKey)) {
+            to[nextKey] = nextSource[nextKey];
+          }
+        }
+      }
+    }
+    return to;
+  };
+}
+
+function camelCase(name) {
+  return name.replace(/([\:\-\_]+(.))/g, function (_, separator, letter, offset) {
+    return offset ? letter.toUpperCase() : letter;
+  });
+}
+
+function isUndefined(value) {
+  return typeof value === 'undefined'
+}
+
+
+
+
+
+function isString(value) {
+  return typeof value === 'string'
+}
+
+
+
+function isFunction(value) {
+  return typeof value === 'function'
+}
+
+function objectExtend(a, b) {
+
+  // Don't touch 'null' or 'undefined' objects.
+  if (a == null || b == null) {
+    return a;
+  }
+
+  Object.keys(b).forEach(function (key) {
+    if (Object.prototype.toString.call(b[key]) == '[object Object]') {
+      if (Object.prototype.toString.call(a[key]) != '[object Object]') {
+        a[key] = b[key];
+      } else {
+        a[key] = objectExtend(a[key], b[key]);
+      }
+    } else {
+      a[key] = b[key];
+    }
+  });
+
+  return a;
+}
+
+/**
+ * Assemble url from two segments
+ * 
+ * @author Sahat Yalkabov <https://github.com/sahat>
+ * @copyright Method taken from https://github.com/sahat/satellizer
+ * 
+ * @param  {String} baseUrl Base url
+ * @param  {String} url     URI
+ * @return {String}
+ */
+function joinUrl(baseUrl, url) {
+  if (/^(?:[a-z]+:)?\/\//i.test(url)) {
+    return url;
+  }
+  var joined = [baseUrl, url].join('/');
+  var normalize = function (str) {
+    return str
+      .replace(/[\/]+/g, '/')
+      .replace(/\/\?/g, '?')
+      .replace(/\/\#/g, '#')
+      .replace(/\:\//g, '://');
+  };
+  return normalize(joined);
+}
+
+/**
+ * Get full path based on current location
+ * 
+ * @author Sahat Yalkabov <https://github.com/sahat>
+ * @copyright Method taken from https://github.com/sahat/satellizer
+ * 
+ * @param  {Location} location
+ * @return {String}
+ */
+function getFullUrlPath(location) {
+  var isHttps = location.protocol === 'https:';
+  return location.protocol + '//' + location.hostname +
+    ':' + (location.port || (isHttps ? '443' : '80')) +
+    (/^\//.test(location.pathname) ? location.pathname : '/' + location.pathname);
+}
+
+/**
+ * Parse query string variables
+ * 
+ * @author Sahat Yalkabov <https://github.com/sahat>
+ * @copyright Method taken from https://github.com/sahat/satellizer
+ * 
+ * @param  {String} Query string
+ * @return {String}
+ */
+function parseQueryString(str) {
+  var obj = {};
+  var key;
+  var value;
+  (str || '').split('&').forEach(function (keyValue) {
+    if (keyValue) {
+      value = keyValue.split('=');
+      key = decodeURIComponent(value[0]);
+      obj[key] = (!!value[1]) ? decodeURIComponent(value[1]) : true;
+    }
+  });
+  return obj;
+}
+
+/**
+ * Decode base64 string
+ * @author Sahat Yalkabov <https://github.com/sahat>
+ * @copyright Method taken from https://github.com/sahat/satellizer
+ * 
+ * @param  {String} str base64 encoded string
+ * @return {Object}
+ */
+
+
+function parseCookies(str) {
+  if (str.length === 0) { return {}; }
+  var parsed = {};
+  var pattern = new RegExp('\\s*;\\s*');
+  str.split(pattern).forEach(function (i) {
+    var ref = i.split('=');
+    var encodedKey = ref[0];
+    var encodedValue = ref[1];
+    var key = decodeURIComponent(encodedKey);
+    var value = decodeURIComponent(encodedValue);
+    parsed[key] = value;
+  });
+  return parsed;
+}
+
+function formatOptions(options) {
+  var path = options.path;
+  var domain = options.domain;
+  var expires = options.expires;
+  var secure = options.secure;
+  return [
+    typeof path === 'undefined' || path === null
+      ? '' : ';path=' + path,
+    typeof domain === 'undefined' || domain === null
+      ? '' : ';domain=' + domain,
+    typeof expires === 'undefined' || expires === null
+      ? '' : ';expires=' + expires.toUTCString(),
+    typeof secure === 'undefined' || secure === null || secure === false
+      ? '' : ';secure'
+  ].join('');
+}
+
+function formatCookie(key, value, options) {
+  return [
+    encodeURIComponent(key),
+    '=',
+    encodeURIComponent(value),
+    formatOptions(options)
+  ].join('');
+}
+
+// Store setTimeout reference so promise-polyfill will be unaffected by
+// other code modifying setTimeout (like sinon.useFakeTimers())
+var setTimeoutFunc = setTimeout;
+
+function noop() {}
+
+// Polyfill for Function.prototype.bind
+function bind(fn, thisArg) {
+  return function () {
+    fn.apply(thisArg, arguments);
+  };
+}
+
+function Promise$1(fn) {
+  if (typeof this !== 'object') { throw new TypeError('Promises must be constructed via new'); }
+  if (typeof fn !== 'function') { throw new TypeError('not a function'); }
+  this._state = 0;
+  this._handled = false;
+  this._value = undefined;
+  this._deferreds = [];
+
+  doResolve(fn, this);
+}
+
+function handle(self, deferred) {
+  while (self._state === 3) {
+    self = self._value;
+  }
+  if (self._state === 0) {
+    self._deferreds.push(deferred);
+    return;
+  }
+  self._handled = true;
+  Promise$1._immediateFn(function () {
+    var cb = self._state === 1 ? deferred.onFulfilled : deferred.onRejected;
+    if (cb === null) {
+      (self._state === 1 ? resolve : reject)(deferred.promise, self._value);
+      return;
+    }
+    var ret;
+    try {
+      ret = cb(self._value);
+    } catch (e) {
+      reject(deferred.promise, e);
+      return;
+    }
+    resolve(deferred.promise, ret);
+  });
+}
+
+function resolve(self, newValue) {
+  try {
+    // Promise Resolution Procedure: https://github.com/promises-aplus/promises-spec#the-promise-resolution-procedure
+    if (newValue === self) { throw new TypeError('A promise cannot be resolved with itself.'); }
+    if (newValue && (typeof newValue === 'object' || typeof newValue === 'function')) {
+      var then = newValue.then;
+      if (newValue instanceof Promise$1) {
+        self._state = 3;
+        self._value = newValue;
+        finale(self);
+        return;
+      } else if (typeof then === 'function') {
+        doResolve(bind(then, newValue), self);
+        return;
+      }
+    }
+    self._state = 1;
+    self._value = newValue;
+    finale(self);
+  } catch (e) {
+    reject(self, e);
+  }
+}
+
+function reject(self, newValue) {
+  self._state = 2;
+  self._value = newValue;
+  finale(self);
+}
+
+function finale(self) {
+  if (self._state === 2 && self._deferreds.length === 0) {
+    Promise$1._immediateFn(function() {
+      if (!self._handled) {
+        Promise$1._unhandledRejectionFn(self._value);
+      }
+    });
+  }
+
+  for (var i = 0, len = self._deferreds.length; i < len; i++) {
+    handle(self, self._deferreds[i]);
+  }
+  self._deferreds = null;
+}
+
+function Handler(onFulfilled, onRejected, promise) {
+  this.onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : null;
+  this.onRejected = typeof onRejected === 'function' ? onRejected : null;
+  this.promise = promise;
+}
+
+/**
+ * Take a potentially misbehaving resolver function and make sure
+ * onFulfilled and onRejected are only called once.
+ *
+ * Makes no guarantees about asynchrony.
+ */
+function doResolve(fn, self) {
+  var done = false;
+  try {
+    fn(function (value) {
+      if (done) { return; }
+      done = true;
+      resolve(self, value);
+    }, function (reason) {
+      if (done) { return; }
+      done = true;
+      reject(self, reason);
+    });
+  } catch (ex) {
+    if (done) { return; }
+    done = true;
+    reject(self, ex);
+  }
+}
+
+Promise$1.prototype['catch'] = function (onRejected) {
+  return this.then(null, onRejected);
+};
+
+Promise$1.prototype.then = function (onFulfilled, onRejected) {
+  var prom = new (this.constructor)(noop);
+
+  handle(this, new Handler(onFulfilled, onRejected, prom));
+  return prom;
+};
+
+Promise$1.all = function (arr) {
+  var args = Array.prototype.slice.call(arr);
+
+  return new Promise$1(function (resolve, reject) {
+    if (args.length === 0) { return resolve([]); }
+    var remaining = args.length;
+
+    function res(i, val) {
+      try {
+        if (val && (typeof val === 'object' || typeof val === 'function')) {
+          var then = val.then;
+          if (typeof then === 'function') {
+            then.call(val, function (val) {
+              res(i, val);
+            }, reject);
+            return;
+          }
+        }
+        args[i] = val;
+        if (--remaining === 0) {
+          resolve(args);
+        }
+      } catch (ex) {
+        reject(ex);
+      }
+    }
+
+    for (var i = 0; i < args.length; i++) {
+      res(i, args[i]);
+    }
+  });
+};
+
+Promise$1.resolve = function (value) {
+  if (value && typeof value === 'object' && value.constructor === Promise$1) {
+    return value;
+  }
+
+  return new Promise$1(function (resolve) {
+    resolve(value);
+  });
+};
+
+Promise$1.reject = function (value) {
+  return new Promise$1(function (resolve, reject) {
+    reject(value);
+  });
+};
+
+Promise$1.race = function (values) {
+  return new Promise$1(function (resolve, reject) {
+    for (var i = 0, len = values.length; i < len; i++) {
+      values[i].then(resolve, reject);
+    }
+  });
+};
+
+// Use polyfill for setImmediate for performance gains
+Promise$1._immediateFn = (typeof setImmediate === 'function' && function (fn) { setImmediate(fn); }) ||
+  function (fn) {
+    setTimeoutFunc(fn, 0);
+  };
+
+Promise$1._unhandledRejectionFn = function _unhandledRejectionFn(err) {
+  if (typeof console !== 'undefined' && console) {
+    console.warn('Possible Unhandled Promise Rejection:', err); // eslint-disable-line no-console
+  }
+};
+
+/**
+ * Set the immediate function to execute callbacks
+ * @param fn {function} Function to execute
+ * @deprecated
+ */
+Promise$1._setImmediateFn = function _setImmediateFn(fn) {
+  Promise$1._immediateFn = fn;
+};
+
+/**
+ * Change the function to execute on unhandled rejection
+ * @param {function} fn Function to execute on unhandled rejection
+ * @deprecated
+ */
+Promise$1._setUnhandledRejectionFn = function _setUnhandledRejectionFn(fn) {
+  Promise$1._unhandledRejectionFn = fn;
+};
+
+/**
+ * Default configuration
+ */
+var defaultOptions = {
+  baseUrl: null,
+  tokenName: 'token',
+  tokenPrefix: 'vueauth',
+  tokenHeader: 'Authorization',
+  tokenType: 'Bearer',
+  loginUrl: '/auth/login',
+  registerUrl: '/auth/register',
+  logoutUrl: null,
+  storageType: 'localStorage',
+  storageNamespace: 'vue-social-auth',
+  cookieStorage: {
+    domain: window.location.hostname,
+    path: '/',
+    secure: false
+  },
+  requestDataKey: 'data',
+  responseDataKey: 'data',
+
+  /**
+   * Default request interceptor for Axios library
+   * @context {VueSocialauth}
+   */
+  bindRequestInterceptor: function ($auth) {
+
+    var tokenHeader = $auth.options.tokenHeader;
+
+    $auth.$http.interceptors.request.use(function (config) {
+      delete config.headers[tokenHeader];
+      return config
+    });
+
+
+  },
+
+  /**
+   * Default response interceptor for Axios library
+   * @contect {VueSocialauth}
+   */
+  bindResponseInterceptor: function ($auth) {
+    $auth.$http.interceptors.response.use(function (response) {
+      return response
+    });
+  },
+
+  providers: {
+    facebook: {
+      name: 'facebook',
+      url: '/auth/facebook',
+      authorizationEndpoint: 'https://www.facebook.com/v2.5/dialog/oauth',
+      redirectUri: window.location.origin + '/',
+      requiredUrlParams: ['display', 'scope'],
+      scope: ['email'],
+      scopeDelimiter: ',',
+      display: 'popup',
+      oauthType: '2.0',
+      popupOptions: { width: 580, height: 400 }
+    },
+
+    google: {
+      name: 'google',
+      url: '/auth/google',
+      authorizationEndpoint: 'https://accounts.google.com/o/oauth2/auth',
+      redirectUri: window.location.origin,
+      requiredUrlParams: ['scope'],
+      optionalUrlParams: ['display'],
+      scope: ['profile', 'email'],
+      scopePrefix: 'openid',
+      scopeDelimiter: ' ',
+      display: 'popup',
+      oauthType: '2.0',
+      popupOptions: { width: 452, height: 633 }
+    },
+
+    github: {
+      name: 'github',
+      url: '/auth/github',
+      authorizationEndpoint: 'https://github.com/login/oauth/authorize',
+      redirectUri: window.location.origin,
+      optionalUrlParams: ['scope'],
+      scope: ['user:email'],
+      scopeDelimiter: ' ',
+      oauthType: '2.0',
+      popupOptions: { width: 1020, height: 618 }
+    },
+
+    instagram: {
+      name: 'instagram',
+      url: '/auth/instagram',
+      authorizationEndpoint: 'https://api.instagram.com/oauth/authorize',
+      redirectUri: window.location.origin,
+      requiredUrlParams: ['scope'],
+      scope: ['basic'],
+      scopeDelimiter: '+',
+      oauthType: '2.0',
+      popupOptions: { width: null, height: null }
+    },
+
+    twitter: {
+      name: 'twitter',
+      url: '/auth/twitter',
+      authorizationEndpoint: 'https://api.twitter.com/oauth/authenticate',
+      redirectUri: window.location.origin,
+      oauthType: '1.0',
+      popupOptions: { width: 495, height: 645 }
+    },
+
+    bitbucket: {
+      name: 'bitbucket',
+      url: '/auth/bitbucket',
+      authorizationEndpoint: 'https://bitbucket.org/site/oauth2/authorize',
+      redirectUri: window.location.origin + '/',
+      optionalUrlParams: ['scope'],
+      scope: ['email'],
+      scopeDelimiter: ' ',
+      oauthType: '2.0',
+      popupOptions: { width: 1020, height: 618 }
+    },
+
+    linkedin: {
+      name: 'linkedin',
+      url: '/auth/linkedin',
+      authorizationEndpoint: 'https://www.linkedin.com/oauth/v2/authorization',
+      redirectUri: window.location.origin,
+      requiredUrlParams: ['state','scope'],
+      scope: ['r_emailaddress'],
+      scopeDelimiter: ' ',
+      state: 'STATE',
+      oauthType: '2.0',
+      popupOptions: { width: 527, height: 582 }
+    },
+
+    vkontakte: {
+      name: 'vkontakte',
+      url: '/auth/vkontakte',
+      authorizationEndpoint: 'https://oauth.vk.com/authorize',
+      redirectUri: window.location.origin + '/',
+      requiredUrlParams: ['scope'],
+      scope: ['email'],
+      scopeDelimiter: ',',
+      display: 'popup',
+      oauthType: '2.0',
+      popupOptions: { width: 580, height: 400 }
+    },
+
+    live: {
+      name: 'live',
+      url: '/auth/live',
+      authorizationEndpoint: 'https://login.live.com/oauth20_authorize.srf',
+      redirectUri: window.location.origin,
+      requiredUrlParams: ['display', 'scope'],
+      scope: ['wl.emails'],
+      scopeDelimiter: ' ',
+      display: 'popup',
+      oauthType: '2.0',
+      popupOptions: { width: 500, height: 560 }
+    },
+
+    oauth1: {
+      name: null,
+      url: '/auth/oauth1',
+      authorizationEndpoint: null,
+      redirectUri: window.location.origin,
+      oauthType: '1.0',
+      popupOptions: null
+    },
+
+    oauth2: {
+      name: null,
+      url: '/auth/oauth2',
+      clientId: null,
+      redirectUri: window.location.origin,
+      authorizationEndpoint: null,
+      defaultUrlParams: ['response_type', 'client_id', 'redirect_uri'],
+      requiredUrlParams: null,
+      optionalUrlParams: null,
+      scope: null,
+      scopePrefix: null,
+      scopeDelimiter: null,
+      state: null,
+      oauthType: '2.0',
+      popupOptions: null,
+      responseType: 'code',
+      responseParams: {
+        code: 'code',
+        clientId: 'clientId',
+        redirectUri: 'redirectUri'
+      }
+    }
+  }
+};
+
+var CookieStorage = function CookieStorage(defaultOptions) {
+  this._defaultOptions = objectExtend({
+    domain: window.location.hostname,
+    expires: null,
+    path: '/',
+    secure: false
+  }, defaultOptions);
+};
+
+CookieStorage.prototype.setItem = function setItem (key, value) {
+  var options = objectExtend({}, this._defaultOptions);
+  var cookie = formatCookie(key, value, options);
+  this._setCookie(cookie);
+};
+
+CookieStorage.prototype.getItem = function getItem (key) {
+  var cookies = parseCookies(this._getCookie());
+  return cookies.hasOwnProperty(key) ? cookies[key] : null;
+};
+
+CookieStorage.prototype.removeItem = function removeItem (key) {
+  var value = '';
+  var defaultOptions = objectExtend({}, this._defaultOptions);
+  var options = objectExtend(defaultOptions, {
+    expires: new Date(0)
+  });
+  var cookie = formatCookie(key, value, options);
+  this._setCookie(cookie);
+};
+
+CookieStorage.prototype._getCookie = function _getCookie () {
+  return typeof document === 'undefined'
+    ? '' : typeof document.cookie === 'undefined'
+      ? '' : document.cookie;
+};
+
+CookieStorage.prototype._setCookie = function _setCookie (cookie) {
+  document.cookie = cookie;
+};
+
+var LocalStorage = function LocalStorage(namespace) {
+  this.namespace = namespace || null;
+};
+
+LocalStorage.prototype.setItem = function setItem (key, value) {
+  window.localStorage.setItem(this._getStorageKey(key), value);
+};
+
+LocalStorage.prototype.getItem = function getItem (key) {
+  return window.localStorage.getItem(this._getStorageKey(key))
+};
+
+LocalStorage.prototype.removeItem = function removeItem (key) {
+  window.localStorage.removeItem(this._getStorageKey(key));
+};
+
+LocalStorage.prototype._getStorageKey = function _getStorageKey (key) {
+  if (this.namespace) {
+    return [this.namespace, key].join('.')
+  }
+  return key;
+};
+
+var MemoryStorage = function MemoryStorage(namespace) {
+  this.namespace = namespace || null;
+  this._storage = {};
+};
+
+MemoryStorage.prototype.setItem = function setItem (key, value) {
+  this._storage[this._getStorageKey(key)] = value;
+};
+
+MemoryStorage.prototype.getItem = function getItem (key) {
+  return this._storage[this._getStorageKey(key)]
+};
+
+MemoryStorage.prototype.removeItem = function removeItem (key) {
+  delete this._storage[this._getStorageKey(key)];
+};
+
+MemoryStorage.prototype._getStorageKey = function _getStorageKey (key) {
+  if (this.namespace) {
+    return [this.namespace, key].join('.')
+  }
+  return key;
+};
+
+var LocalStorage$2 = function LocalStorage(namespace) {
+  this.namespace = namespace || null;
+};
+
+LocalStorage$2.prototype.setItem = function setItem (key, value) {
+  window.sessionStorage.setItem(this._getStorageKey(key), value);
+};
+
+LocalStorage$2.prototype.getItem = function getItem (key) {
+  return window.sessionStorage.getItem(this._getStorageKey(key))
+};
+
+LocalStorage$2.prototype.removeItem = function removeItem (key) {
+  window.sessionStorage.removeItem(this._getStorageKey(key));
+};
+
+LocalStorage$2.prototype._getStorageKey = function _getStorageKey (key) {
+  if (this.namespace) {
+    return [this.namespace, key].join('.')
+  }
+  return key;
+};
+
+function StorageFactory(options) {
+  switch (options.storageType) {
+    case 'localStorage':
+      try {
+        window.localStorage.setItem('testKey', 'test');
+        window.localStorage.removeItem('testKey');
+        return new LocalStorage(options.storageNamespace)
+      } catch(e) {}
+
+    case 'sessionStorage':
+      try {
+        window.sessionStorage.setItem('testKey', 'test');
+        window.sessionStorage.removeItem('testKey');
+        return new LocalStorage$2(options.storageNamespace)
+      } catch (e) {}
+      
+    case 'cookieStorage':
+      return new CookieStorage(options.cookieStorage);
+
+    case 'memoryStorage': 
+    default:
+      return new MemoryStorage(options.storageNamespace)
+      break;
+  }
+}
+
+/**
+ * OAuth2 popup management class
+ * 
+ * @author Sahat Yalkabov <https://github.com/sahat>
+ * @copyright Class mostly taken from https://github.com/sahat/satellizer 
+ * and adjusted to fit vue-social-auth library
+ */
+var OAuthPopup = function OAuthPopup(url, name, popupOptions) {
+  this.popup = null;
+  this.url = url;
+  this.name = name;
+  this.popupOptions = popupOptions;
+};
+
+OAuthPopup.prototype.open = function open (redirectUri, skipPooling) {
+  try {
+    this.popup = window.open(this.url, this.name, this._stringifyOptions());
+    if (this.popup && this.popup.focus) {
+      this.popup.focus();
+    }
+
+    if (skipPooling) {
+      return Promise$1.resolve()
+    } else {
+      return this.pooling(redirectUri)
+    }
+  } catch(e) {
+    return Promise$1.reject(new Error('OAuth popup error occurred'))
+  }
+};
+
+OAuthPopup.prototype.pooling = function pooling (redirectUri) {
+    var this$1 = this;
+
+  return new Promise$1(function (resolve, reject) {
+    var redirectUriParser = document.createElement('a');
+    redirectUriParser.href = redirectUri;
+    var redirectUriPath = getFullUrlPath(redirectUriParser);
+
+    var poolingInterval = setInterval(function () {
+      if (!this$1.popup || this$1.popup.closed || this$1.popup.closed === undefined) {
+        clearInterval(poolingInterval);
+        poolingInterval = null;
+        reject(new Error('Auth popup window closed'));
+      }
+
+      try {
+        var popupWindowPath = getFullUrlPath(this$1.popup.location);
+
+        if (popupWindowPath === redirectUriPath) {
+          if (this$1.popup.location.search || this$1.popup.location.hash) {
+            var query = parseQueryString(this$1.popup.location.search.substring(1).replace(/\/$/, ''));
+            var hash = parseQueryString(this$1.popup.location.hash.substring(1).replace(/[\/$]/, ''));
+            var params = objectExtend({}, query);
+            params = objectExtend(params, hash);
+
+            if (params.error) {
+              reject(new Error(params.error));
+            } else {
+              resolve(params);
+            }
+          } else {
+            reject(new Error('OAuth redirect has occurred but no query or hash parameters were found.'));
+          }
+
+          clearInterval(poolingInterval);
+          poolingInterval = null;
+          this$1.popup.close();
+        }
+      } catch(e) {
+        // Ignore DOMException: Blocked a frame with origin from accessing a cross-origin frame.
+      }
+    }, 250);
+  })
+};
+
+OAuthPopup.prototype._stringifyOptions = function _stringifyOptions () {
+    var this$1 = this;
+
+  var options = [];
+  for (var optionKey in this$1.popupOptions) {
+    if (!isUndefined(this$1.popupOptions[optionKey])) {
+      options.push((optionKey + "=" + (this$1.popupOptions[optionKey])));
+    }
+  }
+  return options.join(',')
+};
+
+var defaultProviderConfig = {
+  name: null,
+  url: null,
+  authorizationEndpoint: null,
+  scope: null,
+  scopePrefix: null,
+  scopeDelimiter: null,
+  redirectUri: null,
+  requiredUrlParams: null,
+  defaultUrlParams: null,
+  oauthType: '1.0',
+  popupOptions: {}
+};
+
+var OAuth = function OAuth($http, storage, providerConfig, options) {
+  this.$http = $http;
+  this.storage = storage;
+  this.providerConfig = objectExtend({}, defaultProviderConfig);
+  this.providerConfig = objectExtend(this.providerConfig, providerConfig);
+  this.options = options;
+};
+
+/**
+ * Initialize OAuth1 process 
+ * @param{Object} userData User data
+ * @return {Promise}
+ */
+OAuth.prototype.init = function init (userData) {
+    var this$1 = this;
+
+  this.oauthPopup = new OAuthPopup('about:blank', this.providerConfig.name, this.providerConfig.popupOptions);
+
+  if (window && !window['cordova']) {
+    this.oauthPopup.open(this.providerConfig.redirectUri, true);
+  }
+
+  return this.getRequestToken().then(function (response) {
+    return this$1.openPopup(response).then(function (popupResponse) {
+      return this$1.exchangeForToken(popupResponse, userData)
+    })
+  })
+};
+
+/**
+ * Get OAuth1 request token
+ * @return {Promise}
+ */
+OAuth.prototype.getRequestToken = function getRequestToken () {
+  var requestOptions = {};
+  requestOptions.method = 'POST';
+  requestOptions[this.options.requestDataKey] = objectExtend({}, this.providerConfig);
+  requestOptions.withCredentials = this.options.withCredentials;
+  if (this.options.baseUrl) {
+    requestOptions.url = joinUrl(this.options.baseUrl, this.providerConfig.url);
+  } else {
+    requestOptions.url = this.providerConfig.url;
+  }
+
+  return this.$http(requestOptions)
+};
+
+/**
+ * Open OAuth1 popup
+ * @param{Object} response Response object containing request token
+ * @return {Promise}
+ */
+OAuth.prototype.openPopup = function openPopup (response) {
+  var url = [this.providerConfig.authorizationEndpoint, this.buildQueryString(response[this.options.responseDataKey])].join('?');
+
+  this.oauthPopup.popup.location = url;
+  if (window && window['cordova']) {
+    return this.oauthPopup.open(this.providerConfig.redirectUri)
+  } else {
+    return this.oauthPopup.pooling(this.providerConfig.redirectUri)
+  }
+};
+
+/**
+ * Exchange token and token verifier for access token
+ * @param{Object} oauth  OAuth data containing token and token verifier
+ * @param{Object} userData User data
+ * @return {Promise}
+ */
+OAuth.prototype.exchangeForToken = function exchangeForToken (oauth, userData) {
+  var payload = objectExtend({}, userData);
+  payload = objectExtend(payload, oauth);
+  var requestOptions = {};
+  requestOptions.method = 'POST';
+  requestOptions[this.options.requestDataKey] = payload;
+  requestOptions.withCredentials = this.options.withCredentials;
+  if (this.options.baseUrl) {
+    requestOptions.url = joinUrl(this.options.baseUrl, this.providerConfig.url);
+  } else {
+    requestOptions.url = this.providerConfig.url;
+  }
+  return this.$http(requestOptions)
+};
+
+OAuth.prototype.buildQueryString = function buildQueryString (params) {
+  var parsedParams = [];
+  for (var key in params) {
+    var value = params[key];
+    parsedParams.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
+  }
+  return parsedParams.join('&');
+};
+
+/**
+ * Default provider configuration
+ * @type {Object}
+ */
+var defaultProviderConfig$1 = {
+  name: null,
+  url: null,
+  clientId: null,
+  authorizationEndpoint: null,
+  redirectUri: null,
+  scope: null,
+  scopePrefix: null,
+  scopeDelimiter: null,
+  state: null,
+  requiredUrlParams: null,
+  defaultUrlParams: ['response_type', 'client_id', 'redirect_uri'],
+  responseType: 'code',
+  responseParams: {
+    code: 'code',
+    clientId: 'clientId',
+    redirectUri: 'redirectUri'
+  },
+  oauthType: '2.0',
+  popupOptions: {}
+};
+
+var OAuth2 = function OAuth2($http, storage, providerConfig, options) {
+  this.$http = $http;
+  this.storage = storage;
+  this.providerConfig = objectExtend({}, defaultProviderConfig$1);
+  this.providerConfig = objectExtend(this.providerConfig, providerConfig);
+  this.options = options;
+};
+
+OAuth2.prototype.init = function init (userData) {
+    var this$1 = this;
+
+  var stateName = this.providerConfig.name + '_state';
+  if (isFunction(this.providerConfig.state)) {
+    this.storage.setItem(stateName, this.providerConfig.state());
+  } else if (isString(this.providerConfig.state)) {
+    this.storage.setItem(stateName, this.providerConfig.state);
+  }
+
+  var url = [this.providerConfig.authorizationEndpoint, this._stringifyRequestParams()].join('?');
+
+  this.oauthPopup = new OAuthPopup(url, this.providerConfig.name, this.providerConfig.popupOptions);
+    
+  return new Promise(function (resolve, reject) {
+    this$1.oauthPopup.open(this$1.providerConfig.redirectUri).then(function (response) {
+      if (this$1.providerConfig.responseType === 'code' || !this$1.providerConfig.url) {
+        return resolve(response)
+      }
+
+      if (response.state && response.state !== this$1.storage.getItem(stateName)) {
+        return reject(new Error('State parameter value does not match original OAuth request state value'))
+      }
+
+      resolve(this$1.exchangeForToken(response, userData));
+    }).catch(function (err) {
+      reject(err);
+    });
+  })
+};
+
+/**
+ * Exchange temporary oauth data for access token
+ * @author Sahat Yalkabov <https://github.com/sahat>
+ * @copyright Method taken from https://github.com/sahat/satellizer
+ * 
+ * @param{[type]} oauth  [description]
+ * @param{[type]} userData [description]
+ * @return {[type]}        [description]
+ */
+OAuth2.prototype.exchangeForToken = function exchangeForToken (oauth, userData) {
+    var this$1 = this;
+
+  var payload = objectExtend({}, userData);
+
+  for (var key in defaultProviderConfig$1.responseParams) {
+    var value = defaultProviderConfig$1[key];
+
+    switch(key) {
+      case 'code':
+        payload[key] = oauth.code;
+        break
+      case 'clientId':
+        payload[key] = this$1.providerConfig.clientId;
+        break
+      case 'redirectUri':
+        payload[key] = this$1.providerConfig.redirectUri;
+        break
+      default:
+        payload[key] = oauth[key];
+    }
+  }
+
+  if (oauth.state) {
+    payload.state = oauth.state;
+  }
+
+  var exchangeTokenUrl;
+  if (this.options.baseUrl) {
+    exchangeTokenUrl = joinUrl(this.options.baseUrl, this.providerConfig.url);
+  } else {
+    exchangeTokenUrl = this.providerConfig.url;
+  }
+
+  return this.$http.post(exchangeTokenUrl, payload, {
+    withCredentials: this.options.withCredentials
+  })
+};
+
+/**
+ * Stringify oauth params
+ * @author Sahat Yalkabov <https://github.com/sahat>
+ * @copyright Method taken from https://github.com/sahat/satellizer
+ * 
+ * @return {String}
+ */
+OAuth2.prototype._stringifyRequestParams = function _stringifyRequestParams () {
+    var this$1 = this;
+
+  var keyValuePairs = [];
+  var paramCategories = ['defaultUrlParams', 'requiredUrlParams', 'optionalUrlParams'];
+
+  paramCategories.forEach(function (categoryName) {
+    if (!this$1.providerConfig[categoryName]) { return }
+    if (!Array.isArray(this$1.providerConfig[categoryName])) { return }
+
+    this$1.providerConfig[categoryName].forEach(function (paramName) {
+      var camelCaseParamName = camelCase(paramName);
+      var paramValue = isFunction(this$1.providerConfig[paramName]) ? this$1.providerConfig[paramName]() : this$1.providerConfig[camelCaseParamName];
+
+      if (paramName === 'redirect_uri' && !paramValue) { return }
+
+      if (paramName === 'state') {
+        var stateName = this$1.providerConfig.name + '_state';
+        paramValue = encodeURIComponent(this$1.storage.getItem(stateName));
+      }
+      if (paramName === 'scope' && Array.isArray(paramValue)) {
+        paramValue = paramValue.join(this$1.providerConfig.scopeDelimiter);
+        if (this$1.providerConfig.scopePrefix) {
+          paramValue = [this$1.providerConfig.scopePrefix, paramValue].join(this$1.providerConfig.scopeDelimiter);
+        }
+      }
+
+      keyValuePairs.push([paramName, paramValue]);
+    });
+  });
+
+  return keyValuePairs.map(function (param) {
+    return param.join('=')
+  }).join('&')
+};
+
+var VueSocialauth = function VueSocialauth($http, overrideOptions) {
+  var options = objectExtend({}, defaultOptions);
+  options = objectExtend(options, overrideOptions);
+  var storage = StorageFactory(options);
+
+  Object.defineProperties(this, {
+    $http: {
+      get: function get() {
+        return $http
+      }
+    },
+
+    options: {
+      get: function get() {
+        return options
+      }
+    },
+
+    storage: {
+      get: function get() {
+        return storage
+      }
+    },
+
+    tokenName: {
+      get: function get() {
+        if (this.options.tokenPrefix) {
+          return [this.options.tokenPrefix, this.options.tokenName].join('_')
+        } else {
+          return this.options.tokenName
+        }
+      }
+    }
+  });
+
+  // Setup request interceptors
+  if (this.options.bindRequestInterceptor && isFunction(this.options.bindRequestInterceptor) &&
+      this.options.bindResponseInterceptor && isFunction(this.options.bindResponseInterceptor)) {
+
+    this.options.bindRequestInterceptor.call(this, this);
+    this.options.bindResponseInterceptor.call(this, this);
+  } else {
+    throw new Error('Both request and response interceptors must be functions')
+  }
+};
+
+/**
+ * Check if user is authenticated
+ * @author Sahat Yalkabov <https://github.com/sahat>
+ * @copyright Method taken from https://github.com/sahat/satellizer
+ * @return {Boolean}
+ */
+// isAuthenticated() {
+// let token = this.storage.getItem(this.tokenName)
+
+// if (token) {// Token is present
+//   if (token.split('.').length === 3) {// Token with a valid JWT format XXX.YYY.ZZZ
+//     try { // Could be a valid JWT or an access token with the same format
+//       const base64Url = token.split('.')[1];
+//       const base64 = base64Url.replace('-', '+').replace('_', '/');
+//       const exp = JSON.parse(window.atob(base64)).exp;
+//       if (typeof exp === 'number') {// JWT with an optonal expiration claims
+//         return Math.round(new Date().getTime() / 1000) < exp;
+//       }
+//     } catch (e) {
+//       return true;// Pass: Non-JWT token that looks like JWT
+//     }
+//   }
+//   return true;// Pass: All other tokens
+// }
+// return false
+// }
+
+/**
+ * Get token if user is authenticated
+ * @return {String} Authentication token
+ */
+VueSocialauth.prototype.getToken = function getToken () {
+  return this.storage.getItem(this.tokenName)
+};
+
+/**
+ * Set new authentication token
+ * @param {String|Object} token
+ */
+// setToken(response) {
+// if (response[this.options.responseDataKey]) {
+//   response = response[this.options.responseDataKey];
+// }
+    
+// let token;
+// if (response.access_token) {
+//   if (isObject(response.access_token) && isObject(response.access_token[this.options.responseDataKey])) {
+//     response = response.access_token
+//   } else if (isString(response.access_token)) {
+//     token = response.access_token
+//   }
+// }
+
+// if (!token && response) {
+//   token = response[this.options.tokenName]
+// }
+
+// if (token) {
+//   this.storage.setItem(this.tokenName, token)
+// }
+// }
+
+// getPayload() {
+// const token = this.storage.getItem(this.tokenName);
+
+// if (token && token.split('.').length === 3) {
+//   try {
+//     const base64Url = token.split('.')[1];
+//     const base64 = base64Url.replace('-', '+').replace('_', '/');
+//     return JSON.parse(decodeBase64(base64));
+//   } catch (e) {}
+// }
+// }
+  
+/**
+ * Login user using email and password
+ * @param{Object} user         User data
+ * @param{Object} requestOptions Request options
+ * @return {Promise}             Request promise
+ */
+// login(user, requestOptions) {
+// requestOptions = requestOptions || {}
+// requestOptions.url = requestOptions.url ? requestOptions.url : joinUrl(this.options.baseUrl, this.options.loginUrl)
+// requestOptions[this.options.requestDataKey] = user || requestOptions[this.options.requestDataKey]
+// requestOptions.method = requestOptions.method || 'POST'
+// requestOptions.withCredentials = requestOptions.withCredentials || this.options.withCredentials
+
+// return this.$http(requestOptions).then((response) => {
+//   this.setToken(response)
+//   return response
+// })
+// }
+
+/**
+ * Register new user
+ * @param{Object} user         User data
+ * @param{Object} requestOptions Request options
+ * @return {Promise}             Request promise
+ */
+// register(user, requestOptions) {
+// requestOptions = requestOptions || {}
+// requestOptions.url = requestOptions.url ? requestOptions.url : joinUrl(this.options.baseUrl, this.options.registerUrl)
+// requestOptions[this.options.requestDataKey] = user || requestOptions[this.options.requestDataKey]
+// requestOptions.method = requestOptions.method || 'POST'
+// requestOptions.withCredentials = requestOptions.withCredentials || this.options.withCredentials
+
+// return this.$http(requestOptions).then((response) => {
+//   this.setToken(response)
+//   return response
+// })
+// }
+
+/**
+ * Logout current user
+ * @param{Object} requestOptionsLogout request options object
+ * @return {Promise}              Request promise
+ */
+// logout(requestOptions) {
+// if (!this.isAuthenticated()) {
+//   return Promise.reject(new Error('There is no currently authenticated user'))
+// }
+
+// requestOptions = requestOptions || {}
+// requestOptions.url = requestOptions.logoutUrl || this.options.logoutUrl
+
+// if (requestOptions.url) {
+//   requestOptions.method = requestOptions.method || 'POST'
+//   requestOptions.withCredentials = requestOptions.withCredentials || this.options.withCredentials
+
+//   return this.$http(requestOptions).then((response) => {
+//     this.storage.removeItem(this.tokenName)
+//   })
+// } else {
+//   this.storage.removeItem(this.tokenName)
+//   return Promise.resolve();
+// }
+// }
+
+/**
+ * Authenticate user using authentication provider
+ * 
+ * @param{String} provider     Provider name
+ * @param{Object} userData     User data
+ * @param{Object} requestOptions Request options
+ * @return {Promise}             Request promise
+ */
+VueSocialauth.prototype.authenticate = function authenticate (provider, userData, requestOptions) {
+    var this$1 = this;
+
+  return new Promise$1(function (resolve, reject) {
+    var providerConfig = this$1.options.providers[provider];
+    if (!providerConfig) {
+      return reject(new Error('Unknown provider'))
+    }
+
+    var providerInstance;
+    switch (providerConfig.oauthType) {
+      case '1.0':
+        providerInstance = new OAuth(this$1.$http, this$1.storage, providerConfig, this$1.options);
+        break
+      case '2.0':
+        providerInstance = new OAuth2(this$1.$http, this$1.storage, providerConfig, this$1.options);
+        break
+      default:
+        return reject(new Error('Invalid OAuth type'))
+        break
+    }
+
+    return providerInstance.init(userData).then(function (response) {
+      return resolve(response)
+
+    }).catch(function (err) { return reject(err); })
+  })
+};
+
+/**
+ * VueSocialauth plugin
+ * @param {Object} Vue
+ * @param {Object} options
+ */
+function plugin(Vue, options) {
+  if (plugin.installed) {
+    return
+  }
+  plugin.installed = true;
+
+  var property = options.property || '$auth';
+
+  var vueAuthInstance = null;
+  Object.defineProperties(Vue.prototype, ( obj = {}, obj[property] = {
+      get: function get() {
+        if (!vueAuthInstance) {
+          // Request handler library not found, throw error
+          // verified vue or nuxt instance
+          if (this.$axios) {
+            vueAuthInstance = new VueSocialauth(this.$axios, options);
+          } else if (this.$http) {
+            vueAuthInstance = new VueSocialauth(this.$http, options);
+          } else {
+            throw new Error('Request handler instance not found')
+          }
+        }
+        return vueAuthInstance
+      }
+    }, obj ));
+  var obj;
+}
+
+/**
+ * External factory helper for ES5 and CommonJS
+ * @param  {Object} $http     Instance of request handling library
+ * @param  {Object} options   Configuration object
+ * @return {VueSocialauth}  VueSocialauth instance
+ */
+plugin.factory = function ($http, options) {
+  return new VueSocialauth($http, options)
+};
+
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (plugin);
+
+
 
 /***/ }),
 

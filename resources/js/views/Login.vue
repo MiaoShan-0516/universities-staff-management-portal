@@ -1,104 +1,66 @@
 <template>
   <div>
-    <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-12 col-lg-6">
-          <div class="card shadow">
-            <div class="p-5">
-            <div class="col-2 mx-auto mb-3">
-              <img src="https://www.arealme.com/logo.png" alt="Logo" class="img-fluid">
-            </div>
-            <div class="my-3">
-              <div class="text-center">
-                <h1 class="my-3">Login in to portal</h1>
+    <section id="login">
+      <div class="container-fluid p-0">
+        <div class="row">
+          <img src="/img/login_bg.jfif" class="img-fluid d-none d-lg-block col-md-6 p-0" alt="login_bg">
+          <div class="col-12 col-md-6 m-auto text-center px-0">
+            <img src="/img/logo.png" class="img-fluid" alt="logo">
+            <h1 class="my-4">Welcome</h1>
+            <button class="btn-google" @click="AuthProvider('google')">
+              <span class="mr-2">
+                <i class="fa fa-google" aria-hidden="true"></i>
+              </span>
+              <span>Sign in with Google</span>
+            </button>
+            <h2 class="mt-4">OR</h2>
+            <div class="col-10 col-md-6 m-auto">
+              <div class="my-3">
+                <div class="d-flex align-items-center">
+                  <div class="form-control form-control-md col">
+                    <i class="fa fa-envelope"></i>
+                  </div>
+                  <input
+                    type="email"
+                    name="email"
+                    @blur="handleBlur"
+                    class="form-control form-control-lg text-lowercase"
+                    placeholder="Email Address"
+                    v-model="email"
+                  />
+                </div>
+                <small class="text-danger" v-if="email != '' && !emailValidation(email)">
+                  Please enter valid email address (format: example@email.com)
+                </small>
               </div>
-                <div class="row">
-                  <div class="col-12 col-md-6 d-flex justify-content-center">
-                    <button
-                      @click="AuthProvider('google')"
-                      class="
-                        row
-                        btn btn-danger
-                        text-white
-                        p-3
-                        w-100
-                        d-flex
-                        align-items-center
-                        justify-content-center
-                      "
-                    >
-                      <span class="text-white col-1 ">
-                        <i class="fa fa-google" aria-hidden="true"></i>
-                      </span>
-                      <span class="col-10">Sign in with Google</span>
-                    </button>
+              <div class="my-3">
+                <div class="d-flex align-items-center">
+                  <div class="form-control form-control-md col">
+                    <i class="fa fa-lock mr-1"></i>
                   </div>
-                  <div class="col-12 col-lg-6 d-flex justify-content-center">
-                    <button
-                      @click.prevent="AuthProvider('facebook')"
-                      class="
-                        row
-                        btn btn-primary
-                        p-3
-                        w-100
-                        d-flex
-                        align-items-center
-                        justify-content-center
-                      "
-                    >
-                      <span class="col-1 text-white">
-                        <i class="fa fa-facebook" aria-hidden="true"></i>
-                      </span>
-                      <span class="col-10">Sign in with Facebook</span>
-                    </button>
+                  <input
+                    name="password"
+                    v-bind:type="[showPassword ? 'text' : 'password']"
+                    class="form-control form-control-lg"
+                    autocomplete="off"
+                    placeholder="Password"
+                    v-model="password"
+                  />
+                  <div class="form-control form-control-md col cursor-pointer" @click="displayPassword()">
+                    <i class="fa" :class="{ 'fa-eye-slash': showPassword, 'fa-eye': !showPassword }"></i>
                   </div>
                 </div>
-                <span class="row my-3 text-center justify-content-center font-weight-bold">
-                  OR
-                  </span>
-                <div>
-                  <div class="my-3">
-                    <label for="email">Email Address</label>
-                    <input
-                      type="email"
-                      name="email"
-                      @blur="handleBlur"
-                      class="form-control form-control-lg text-lowercase"
-                      placeholder="example@email.com"
-                      v-model="email"
-                    />
-                    <small v-if="email != '' && !emailValidation(email)"
-                      >Please enter valid email address</small
-                    >
-                  </div>
-                  <div class="my-3">
-                    <label for="password">Password</label>
-                    <div class="d-flex align-items-center">
-                      <input
-                      name="password"
-                      v-bind:type="[showPassword ? 'text' : 'password']"
-                      class="form-control form-control-lg"
-                      autocomplete="off"
-                      placeholder=""
-                      v-model="password"
-                    />
-                      <div class="form-control form-control-lg col cursor-pointer" @click="displayPassword()">
-                        <i class="fa" :class="{ 'fa-eye-slash': showPassword, 'fa-eye': !showPassword }"></i>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-12 col-lg-3 m-auto">
-                    <button class="btn btn-primary w-100" @click="logIn()">
-                      Login
-                    </button>
-                  </div>
-                </div>
+              </div>
+              <div>
+                <button class="btn btn-login" @click="logIn()">
+                  Login
+                </button>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -120,6 +82,28 @@
       }
     },
     methods: {
+      AuthProvider(provider) {
+        this.$auth.authenticate(provider).then(response =>{
+          this.SocialLogin(provider,response)
+          }).catch(err => {
+              console.log({err:err})
+          })
+      },
+      SocialLogin(provider,response) {
+        axios.defaults.baseURL = "/api";
+          axios
+            .post("/sociallogin/" + provider, response)
+            .then((response) => {
+              console.log(response.data)
+              this.userData = response.arr_user;
+              let self = this;
+              self.$session.start();
+              self.$session.set("userData", this.userData);
+              self.$router.push({ path: "/" });
+          }).catch(err => {
+              console.log({err:err})
+          })
+      },
       emailValidation: function (email) {
         const re =
           /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

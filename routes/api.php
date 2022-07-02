@@ -26,6 +26,8 @@ Route::post('/loginValidation', 'App\Http\Controllers\AuthController@userLogin')
 Route::get('/getAllUniversity', 'App\Http\Controllers\UniversityController@getAllUniversity');
 Route::get('/getUniversityDetails/{id}', 'App\Http\Controllers\UniversityController@getUniversityDetails');
 Route::post('/addStaffToUniversity/{id}', 'App\Http\Controllers\UniversityController@addStaffToUniversity');
-Route::get('/getStaffDetails/{id}', 'App\Http\Controllers\StaffController@getStaffDetails');
+Route::get('/getStaffDetails/{id}{uniId}', 'App\Http\Controllers\StaffController@getStaffDetails');
 Route::post('/updateStaffDetails', 'App\Http\Controllers\StaffController@updateStaffDetails');
 Route::post('/deleteStaff/{id}', 'App\Http\Controllers\StaffController@deleteStaff');
+
+Route::post('sociallogin/{provider}', 'App\Http\Controllers\AuthController@SocialSignup');

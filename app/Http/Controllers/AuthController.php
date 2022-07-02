@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
+use Socialite;
 
 class AuthController extends Controller
 {
@@ -29,5 +31,13 @@ class AuthController extends Controller
         else {
             return response()->json(['error' => 'login_error'], 401);
         }
+    }
+
+    public function SocialSignup($provider)
+    {
+        // Socialite will pick response data automatic
+        $user = Socialite::driver($provider)->stateless()->user();
+
+        return response()->json($user);
     }
 }

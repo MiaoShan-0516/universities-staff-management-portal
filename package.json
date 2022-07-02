@@ -32,9 +32,12 @@
         "laravel-vue-datatable": "^0.6.0",
         "vue-axios": "^3.4.1",
         "vue-cookie": "^1.1.4",
+        "vue-google-login": "^2.0.5",
+        "vue-google-oauth2": "^1.5.8",
         "vue-router": "^3.5.4",
         "vue-session": "^1.0.0",
         "vue-simple-alert": "^1.1.1",
+        "vue-social-auth": "^1.4.9",
         "vuejs-datatable": "^2.0.0-alpha.7",
         "vuetify": "^2.6.6"
     }

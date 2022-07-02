@@ -7,6 +7,60 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+/*--------------------------------------------------------------
+# General
+--------------------------------------------------------------*/
+body {
+    background-color: #E2DEDB !important;
+    color: #4B3D30;
+}
+section {
+    margin-top: 8rem;
+}
+.v-application a {
+    color: #6c3400 !important
+}
+.v-application a:hover {
+    font-weight: bold;
+}
+.tr-border {
+    border-bottom: 1px solid #e5e5e5;
+}
+.td-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+.td-body {
+    font-size: 0.8rem;
+}
+.breadcrumb-header {
+    position: fixed;
+    top: 80px;
+    padding: 10px;
+    background-color: #AC9D94;
+    color: #FFFFFF;
+    z-index: 9;
+
+    a, a:hover {
+        color: #ffffff;
+    }
+}
+.name-card {
+    background-color: #ffffff;
+    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
+    border-radius: 10px;
+    padding: 1rem;
+
+    a, a:hover {
+        color: #6c3400;
+    }
+}
+.text-center {
+    text-align: center !important;
+}
+.text-right {
+    text-align: right !important;
+}
 .cursor-pointer {
     cursor: pointer;
 }
@@ -14,14 +68,163 @@
     font-weight: bold;
 }
 
+@media screen and (max-width: 768px) {
+    .v-application a {
+        color: #4B3D30 !important;
+    }
+}
+@media screen and (max-width: 992px) {
+    section#without-breadcrumb {
+        margin-top: 5rem;
+    }
+}
+
+/*--------------------------------------------------------------
+# Navgation Bar
+--------------------------------------------------------------*/
+#navbar {
+    height: 80px;
+    font-size: 0.8em;
+    background: #D2C5BD;
+    color: #4B3D30;
+}
+.fixed-top {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1030;
+}
+.logo {
+    img {
+        max-height: 80px;
+    }
+}
+.time {
+    font-size: 2rem;
+    font-weight: 900;
+    letter-spacing: 6px;
+}
+.user-dropdown {
+    padding: 5px;
+    font-weight: 700;
+    cursor: pointer;
+}
+.user-dropdown:hover {
+    background-color: #b9aba3;
+}
+.dropdown-menu {
+    transform: translate3d(10%, 50%, 0px) !important;
+}
+.dropcontent {
+    display: none;
+    width: 240px;
+    background: #fefefe;
+    box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
+    text-align: center;
+}
+.open {
+    display: block;
+    position: absolute;
+    z-index: 1000000;
+    right: 0;
+    top: 80px;
+}
+.touch {
+    box-shadow: 0 3px 10px rgb(0 0 0 / 20%);
+}
+.mobile-icon {
+    width: 100%;
+    text-align: right;
+    box-sizing: border-box;
+    cursor: pointer;
+    color: #d9ba85;
+    display: none;
+    font-size: 20px;
+    font-family: bold;
+    margin: 2% 2%;
+    position: relative;
+    padding-left: 1.25em;
+}
+#sidebar {
+    background: #fff;
+    height: 100%;
+    left: -100%;
+    top: 0;
+    bottom: 0;
+    overflow: auto;
+    position: fixed;
+    transition: .4s ease-in-out;
+    width: 94%;
+    z-index: 5001;
+    box-shadow: 0 0 20px rgb(0 0 0 / 30%);
+    padding: 1.25rem 1rem 1rem;
+}
+#sidebar.active {
+    left: 0;
+}
+
+@media screen and (max-width: 768px) {
+    .dropdown-menu {
+        transform: translate3d(55vw, 50%, 0px) !important;
+    }
+    .time {
+        font-size: 0.8rem;
+        font-weight: 900;
+        letter-spacing: 3px;
+    }
+}
+
+/*--------------------------------------------------------------
+# Login Page
+--------------------------------------------------------------*/
+
+section#login {
+    margin: 0;
+}
+#login {
+    span {
+        font-size: 1.2rem;
+    }
+}
+.btn-google {
+    background-color: #C94130;
+    color: #ffffff;
+    padding: 10px 30px;
+    border-radius: 5px;
+}
+.btn-login {
+    background-color: #887459;
+    width: 100%;
+    color: #ffffff;
+    font-weight: bold !important;
+    font-size: 1.5rem !important;
+}
+.btn-login:hover {
+    background-color: #71614a;
+    color: #ffffff;
+}
+
+/*--------------------------------------------------------------
+# University Profile Page
+--------------------------------------------------------------*/
+
+#staff > div > div > div.v-data-table__wrapper > table > thead > tr > th:nth-child(3) {
+    text-align: right !important;
+}
+.inactive-staff-row {
+    background-color: lightgray;
+}
+.inactive-staff-row:hover {
+    background-color: gray !important;
+}
 .floating-add-icon {
     position: fixed;
     bottom: 40px;
     right: 111px;
     padding: 11px 15px;
-    background-color: darkgray;
+    background-color: #4b3d30;
     border-radius: 30px;
-    border: solid 1px grey;
     cursor: pointer;
 
     i {
@@ -33,9 +236,40 @@
     }
 }
 .floating-add-icon:hover {
-    background-color: gray;
+    box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 15%);
     i {
         font-size: 35px;
         transition: 0.3s;
+    }
+}
+@media screen and (max-width: 425px) {
+    .floating-add-icon {
+        right: 41px;
+    }
+}
+
+/*--------------------------------------------------------------
+# Staff Profile Page
+--------------------------------------------------------------*/
+
+#staff-profile {
+    a, a:hover {
+        color: #6c3400;
+        text-decoration: underline;
+    }
+}
+.btn-update-icon {
+    width: 75px;
+    padding: 11px 15px;
+    background-color: #4b3d30;
+    border-radius: 8px;
+    margin: 0 1rem;
+    cursor: pointer;
+    i {
+        font-size: 30px;
+        color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 }

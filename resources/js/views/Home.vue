@@ -39,9 +39,9 @@
                     <tr>
                       <td>{{ item.id }}</td>
                       <td>
-                        <router-link :to="{ path: '/profile/' + item.name.replace(/\s+/g, '-') + '/id=' + item.id }">
+                        <a :href="'/profile/' + item.name.replace(/\s+/g, '-') + '/id=' + item.id">
                           {{ item.name }}
-                        </router-link>
+                        </a>
                       </td>
                       <td>
                         <a :href="item.url" target="_blank">
@@ -78,7 +78,7 @@
                 >
                   <template v-slot:item="{ item }">
                     <tr class="tr-border">
-                      <router-link :to="{ path: '/profile/' + item.name.replace(/\s+/g, '-') + '/id=' + item.id }">
+                      <a :href="'/profile/' + item.name.replace(/\s+/g, '-') + '/id=' + item.id">
                         <div class="d-flex">
                           <div class="col-1">
                             <td>{{ item.id }}</td>
@@ -86,9 +86,9 @@
                           <div class="col-11">
                             <div class="d-flex flex-column">
                               <td class="td-title">
-                                <router-link :to="{ path: '/profile/' + item.name.replace(/\s+/g, '-') + '/id=' + item.id }">
+                                <a :href="'/profile/' + item.name.replace(/\s+/g, '-') + '/id=' + item.id">
                                   {{ item.name }}
-                                </router-link>
+                                </a>
                               </td>
                               <td class="td-body">
                                 <a :href="item.url" target="_blank">
@@ -98,7 +98,7 @@
                             </div>
                           </div>
                         </div>
-                      </router-link>
+                      </a>
                     </tr>
                   </template>
                 </v-data-table>

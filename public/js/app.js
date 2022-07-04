@@ -3443,7 +3443,8 @@ __webpack_require__.r(__webpack_exports__);
       update_staff_dob: "",
       update_staff_is_active: "",
       update_staff_picture: "",
-      update_staff_university_id: ""
+      update_staff_university_id: "",
+      refresh: ""
     };
   },
   created: function created() {
@@ -3457,6 +3458,7 @@ __webpack_require__.r(__webpack_exports__);
       });
     } else {
       this.getUniversityDetails();
+      this.refreshOnce();
     }
   },
   methods: {
@@ -3592,6 +3594,12 @@ __webpack_require__.r(__webpack_exports__);
         })["catch"](function (error) {
           alert("Error");
         });
+      }
+    },
+    refreshOnce: function refreshOnce() {
+      if (this.refresh = 0) {
+        window.location.reload();
+        this.refresh = 1;
       }
     }
   }
@@ -8623,36 +8631,27 @@ var render = function () {
                                   _c("tr", [
                                     _c("td", [_vm._v(_vm._s(item.id))]),
                                     _vm._v(" "),
-                                    _c(
-                                      "td",
-                                      [
-                                        _c(
-                                          "router-link",
-                                          {
-                                            attrs: {
-                                              to: {
-                                                path:
-                                                  "/profile/" +
-                                                  item.name.replace(
-                                                    /\s+/g,
-                                                    "-"
-                                                  ) +
-                                                  "/id=" +
-                                                  item.id,
-                                              },
-                                            },
+                                    _c("td", [
+                                      _c(
+                                        "a",
+                                        {
+                                          attrs: {
+                                            href:
+                                              "/profile/" +
+                                              item.name.replace(/\s+/g, "-") +
+                                              "/id=" +
+                                              item.id,
                                           },
-                                          [
-                                            _vm._v(
-                                              "\n                        " +
-                                                _vm._s(item.name) +
-                                                "\n                      "
-                                            ),
-                                          ]
-                                        ),
-                                      ],
-                                      1
-                                    ),
+                                        },
+                                        [
+                                          _vm._v(
+                                            "\n                        " +
+                                              _vm._s(item.name) +
+                                              "\n                      "
+                                          ),
+                                        ]
+                                      ),
+                                    ]),
                                     _vm._v(" "),
                                     _c("td", [
                                       _c(
@@ -8737,105 +8736,78 @@ var render = function () {
                               fn: function (ref) {
                                 var item = ref.item
                                 return [
-                                  _c(
-                                    "tr",
-                                    { staticClass: "tr-border" },
-                                    [
-                                      _c(
-                                        "router-link",
-                                        {
-                                          attrs: {
-                                            to: {
-                                              path:
-                                                "/profile/" +
-                                                item.name.replace(/\s+/g, "-") +
-                                                "/id=" +
-                                                item.id,
-                                            },
-                                          },
+                                  _c("tr", { staticClass: "tr-border" }, [
+                                    _c(
+                                      "a",
+                                      {
+                                        attrs: {
+                                          href:
+                                            "/profile/" +
+                                            item.name.replace(/\s+/g, "-") +
+                                            "/id=" +
+                                            item.id,
                                         },
-                                        [
-                                          _c("div", { staticClass: "d-flex" }, [
+                                      },
+                                      [
+                                        _c("div", { staticClass: "d-flex" }, [
+                                          _c("div", { staticClass: "col-1" }, [
+                                            _c("td", [_vm._v(_vm._s(item.id))]),
+                                          ]),
+                                          _vm._v(" "),
+                                          _c("div", { staticClass: "col-11" }, [
                                             _c(
                                               "div",
-                                              { staticClass: "col-1" },
-                                              [
-                                                _c("td", [
-                                                  _vm._v(_vm._s(item.id)),
-                                                ]),
-                                              ]
-                                            ),
-                                            _vm._v(" "),
-                                            _c(
-                                              "div",
-                                              { staticClass: "col-11" },
+                                              {
+                                                staticClass:
+                                                  "d-flex flex-column",
+                                              },
                                               [
                                                 _c(
-                                                  "div",
-                                                  {
-                                                    staticClass:
-                                                      "d-flex flex-column",
-                                                  },
+                                                  "td",
+                                                  { staticClass: "td-title" },
                                                   [
                                                     _c(
-                                                      "td",
+                                                      "a",
                                                       {
-                                                        staticClass: "td-title",
+                                                        attrs: {
+                                                          href:
+                                                            "/profile/" +
+                                                            item.name.replace(
+                                                              /\s+/g,
+                                                              "-"
+                                                            ) +
+                                                            "/id=" +
+                                                            item.id,
+                                                        },
                                                       },
                                                       [
-                                                        _c(
-                                                          "router-link",
-                                                          {
-                                                            attrs: {
-                                                              to: {
-                                                                path:
-                                                                  "/profile/" +
-                                                                  item.name.replace(
-                                                                    /\s+/g,
-                                                                    "-"
-                                                                  ) +
-                                                                  "/id=" +
-                                                                  item.id,
-                                                              },
-                                                            },
-                                                          },
-                                                          [
-                                                            _vm._v(
-                                                              "\n                                " +
-                                                                _vm._s(
-                                                                  item.name
-                                                                ) +
-                                                                "\n                              "
-                                                            ),
-                                                          ]
+                                                        _vm._v(
+                                                          "\n                                " +
+                                                            _vm._s(item.name) +
+                                                            "\n                              "
                                                         ),
-                                                      ],
-                                                      1
+                                                      ]
                                                     ),
-                                                    _vm._v(" "),
+                                                  ]
+                                                ),
+                                                _vm._v(" "),
+                                                _c(
+                                                  "td",
+                                                  { staticClass: "td-body" },
+                                                  [
                                                     _c(
-                                                      "td",
+                                                      "a",
                                                       {
-                                                        staticClass: "td-body",
+                                                        attrs: {
+                                                          href: item.url,
+                                                          target: "_blank",
+                                                        },
                                                       },
                                                       [
-                                                        _c(
-                                                          "a",
-                                                          {
-                                                            attrs: {
-                                                              href: item.url,
-                                                              target: "_blank",
-                                                            },
-                                                          },
-                                                          [
-                                                            _vm._v(
-                                                              "\n                                " +
-                                                                _vm._s(
-                                                                  item.url
-                                                                ) +
-                                                                "\n                              "
-                                                            ),
-                                                          ]
+                                                        _vm._v(
+                                                          "\n                                " +
+                                                            _vm._s(item.url) +
+                                                            "\n                              "
                                                         ),
                                                       ]
                                                     ),
@@ -8844,11 +8816,10 @@ var render = function () {
                                               ]
                                             ),
                                           ]),
-                                        ]
-                                      ),
-                                    ],
-                                    1
-                                  ),
+                                        ]),
+                                      ]
+                                    ),
+                                  ]),
                                 ]
                               },
                             },

@@ -470,6 +470,7 @@
         update_staff_is_active: "",
         update_staff_picture: "",
         update_staff_university_id: "",
+        refresh: "",
       };
     },
     created() {
@@ -480,6 +481,7 @@
       }
       else {
         this.getUniversityDetails();
+        this.refreshOnce();
       }
     },
     methods: {
@@ -640,6 +642,12 @@
           });   
         }
       },
+      refreshOnce() {
+        if (this.refresh = 0) {
+          window.location.reload();
+          this.refresh = 1;
+        }
+      }
     }
   };
 </script>

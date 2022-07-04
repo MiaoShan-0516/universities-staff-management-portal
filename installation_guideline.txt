@@ -1,0 +1,25 @@
+Introduction: 
+- This project is a Single Page Application (SPA) which using vue router. 
+- Feel free to have a look on wireframe design inside root / folder (name: wireframe.pdf).
+
+
+Way of execute: 
+1. Download source code as zip folder and extract it.
+2. Open the folder in Visual Studio/any
+3. Start Apache & MySQL in XAMPP/any
+4. Open phpMyAdmin (http://localhost/phpmyadmin/): Create a new database table name as 'universities_portal_db'
+5. Open terminal and run the following command: 
+- composer install
+- composer require laravel/ui
+- php artisan key:generate
+- npm install
+- npm run dev
+- npm update
+- php artisan migrate
+- php artisan db:seed
+- php artisan serve
+- npm run watch
+6. open browser locahost (http://localhost:8000/)
+*use http://localhost:8000/ for google sign in
+
+

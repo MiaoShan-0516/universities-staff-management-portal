@@ -2821,6 +2821,7 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       id: "",
+      uniId: "",
       staff: [],
       university: [{
         name: ''
@@ -2855,8 +2856,9 @@ __webpack_require__.r(__webpack_exports__);
 
       this.id = this.$route.params.id;
       this.uniId = this.$route.params.uniId;
+      console.log(this.id);
       (axios__WEBPACK_IMPORTED_MODULE_0___default().defaults.baseURL) = "/api";
-      axios__WEBPACK_IMPORTED_MODULE_0___default().get("/getStaffDetails/" + this.id + this.uniId).then(function (response) {
+      axios__WEBPACK_IMPORTED_MODULE_0___default().get("/getStaffDetails/" + this.id + '/' + this.uniId).then(function (response) {
         _this2.staff = response.data.staff;
         _this2.birthday = response.data.birthday;
         _this2.university = response.data.university; //calculate age

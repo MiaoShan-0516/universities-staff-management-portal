@@ -189,6 +189,7 @@
     data() {
       return {
         id: "",
+        uniId: "",
         staff: [],
         university: [
           {
@@ -220,9 +221,10 @@
       getStaffDetails() {
       this.id = this.$route.params.id;
       this.uniId = this.$route.params.uniId;
+      console.log(this.id);
       axios.defaults.baseURL = "/api";
       axios
-        .get("/getStaffDetails/" + this.id + this.uniId)
+        .get("/getStaffDetails/" + this.id + '/' + this.uniId)
         .then((response) => {
           this.staff = response.data.staff;
           this.birthday = response.data.birthday;

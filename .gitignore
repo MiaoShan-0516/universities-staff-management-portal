@@ -1,8 +1,2 @@
 /node_modules
-/public/mix-manifest.json
-/js/app.js
-/package.json
-/css/ap
-/storage/*.key
 /vendor
-.env

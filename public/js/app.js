@@ -2554,6 +2554,18 @@ var date = new Date();
     };
   },
   created: function created() {},
+  beforeMount: function beforeMount() {
+    this.timer = setInterval(this.setDateTime, 1000);
+  },
+  mounted: function mounted() {
+    document.addEventListener("click", this.close);
+    document.addEventListener("click", this.hide);
+  },
+  beforeUnmount: function beforeUnmount() {
+    clearInterval(this.timer);
+    document.removeEventListener("click", this.close);
+    document.removeEventListener("click", this.hide);
+  },
   methods: {
     logout: function logout() {
       var _this = this;
@@ -2599,20 +2611,6 @@ var date = new Date();
         return _this2.$route.path.indexOf(path) === 0; // current path starts with this path string
       });
     }
-  },
-  beforeMount: function beforeMount() {
-    this.timer = setInterval(this.setDateTime, 1000);
-  },
-  mounted: function mounted() {
-    document.addEventListener("click", this.close);
-    document.addEventListener("click", this.hide);
-  },
-  beforeUnmount: function beforeUnmount() {
-    clearInterval(this.timer);
-  },
-  beforeDestroy: function beforeDestroy() {
-    document.removeEventListener("click", this.close);
-    document.removeEventListener("click", this.hide);
   }
 });
 

@@ -135,7 +135,18 @@ const date = new Date();
     },
     created() {
     },
-
+    beforeMount() {
+      this.timer = setInterval(this.setDateTime, 1000);
+    },
+    mounted() {
+      document.addEventListener("click", this.close);
+      document.addEventListener("click", this.hide);
+    },
+    beforeUnmount() {
+      clearInterval(this.timer);
+      document.removeEventListener("click", this.close);
+      document.removeEventListener("click", this.hide);
+    },
     methods: {
       logout() {
         this.isActive = false;
@@ -176,20 +187,6 @@ const date = new Date();
           return this.$route.path.indexOf(path) === 0; // current path starts with this path string
         });
       },
-    },
-    beforeMount() {
-      this.timer = setInterval(this.setDateTime, 1000);
-    },
-    mounted() {
-      document.addEventListener("click", this.close);
-      document.addEventListener("click", this.hide);
-    },
-    beforeUnmount() {
-      clearInterval(this.timer);
-    },
-    beforeDestroy() {
-      document.removeEventListener("click", this.close);
-      document.removeEventListener("click", this.hide);
     },
   };
 </script>
